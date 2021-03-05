@@ -93,7 +93,6 @@ class AccountRCType(models.Model):
         default=lambda self: self.env.company,
     )
 
-    @api.multi
     @api.constrains("with_supplier_self_invoice", "tax_ids")
     def _check_tax_ids(self):
         for rctype in self:
