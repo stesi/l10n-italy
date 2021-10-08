@@ -38,7 +38,8 @@ def migrate(env, version):
         am.company_id,
         full_reconcile_id,
         am.id,
-        inv.rc_purchase_invoice_id
+        inv.rc_purchase_invoice_id,
+        aml.account_id
         from account_move_line aml
         join account_move am
         on am.id = aml.move_id
@@ -54,13 +55,18 @@ def migrate(env, version):
     res = cr.fetchall()
 
     for r in res:
-        company_id, fr_id, rc_inv, supp_inv = r
+        company_id, fr_id, rc_inv, supp_inv, rc_dest_acc_id = r
         openupgrade.logged_query(
             cr,
             """
-            select currency_id, partner_id, create_uid
-            from account_move
-            where id = {supp_inv};
+            select am.currency_id, am.partner_id, am.create_uid, aml.account_id
+            from account_move am join account_move_line aml
+            on am.id = aml.move_id
+            where am.id = {supp_inv}
+            and aml.account_id in (
+                select aa.id from account_account aa
+                where aa.internal_type = 'payable'
+            );
             """.format(
                 supp_inv=supp_inv
             ),
@@ -69,28 +75,7 @@ def migrate(env, version):
         currency_id = payment_vals[0]
         partner_id = payment_vals[1]
         create_uid = payment_vals[2]
-        supp_dest_acc_id = 0
-        rc_dest_acc_id = 0
-
-        for acc_type in ["payable", "receivable"]:
-            openupgrade.logged_query(
-                cr,
-                """
-            select id from account_account
-            where company_id = {company_id}
-            and type = '{acc_type}'
-            and internal_type = '{acc_type}'
-            limit 1;
-            """.format(
-                    company_id=company_id, acc_type=acc_type
-                ),
-            )
-            supp_dest_acc_id = (
-                cr.fetchone()[0] if acc_type == "payable" else supp_dest_acc_id
-            )
-            rc_dest_acc_id = (
-                cr.fetchone()[0] if acc_type == "receivable" else rc_dest_acc_id
-            )
+        supp_dest_acc_id = payment_vals[3]
 
         openupgrade.logged_query(
             cr,
@@ -100,7 +85,11 @@ def migrate(env, version):
                 where move_id in (
                 select move_id from account_move_line
         where full_reconcile_id = {fr_id}
-        and stored_invoice_id is null)
+        and journal_id in (
+            select payment_journal_id
+            from account_rc_type
+            where method = 'selfinvoice'
+        ))
         order by full_reconcile_id;
         """.format(
                 fr_id=fr_id

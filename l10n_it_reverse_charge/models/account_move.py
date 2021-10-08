@@ -106,17 +106,17 @@ class AccountMove(models.Model):
 
     def get_inv_line_to_reconcile(self):
         for inv_line in self.line_ids:
-            if (self.move_type == "in_invoice") and inv_line.credit:
-                return inv_line
-            elif (self.move_type == "in_refund") and inv_line.debit:
+            if ((self.move_type == "in_invoice") and inv_line.credit) or (
+                (self.move_type == "in_refund") and inv_line.debit
+            ):
                 return inv_line
         return False
 
     def get_rc_inv_line_to_reconcile(self, invoice):
         for inv_line in invoice.line_ids:
-            if (invoice.move_type == "out_invoice") and inv_line.debit:
-                return inv_line
-            elif (invoice.move_type == "out_refund") and inv_line.credit:
+            if ((self.move_type == "out_invoice") and inv_line.debit) or (
+                (self.move_type == "out_refund") and inv_line.credit
+            ):
                 return inv_line
         return False
 
@@ -144,41 +144,6 @@ class AccountMove(models.Model):
             rc_amount_tax = invoice_currency.compute(rc_amount_tax, main_currency)
 
         return round_curr(rc_amount_tax)
-
-    def rc_debit_line_vals(self, amount=None):
-        credit = debit = 0.0
-
-        if self.move_type == "in_invoice":
-            if amount:
-                debit = amount
-            else:
-                debit = self.compute_rc_amount_tax()
-        else:
-            if amount:
-                credit = amount
-            else:
-                credit = self.compute_rc_amount_tax()
-        return {
-            "name": self.sequence_number,
-            "debit": debit,
-            "credit": credit,
-            "account_id": self.get_inv_line_to_reconcile().account_id.id,
-            "partner_id": self.partner_id.id,
-        }
-
-    def rc_payment_credit_line_vals(self, invoice):
-        credit = debit = 0.0
-        if invoice.move_type == "out_invoice":
-            credit = self.get_rc_inv_line_to_reconcile(invoice).debit
-        else:
-            debit = self.get_rc_inv_line_to_reconcile(invoice).credit
-        return {
-            "name": invoice.sequence_number,
-            "credit": credit,
-            "debit": debit,
-            "account_id": self.get_rc_inv_line_to_reconcile(invoice).account_id.id,
-            "partner_id": invoice.partner_id.id,
-        }
 
     def reconcile_supplier_invoice(self):
         rc_type = self.fiscal_position_id.rc_type_id
@@ -257,7 +222,7 @@ class AccountMove(models.Model):
                 if not line_tax_ids:
                     raise UserError(
                         _("Invoice %s, line\n%s\nis RC but has not tax")
-                        % ((self.ref or self.partner_id.display_name), line.name)
+                        % ((self.name or self.partner_id.display_name), line.name)
                     )
                 tax_ids = list()
                 for tax_mapping in rc_type.tax_ids:
