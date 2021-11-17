@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Lorenzo Battistini - Agile Business Group
+     Copyright 2018 Simone Rubino - Agile Business Group
+     Copyright 2021 Kevin Poli - AIR s.r.l.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+    <!-- Order -->
+
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="priority" eval="17"/>
+        <field name="arch" type="xml">
+            <group name="sale_info" position="inside">
+                <field name="corrispettivi"/>
+            </group>
+        </field>
+    </record>
+</odoo>

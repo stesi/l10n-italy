@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <templates id="template" xml:space="preserve"  inherit_id="point_of_sale.template">
+        <t  t-extend="PaymentScreen">
+
+            <t t-jquery='div.payment-controls' t-operation='replace'>
+                <div t-if="env.pos.config.module_account" class="button js_invoice"
+                    t-att-class="{ highlight: currentOrder.is_to_invoice() }"
+                    t-on-click="toggleIsToInvoice">
+                    <i class="fa fa-file-text-o" /> Fattura
+                </div>
+                <div t-if="env.pos.config.module_account" class="button js_invoice"
+                    t-att-class="{ highlight: currentOrder.is_to_invoice() }"
+                    t-on-click="toggleIsToInvoice">
+                    <i class="fa fa-file-text-o" /> Corrispettivo
+                </div>
+                <div t-if="env.pos.config.tip_product_id" class="button js_tip"
+                    t-on-click="addTip">
+                    <i class="fa fa-heart" /> Tip
+                </div>
+                <div t-if="env.pos.config.iface_cashdrawer" class="button js_cashdrawer"
+                    t-on-click="openCashbox">
+                    <i class="fa fa-archive" /> Open Cashbox
+                </div>
+            </t>
+        </t>
+    </templates>

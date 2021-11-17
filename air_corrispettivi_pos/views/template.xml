@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit Form View to Modify it -->
+    <template id="assets"  inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/air_corrispettivi_pos/static/src/js/models.js"></script>
+<!--            <script type="text/javascript" src="/air_corrispettivi_pos/static/src/js/Screens/PaymentScreen/PaymentsScreen.js"></script>-->
+        </xpath>
+    </template>
+
+
+</odoo>

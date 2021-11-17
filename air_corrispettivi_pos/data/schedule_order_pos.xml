@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="schedule_order_pos_cron"  model="ir.cron">
+            <field name="name">Genera cor. da ric. pagate e senza cliente</field>
+            <field eval="False" name="active"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="point_of_sale.model_pos_order"/>
+            <field name="state">code</field>
+            <field name="code">model.schedule_as_corrispettivi()</field>
+        </record>
+
+    </data>
+</odoo>
