@@ -132,7 +132,7 @@ class ResPartner(models.Model):
             # Partner is receipts, assign a receipts (corrispettivi)
             # fiscal position only if there is none
             if not self.property_account_position_id:
-                default=self.default_get(['parent_id'])['company_id']
+                default=self.env.company
                 company = self.company_id or default
                 self.property_account_position_id = \
                     self.env['account.fiscal.position'] \
