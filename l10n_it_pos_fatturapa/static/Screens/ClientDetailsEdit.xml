@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="ClientDetailsAddElectronicInvoice" t-inherit="point_of_sale.ClientDetailsEdit" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('client-details-right')]/div[hasclass('client-detail')][5]" position="after">
+            <div class="client-detail">
+                <span class="label">Abilitare fatturazione elettronica</span>
+                <input class="detail" name="electronic_invoice_subjected" t-on-change="captureChange" type="checkbox"
+                       t-att-value="props.partner.electronic_invoice_subjected || False" /> <!--  -->
+            </div>
+            <div class="client-detail">
+                <span class="label">Soggetto obbligato</span>
+                <input class="detail" name="electronic_invoice_obliged_subject" t-on-change="captureChange" type="checkbox"
+                       t-att-value="props.partner.electronic_invoice_obliged_subject || False"/>
+                <!-- t-att-value="props.partner.vat || ''"  -->
+            </div>
+            <div class="client-detail">
+                <span class="label">PEC destinatario</span>
+                <input class="detail client-email" name="pec_destinatario" t-on-change="captureChange"
+                       t-att-value="props.partner.pec_destinatario || ''"/> <!-- t-att-value="props.partner.vat || ''"  -->
+            </div>
+            <div class="client-detail">
+                <span class="label">Codice destinatario</span>
+                <input class="detail vat" name="codice_destinatario" t-on-change="captureChange"
+                       t-att-value="props.partner.codice_destinatario || ''"/> <!-- t-att-value="props.partner.codice_destinatario || ''"  -->
+            </div>
+        </xpath>
+    </t>
+</templates>
