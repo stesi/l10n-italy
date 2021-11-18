@@ -20,7 +20,7 @@
 <!--        </xpath>-->
         <xpath expr="//div[hasclass('client-details-right')]/div[hasclass('client-detail')][5]" position="after">
             <div class="client-detail">
-                <span class="label">Abilitare fatturazione elettronica</span>
+                <span class="label">Enable electronic invoicing</span>
 <!--                <input class="detail" name="electronic_invoice_subjected" t-on-change="captureChange" type="checkbox"-->
 <!--                       t-att-value="props.partner.electronic_invoice_subjected || true"/> &lt;!&ndash;  &ndash;&gt;-->
 <!--                <select class="detail needsclick" name="electronic_invoice_subjected"-->
@@ -35,19 +35,21 @@
                        t-att-value="props.partner.electronic_invoice_subjected"/>
             </div>
             <div class="client-detail">
-                <span class="label">Soggetto obbligato</span>
+                <span class="label">Obliged Subject</span>
                 <input class="detail" name="electronic_invoice_obliged_subject" t-on-change="captureChange"
                        t-att-value="props.partner.electronic_invoice_obliged_subject"/>
                 <!-- t-att-value="props.partner.vat || ''"  -->
             </div>
+            <!--<t t-if="props.partner.electronic_invoice_subjected &amp;&amp; props.partner.electronic_invoice_obliged_subject">-->
+                <div class="client-detail">
+                    <span class="label">PEC</span>
+                    <input class="detail pec-destinatario" name="pec_destinatario" t-on-change="captureChange"
+                           t-att-value="props.partner.pec_destinatario || ''"/> <!-- t-att-value="props.partner.vat || ''"  -->
+                </div>
+            <!--</t>-->
             <div class="client-detail">
-                <span class="label">PEC destinatario</span>
-                <input class="detail" name="pec_destinatario" t-on-change="captureChange"
-                       t-att-value="props.partner.pec_destinatario || ''"/> <!-- t-att-value="props.partner.vat || ''"  -->
-            </div>
-            <div class="client-detail">
-                <span class="label">Codice destinatario</span>
-                <input class="detail" name="codice_destinatario" t-on-change="captureChange"
+                <span class="label">Addr. code</span>
+                <input class="detail codice-destinatario" name="codice_destinatario" t-on-change="captureChange"
                        t-att-value="props.partner.codice_destinatario || ''"/> <!-- t-att-value="props.partner.codice_destinatario || ''"  -->
             </div>
         </xpath>

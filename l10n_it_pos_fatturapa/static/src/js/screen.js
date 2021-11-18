@@ -15,6 +15,19 @@ odoo.define("l10n_it_pos_fatturapa.screens", function(require) {
                 var electronic_invoice_obliged_subject=$('.electronic_invoice_obliged_subject').val();
                 var codice_destinatario=$('.codice_destinatario').val();
 
+
+                console.log('pec add has been settedss');
+                console.log(pec_add);
+                if (pec_add == true) {
+                    console.log('pec add has been setted');
+                }
+                if ((pec_add || codice_destinatario) && (!electronic_invoice_subjected || !electronic_invoice_obliged_subject)){
+                     await this.showPopup('ErrorPopup', {
+                            title: this.env._t('Error'),
+                            body: this.env._t('To set "Pec address/Addresses code" you must set "Enable electronic invoicing" and "Obliged Subject" to True'),
+                     });
+                     return;
+                }
                 let partnerId = await this.rpc({
                     model: 'res.partner',
                     method: 'create_from_ui',
