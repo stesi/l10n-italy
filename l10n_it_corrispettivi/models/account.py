@@ -15,7 +15,7 @@ class AccountJournal(models.Model):
     def get_corr_journal(self, company_id=None):
         if not company_id:
             company_id = self.env.user.company_id
-        corr_journal_id = self.search(
+        corr_journal_id = self.sudo().search(
             [('type', '=', 'sale'),
              ('corrispettivi', '=', True),
              ('company_id', '=', company_id.id)], limit=1)
