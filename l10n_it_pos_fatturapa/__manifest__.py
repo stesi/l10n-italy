@@ -16,6 +16,7 @@
         # "pos_partner_firstname",
         # "l10n_it_pos_fiscalcode",
         "l10n_it_fatturapa",
+        'point_of_sale'
     ],
     'data': [
         'templates/assets.xml'

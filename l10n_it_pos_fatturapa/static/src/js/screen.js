@@ -16,8 +16,24 @@ odoo.define("l10n_it_pos_fatturapa.screens", function(require) {
                 var codice_destinatario=$('.codice_destinatario').val();
 
 
-                console.log('pec add has been settedss');
-                console.log(pec_add);
+//                console.log('pec add has been settedss');
+//                console.log(electronic_invoice_subjected);
+//                var x = electronic_invoice_subjected === "true";
+                console.log(electronic_invoice_subjected);
+//                console.log('true');
+//                console.log(x);
+//                debugger;
+                if (electronic_invoice_subjected == "true") {
+                    electronic_invoice_subjected = true;
+                    console.log('is in true');
+                } else {
+                    electronic_invoice_subjected = false;
+                    console.log('is in else');
+                }
+
+                console.log(typeof electronic_invoice_subjected);
+                console.log(electronic_invoice_subjected);
+
                 if (pec_add == true) {
                     console.log('pec add has been setted');
                 }
@@ -33,6 +49,7 @@ odoo.define("l10n_it_pos_fatturapa.screens", function(require) {
                     method: 'create_from_ui',
                     args: [event.detail.processedChanges],
                 });
+                //console.log(partnerId);
                 await this.env.pos.load_new_partners();
                 this.state.selectedClient = this.env.pos.db.get_partner_by_id(partnerId);
                 this.state.detailIsShown = false;
