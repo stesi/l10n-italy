@@ -1,0 +1,12 @@
+<odoo>
+    <record model="ir.actions.server" id="print_td">
+        <field name="name">Multiple Action Invoice</field>
+        <field name="model_id" ref="l10n_it_delivery_note.model_stock_delivery_note"/>
+        <field name="binding_model_id" ref="l10n_it_delivery_note.model_stock_delivery_note"/>
+        <field name="binding_type">action</field>
+        <field name="state">code</field>
+        <field name="code">
+            records.multiple_action_invoice()
+        </field>
+    </record>
+</odoo>
