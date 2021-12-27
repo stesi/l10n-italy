@@ -2,7 +2,7 @@
 # Copyright © 2018 Openforce Srls Unipersonale (www.openforce.it)
 # Copyright 2019 Lorenzo Battistini <https://github.com/eLBati>
 from odoo import api, fields, models
-
+#Define model that not exists
 class FaturapaActivityProgress(models.Model):
     # _position = ['2.1.7']
     _name = "faturapa.activity.progress"

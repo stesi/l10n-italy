@@ -8,7 +8,7 @@
 
 {
     'name': 'ITA - Fattura migrat',
-    'version': '12.0.1.9.0',
+    'version': '14.0.1.9.0',
     'category': 'Localization/Italy',
     'summary': 'Invio fatture elettroniche tramite PEC',
     'author': 'Openforce Srls Unipersonale, Odoo Community Association (OCA)',
