@@ -1,0 +1,4 @@
+runnare ./update.sh
+andare sulla pull request via web e prendere codice a 4 cifre dopo #
+./mergepull.sh numeroaquattrocifre
+se va in merge, se la ver della pull request è più recente, rimuovere cartella locale, committare e rifare il mergepull
