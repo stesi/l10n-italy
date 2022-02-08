@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template
+            id="account_invoice_line_it_FatturaPA"
+            inherit_id="l10n_it_fatturapa_out.account_invoice_line_it_FatturaPA"
+        >
+            <xpath expr="//DettaglioLinee/CodiceArticolo[1]" position="replace"/>
+            <xpath expr="//DettaglioLinee/CodiceArticolo[1]" position="replace"/>
+            <xpath expr="//DettaglioLinee/NumeroLinea" position="after">
+                <CodiceArticolo >
+                    <!--2.2.1.3-->
+                    <CodiceTipo t-esc="line.value_type_for_efattura"/>
+                    <CodiceValore t-esc="line.value_value_for_efattura"/>
+                </CodiceArticolo>
+            </xpath>
+
+        </template>
+    </data>
+</odoo>
