@@ -17,14 +17,14 @@ class Respartner(models.Model):
     def check_if_partner_exist(self):
         check_partner_count=0
         if self.vat:
-            domain = [('vat', '=', self.vat), ('partner_def_e_fattura', '=', True)]
+            domain = [('vat', '=', self.vat), ('partner_def_e_fattura', '=', True), ('type', '=', 'contact')]
             if isinstance(self.id,int):
                 domain.append(('id','=',self.id))
             check_partner = self.env['res.partner'].search(domain,
                                                            limit=1)
             check_partner_count = len(check_partner)
         if check_partner_count == 0 and self.fiscalcode:
-            domain =[('fiscalcode', '=', self.fiscalcode), ('partner_def_e_fattura', '=', True)]
+            domain =[('fiscalcode', '=', self.fiscalcode), ('partner_def_e_fattura', '=', True), ('type', '=', 'contact')]
             if isinstance(self.id,int):
                 domain.append(('id','=',self.id))
             check_partner = self.env['res.partner'].search(domain
@@ -55,3 +55,18 @@ class Respartner(models.Model):
                         'message': _('Already exist a default partner with same VAT or Fiscal code.')}
 
                 }
+    def fix_old_partner_default(self):
+        partner_list = self.env['res.partner'].search([('type','=','contact')],order='id desc')
+        for partner in partner_list:
+
+            if partner.vat or partner.fiscalcode:
+                domain = [('partner_def_e_fattura', '=', True)]
+                if partner.vat:
+                    domain.append([('vat','=',partner.vat)])
+                else:
+                    domain.append([('fiscalcode','=',partner.fiscalcode)])
+
+                already_exist_default = self.env['res.partner'].search(domain)
+                if len(already_exist_default)==0:
+                    partner.partner_def_e_fattura = True
+        #return
