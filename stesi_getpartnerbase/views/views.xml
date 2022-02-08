@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="stesi_getpartnerbase.list">
+      <field name="name">stesi_getpartnerbase list</field>
+      <field name="model">stesi_getpartnerbase.stesi_getpartnerbase</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="stesi_getpartnerbase.action_window">
+      <field name="name">stesi_getpartnerbase window</field>
+      <field name="res_model">stesi_getpartnerbase.stesi_getpartnerbase</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="stesi_getpartnerbase.action_server">
+      <field name="name">stesi_getpartnerbase server</field>
+      <field name="model_id" ref="model_stesi_getpartnerbase_stesi_getpartnerbase"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="stesi_getpartnerbase" id="stesi_getpartnerbase.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="stesi_getpartnerbase.menu_1" parent="stesi_getpartnerbase.menu_root"/>
+    <menuitem name="Menu 2" id="stesi_getpartnerbase.menu_2" parent="stesi_getpartnerbase.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="stesi_getpartnerbase.menu_1_list" parent="stesi_getpartnerbase.menu_1"
+              action="stesi_getpartnerbase.action_window"/>
+    <menuitem name="Server to list" id="stesi_getpartnerbase" parent="stesi_getpartnerbase.menu_2"
+              action="stesi_getpartnerbase.action_server"/>
+-->
+  </data>
+</odoo>
