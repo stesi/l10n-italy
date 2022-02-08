@@ -62,11 +62,11 @@ class Respartner(models.Model):
             if partner.vat or partner.fiscalcode:
                 domain = [('partner_def_e_fattura', '=', True)]
                 if partner.vat:
-                    domain.append([('vat','=',partner.vat)])
+                    domain.append(('vat','=',partner.vat))
                 else:
-                    domain.append([('fiscalcode','=',partner.fiscalcode)])
+                    domain.append(('fiscalcode','=',partner.fiscalcode))
 
                 already_exist_default = self.env['res.partner'].search(domain)
                 if len(already_exist_default)==0:
-                    partner.partner_def_e_fattura = True
+                    partner.update({'partner_def_e_fattura':True})
         #return
