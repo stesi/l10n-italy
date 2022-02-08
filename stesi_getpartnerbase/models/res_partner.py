@@ -55,18 +55,26 @@ class Respartner(models.Model):
                         'message': _('Already exist a default partner with same VAT or Fiscal code.')}
 
                 }
-    def fix_old_partner_default(self):
-        partner_list = self.env['res.partner'].search([('type','=','contact')],order='id desc')
-        for partner in partner_list:
-
-            if partner.vat or partner.fiscalcode:
-                domain = [('partner_def_e_fattura', '=', True)]
-                if partner.vat:
-                    domain.append(('vat','=',partner.vat))
-                else:
-                    domain.append(('fiscalcode','=',partner.fiscalcode))
-
-                already_exist_default = self.env['res.partner'].search(domain)
-                if len(already_exist_default)==0:
-                    partner.update({'partner_def_e_fattura':True})
-        #return
+    # def fix_old_partner_default(self):
+    #     partner_list = self.env['res.partner'].search([('type','=','contact')],order='id desc')
+    #
+    #     for partner in partner_list:
+    #         partner.refresh()
+    #
+    #         if partner.vat or partner.fiscalcode:
+    #             domain = []
+    #             if partner.vat:
+    #                 domain.append(('vat','=',partner.vat))
+    #             else:
+    #                 domain.append(('fiscalcode','=',partner.fiscalcode))
+    #
+    #             already_exist_default = self.env['res.partner'].search(domain)
+    #
+    #             if len(already_exist_default)>0:#invoice_ids
+    #                 check_already_exist = already_exist_default.filtered(lambda l: l.partner_def_e_fattura)
+    #
+    #                 if not check_already_exist:
+    #                     must_be_default = already_exist_default.sorted(lambda l: len(l.invoice_ids),reverse=True)
+    #                     must_be_default[0].update({'partner_def_e_fattura':True})
+    #
+    #     #return
