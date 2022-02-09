@@ -75,7 +75,7 @@ class WizardImportFatturapa(models.TransientModel):
             partners = partner_model.search(domain)
         commercial_partner_id = False
         if len(partners) > 1:
-            partners = partners.sorted(lambda l: l.partner_default_e_fattura,reverse=True)
+            partners = partners.sorted(lambda l: l.partner_def_e_fattura,reverse=True)
             #commercial_partner_id = partners[0]
             # for partner in partners_list:
                 # if (
