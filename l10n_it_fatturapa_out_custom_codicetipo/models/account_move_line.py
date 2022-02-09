@@ -25,7 +25,7 @@ class account_move_line(models.Model):
                     aml.value_value_for_efattura = aml.product_id.barcode[:35]
                 elif aml.product_id.default_code:
                     aml.value_type_for_efattura = self.env['ir.config_parameter'].sudo().get_param('fatturapa.codicetipo.odoo', 'ODOO')
-                    aml.value_value_for_efattura = aml.default_code.barcode[:35]
+                    aml.value_value_for_efattura = aml.product_id.default_code[:35]
                 else:
                     aml.value_type_for_efattura = self.env['ir.config_parameter'].sudo().get_param('fatturapa.codicetipo.odoo', 'ODOO')
                     aml.value_value_for_efattura = "000000"
