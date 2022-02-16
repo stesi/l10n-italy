@@ -12,7 +12,7 @@
     'version': '14.0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['l10n_it_reverse_charge', 'sale', 'account'],
+    'depends': ['l10n_it_reverse_charge', 'sale', 'account', 'purchase'],
 
     # always loaded
     'data': [
