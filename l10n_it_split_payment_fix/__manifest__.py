@@ -16,7 +16,7 @@
         "l10n_it_split_payment",
     ],
     "data": [
-
+        'views/account_view.xml'
     ],
     "images": [
 
