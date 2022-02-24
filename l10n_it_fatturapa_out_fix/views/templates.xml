@@ -1,0 +1,62 @@
+<?xml version="1.0" ?>
+<odoo>
+
+
+    <record id="account_move_form_sp_fix" model="ir.ui.view">
+        <field name="name">account.move.form.sp.fix</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="l10n_it_fatturapa_out.account_invoice_it_cedente_prestatore" />
+        <field name="arch" type="xml">
+
+<xpath expr="//IdFiscaleIVA" position="attributes">
+    <attribute name="t-if">partner_id.vat</attribute>
+</xpath>
+        </field>
+    </record>
+    <record id="account_move_form_sp_fix2" model="ir.ui.view">
+        <field name="name">account.move.form.sp.fix</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="l10n_it_fatturapa_out.account_invoice_it_rappresentante_fiscale" />
+        <field name="arch" type="xml">
+
+<xpath expr="//IdFiscaleIVA" position="attributes">
+    <attribute name="t-if">fatturapa_tax_representative.vat</attribute>
+</xpath>
+        </field>
+    </record>
+    <record id="account_move_form_sp_fix2" model="ir.ui.view">
+        <field name="name">account.move.form.sp.fix</field>
+        <field name="inherit_id" ref="l10n_it_fatturapa_out.account_invoice_it_rappresentante_fiscale" />
+        <field name="arch" type="xml">
+
+<xpath expr="//IdFiscaleIVA" position="attributes">
+    <attribute name="t-if">fatturapa_tax_representative.vat</attribute>
+</xpath>
+        </field>
+    </record>
+
+
+        <record id="account_move_form_sp_fix3" model="ir.ui.view">
+        <field name="name">account.move.form.sp.fix</field>
+        <field name="inherit_id" ref="l10n_it_fatturapa_out.account_invoice_it_cessionario_committente" />
+        <field name="arch" type="xml">
+
+<xpath expr="//IdFiscaleIVA" position="attributes">
+    <attribute name="t-if">partner_id.vat</attribute>
+</xpath>
+        </field>
+    </record>
+
+
+           <record id="account_move_form_sp_fix4" model="ir.ui.view">
+        <field name="name">account.move.form.sp.fix</field>
+        <field name="inherit_id" ref="l10n_it_fatturapa_out.account_invoice_it_terzo_intermediario_soggetto_emittente" />
+        <field name="arch" type="xml">
+
+<xpath expr="//IdFiscaleIVA" position="attributes">
+    <attribute name="t-if">company_id.fatturapa_sender_partner.vat</attribute>
+</xpath>
+        </field>
+    </record>
+
+</odoo>
