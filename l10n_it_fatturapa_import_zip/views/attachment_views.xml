@@ -19,10 +19,11 @@
                 <sheet string="Import e-bill ZIP">
                     <div class="oe_button_box" name="button_box">
                         <button
-                            name="action_view_xml_out"
+                            name="action_view_xml"
                             type="object"
                             class="oe_stat_button"
                             icon="fa-files-o"
+                            context="{'xml_type': 'out_xml'}"
                             attrs="{'invisible': [('xml_out_count', '=', 0)]}"
                         >
                             <field
@@ -32,10 +33,11 @@
                             />
                         </button>
                         <button
-                            name="action_view_xml_in"
+                            name="action_view_xml"
                             type="object"
                             class="oe_stat_button"
                             icon="fa-files-o"
+                            context="{'xml_type': 'in_xml'}"
                             attrs="{'invisible': [('xml_in_count', '=', 0)]}"
                         >
                             <field
@@ -45,10 +47,11 @@
                             />
                         </button>
                         <button
-                            name="action_view_invoices_out"
+                            name="action_view_invoices"
                             type="object"
                             class="oe_stat_button"
                             icon="fa-pencil-square-o"
+                            context="{'invoice_type': 'out_invoice'}"
                             attrs="{'invisible': [('invoices_out_count', '=', 0)]}"
                         >
                             <field
@@ -58,10 +61,11 @@
                             />
                         </button>
                         <button
-                            name="action_view_invoices_in"
+                            name="action_view_invoices"
                             type="object"
                             class="oe_stat_button"
                             icon="fa-pencil-square-o"
+                            context="{'invoice_type': 'in_invoice'}"
                             attrs="{'invisible': [('invoices_in_count', '=', 0)]}"
                         >
                             <field

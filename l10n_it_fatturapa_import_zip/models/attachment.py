@@ -65,50 +65,39 @@ class FatturaPAAttachmentImportZIP(models.Model):
         "account.move", "attachment_in_import_zip_id", string="Invoices In"
     )
 
-    def action_view_xml(self, attachments, action):
+    def action_view_xml(self):
+        if self.env.context.get("xml_type") == "out_xml":
+            attachments = self.mapped("attachment_out_ids")
+            action = self.env.ref(
+                "l10n_it_fatturapa_out.action_fatturapa_attachment"
+            ).read()[0]
+        elif self.env.context.get("xml_type") == "in_xml":
+            attachments = self.mapped("attachment_in_ids")
+            action = self.env.ref("l10n_it_fatturapa_in.action_fattura_pa_in").read()[0]
+        else:
+            return {"type": "ir.actions.act_window_close"}
         action["context"] = "{}"
-        if len(attachments) >= 1:
-            action["domain"] = [("id", "in", attachments.ids)]
-        else:
-            action = {"type": "ir.actions.act_window_close"}
+        action["domain"] = [("id", "in", attachments.ids)]
         return action
 
-    def action_view_xml_out(self):
-        out_attachments = self.mapped("attachment_out_ids")
-        action = self.env.ref(
-            "l10n_it_fatturapa_out.action_fatturapa_attachment"
-        ).read()[0]
-        self.action_view_xml(out_attachments, action)
-
-    def action_view_xml_in(self):
-        in_attachments = self.mapped("attachment_in_ids")
-        action = self.env.ref("l10n_it_fatturapa_in.action_fattura_pa_in").read()[0]
-        self.action_view_xml(in_attachments, action)
-
-    def action_view_invoices(self, invoices, action, move_type):
-        if len(invoices) >= 1:
-            action["domain"] = [("id", "in", invoices.ids)]
+    def action_view_invoices(self):
+        if self.env.context.get("invoice_type") == "out_invoice":
+            invoices = self.mapped("invoice_out_ids")
+            action = self.env.ref("account.action_move_out_invoice_type").read()[0]
+            context = {
+                "default_move_type": "out_invoice",
+            }
+        elif self.env.context.get("invoice_type") == "in_invoice":
+            invoices = self.mapped("invoice_in_ids")
+            action = self.env.ref("account.action_move_in_invoice_type").read()[0]
+            context = {
+                "default_move_type": "in_invoice",
+            }
         else:
-            action = {"type": "ir.actions.act_window_close"}
-        context = {
-            "default_move_type": move_type,
-        }
+            return {"type": "ir.actions.act_window_close"}
         action["context"] = context
+        action["domain"] = [("id", "in", invoices.ids)]
         return action
-
-    def action_view_invoices_out(self):
-        out_invoices = self.mapped("invoice_out_ids")
-        action = self.env["ir.actions.actions"]._for_xml_id(
-            "account.action_move_out_invoice_type"
-        )
-        self.action_view_invoices(out_invoices, action, "out_invoice")
-
-    def action_view_invoices_in(self):
-        in_invoices = self.mapped("invoice_in_ids")
-        action = self.env["ir.actions.actions"]._for_xml_id(
-            "account.action_move_in_invoice_type"
-        )
-        self.action_view_invoices(in_invoices, action, "in_invoice")
 
     def _compute_invoices_data(self):
         for import_zip in self:
