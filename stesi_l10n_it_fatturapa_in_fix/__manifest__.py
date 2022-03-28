@@ -8,6 +8,7 @@
     "license": "AGPL-3",
     "depends": [
         "l10n_it_fatturapa_in",
+        "base_vat"
     ],
     "data": [],
 }
