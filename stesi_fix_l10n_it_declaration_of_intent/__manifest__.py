@@ -7,8 +7,6 @@
 
     # any module necessary for this one to work correctly
     'depends': ['l10n_it_declaration_of_intent'],
-    'data': [
-
-    ]
+    'data': []
 }
 
