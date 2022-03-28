@@ -18,3 +18,4 @@ class PosConfig(models.Model):
     fiscal_printer_serial = fields.Char(string='Fiscal Printer Serial')
 
     fiscal_cashdrawer = fields.Boolean(string='Fiscal Printer Open CashDrawer')
+    print_invoice_receipt = fields.Boolean(string="Print receipt on invoice")

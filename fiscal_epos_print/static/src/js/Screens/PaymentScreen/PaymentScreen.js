@@ -31,7 +31,7 @@ odoo.define("fiscal_epos_print.PaymentScreen", function (require) {
             // the receipt preview
             var currentOrder = this.env.pos.get('selectedOrder');
             super._finalizeValidation(...arguments);
-            if (this.env.pos.config.printer_ip && !currentOrder.is_to_invoice()) {
+            if (this.env.pos.config.printer_ip && this.env.pos.config.print_invoice_receipt) {
                 // TODO self.chrome does not exists
                 // this.chrome.loading_show();
                 // this.chrome.loading_message(_t('Connecting to the fiscal printer'));

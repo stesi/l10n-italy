@@ -40,12 +40,13 @@
         </div>
     </t> -->
 
-    <t t-name="RefundInfoPopupWidget">
+    <!-- MOVED INSIDE RefundInfoPopup -->
+    <!-- <t t-name="RefundInfoPopupWidget">
         <div class="modal-dialog">
             <div class="popup popup-text">
 
                 <p class="title">
-                   <t t-esc=" widget.options.title || '' " />
+                   <t t-esc=" widget.options.title || '' "/>
                 </p>
 
                 <div class='client-detail'>
@@ -60,7 +61,8 @@
                 </div>
                 <div class='client-detail'>
                     <div class='label'>Receipt Date</div>
-                    <input id="refund_date" class="detail refund_date" type='text' t-att-value="widget.options.refund_date || ''"
+                    <input id="refund_date" class="detail refund_date" type='text'
+                           t-att-value="widget.options.refund_date || ''"
                            placeholder="YYYY-MM-DD"/>
                 </div>
                 <div class='client-detail'>
@@ -83,7 +85,7 @@
                 </div>
             </div>
         </div>
-    </t>
+    </t> -->
 
     <!-- Moved inside EpostonFP81IIComponent.xml -->
     <!-- <t t-name="EpsonFP81IIWidget">
