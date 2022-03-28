@@ -1,6 +1,6 @@
 {
     "name": "Stesi FIX ITA - l10n fatturapa in",
-    "version": "14.0.1.0.3",
+    "version": "14.0.1.0.4",
     "category": "Localization/Italy",
     "summary": "Scissione pagamenti",
     "author": "Abstract, Agile Business Group, Odoo Community Association (OCA)",
