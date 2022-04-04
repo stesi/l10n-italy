@@ -3,7 +3,7 @@
     <template id="assets" inherit_id="point_of_sale.assets">
         <xpath expr="." position="inside">
             <script type="text/javascript" src="/stesi_l10n_it_posfiscalcode_fix/static/src/js/model.js"></script>
-            <script type="text/javascript" src="/stesi_l10n_it_posfiscalcode_fix/static/src/js/screen.js"></script>
+<!--            <script type="text/javascript" src="/stesi_l10n_it_posfiscalcode_fix/static/src/js/screen.js"></script>-->
 <!--            <script type="text/javascript" src="/l10n_it_pos_fatturapa/static/src/js/screen.js"></script>-->
         </xpath>
     </template>
