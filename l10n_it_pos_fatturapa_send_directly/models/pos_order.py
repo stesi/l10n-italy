@@ -20,5 +20,8 @@ class Order(models.Model):
                     active_model="account.move"
                 ).create({})
                 wizard.exportFatturaPA()
-                order._send_e_invoice()
+                IrConfigParameter = self.env["ir.config_parameter"].sudo()
+                auto_send_invoice = IrConfigParameter.get_param("auto_send_invoice","0")
+                if auto_send_invoice =="1":
+                    order._send_e_invoice()
         return order_ids
