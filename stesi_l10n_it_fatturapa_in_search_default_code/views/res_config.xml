@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_account_config_settings_ftpa_in" model="ir.ui.view">
+        <field name="name">view_account_config_settings_ftpa_in</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="l10n_it_fatturapa.view_account_config_settings" />
+        <field name="arch" type="xml">
+<xpath expr="//div[@id='supplier_fatturapa_settings']//div[hasclass('o_setting_box')]" position="inside">
+
+                        <div class="o_setting_left_pane" />
+                        <div class="o_setting_right_pane">
+                            <label for="fatturapa_in_search_by_default_code">Search product by global default code in fatturapa in</label>
+                            <field name="fatturapa_in_search_by_default_code"/>
+                        </div>
+
+</xpath>
+        </field>
+        </record>
+</odoo>
