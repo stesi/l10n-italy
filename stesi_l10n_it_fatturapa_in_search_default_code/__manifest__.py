@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "",
+    'name': "Get product by default code in fatturapa xml",
 
     'summary': "",
 

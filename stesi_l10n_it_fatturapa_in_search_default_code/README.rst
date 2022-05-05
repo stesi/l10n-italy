@@ -1,13 +1,13 @@
-Title
+Get product by default code in fatturapa xml
 ===============================
-Description
+Serve per prendere i prodotti della fattura ricercandoli tramite default code globale anzicche quello specifico per fornitore
 
 Configuration
 =============
 
 Usage
 =====
-Descriprion usage
+Mettere la spunta nei parametri
 
 
 Credits
@@ -22,3 +22,4 @@ Contributors
 ~~~~~~~~~~~~
 
 * Moccia Francesco <moccia.f@stesi.eu>
+* Di Croce Michele <dicroce.m@stesi.eu>
