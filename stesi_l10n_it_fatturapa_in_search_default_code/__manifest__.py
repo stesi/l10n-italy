@@ -8,7 +8,7 @@
 
     'author': "STeSI Srl",
 
-    'category': '',
+    'category': 'fatturapa',
 
     'version': '14.0.0.1',
 
