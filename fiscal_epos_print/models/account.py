@@ -13,5 +13,6 @@ class AccountTax(models.Model):
 
     @api.constrains("fpdeptax")
     def _validate_fpdeptax(self):
-        if not re.search(regex, self.fpdeptax):
-            raise ValidationError(_("Department ID number range [1 - 99]"))
+        for tax in self:
+            if not re.search(regex, tax.fpdeptax):
+                raise ValidationError(_("Department ID number range [1 - 99]"))
