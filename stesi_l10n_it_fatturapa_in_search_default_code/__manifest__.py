@@ -15,7 +15,7 @@
     'website': "http://www.stesi.eu",
 
     # any module necessary for this one to work correctly
-    'depends': ['l10n_it_fatturapa_in'],
+    'depends': ['l10n_it_fatturapa_in', 'l10n_it_fatturapa'],
 
     # always loaded
     'data': ['views/res_config.xml'],
