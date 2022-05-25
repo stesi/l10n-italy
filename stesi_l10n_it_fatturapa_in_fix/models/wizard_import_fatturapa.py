@@ -124,5 +124,5 @@ class WizardImportFatturapa(models.TransientModel):
                 return partner_model.create(vals).id
             else:
 
-                return partner if isinstance(int,partner) else partner.id
+                return partner if isinstance(partner,int) else partner.id
 
