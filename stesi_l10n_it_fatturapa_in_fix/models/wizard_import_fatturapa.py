@@ -123,5 +123,6 @@ class WizardImportFatturapa(models.TransientModel):
                 vals['vat'] = vat
                 return partner_model.create(vals).id
             else:
-                return partner
+
+                return partner if isinstance(int,partner) else partner.id
 
