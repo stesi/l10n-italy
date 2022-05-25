@@ -80,5 +80,7 @@ class AccountMove(models.Model):
             self.set_receivable_line_ids()
             if self.amount_sp:
                 self.line_ids = [(0, 0, write_off_line_vals)]
-                self.invoice_line_ids = self.line_ids.filtered(lambda l:not l.exclude_from_invoice_tab)
+                if len(self.invoice_line_ids) == 0 and len(self.line_ids.filtered(lambda l: not l.exclude_from_invoice_tab)) > 0:
+                    self.invoice_line_ids = self.line_ids.filtered(lambda l: not l.exclude_from_invoice_tab)
+
 

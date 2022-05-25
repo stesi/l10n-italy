@@ -6,7 +6,7 @@
 
 {
     "name": "Stesi FIX ITA - Scissione pagamenti",
-    "version": "14.0.1.0.3",
+    "version": "14.0.1.1",
     "category": "Localization/Italy",
     "summary": "Scissione pagamenti",
     "author": "Abstract, Agile Business Group, Odoo Community Association (OCA)",
