@@ -27,6 +27,7 @@ class FatturaPACommon(AccountTestInvoicingCommon):
         )
         self.env.user = self.account_manager
         self.company = self.env.company
+        self.company.e_invoice_transmitter_id = self.company.partner_id.id
 
         self.wizard_model = self.env["wizard.export.fatturapa"]
         self.data_model = self.env["ir.model.data"]
@@ -150,6 +151,7 @@ class FatturaPACommon(AccountTestInvoicingCommon):
             "UPDATE res_company SET currency_id = %s WHERE id = %s",
             [self.EUR.id, self.company.id],
         )
+        self.trasmittente = self.env.ref("l10n_it_fatturapa.res_partner_fatturapa_1")
         # Otherwise self.company in cache could keep the old wrong value USD
         self.company.refresh()
 
@@ -182,16 +184,9 @@ class FatturaPACommon(AccountTestInvoicingCommon):
             seq_date = inv_seq._create_date_range_seq(dt)
         seq_date.number_next_actual = invoice_number
 
-    def run_wizard(self, invoice_ids):
-        """
-        Execute the export wizard on the invoices having ID `invoice_ids`.
-        :param invoice_ids: integer or list of integers
-        :return: result of export wizard
-        """
-        if not isinstance(invoice_ids, list):
-            invoice_ids = [invoice_ids]
+    def run_wizard(self, invoice_id):
         wizard = self.wizard_model.create({})
-        return wizard.with_context({"active_ids": invoice_ids}).exportFatturaPA()
+        return wizard.with_context({"active_ids": [invoice_id]}).exportFatturaPA()
 
     def set_e_invoice_file_id(self, e_invoice, file_name):
         # We need this because file name is random and we can't predict it

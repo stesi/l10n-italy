@@ -47,7 +47,6 @@ class TestFatturaOutNoteLine(FatturaPACommon):
             line_form.name = "just a note"
             line_form.account_id = self.env["account.account"]
         invoice = move_form.save()
-        invoice.action_post()
 
         res = self.run_wizard(invoice.id)
         self.assertTrue(res)
@@ -86,7 +85,6 @@ class TestFatturaOutNoteLine(FatturaPACommon):
             line_form.name = "just a note"
             line_form.account_id = self.env["account.account"]
         invoice = move_form.save()
-        invoice.action_post()
 
         res = self.run_wizard(invoice.id)
         self.assertTrue(res)
@@ -133,7 +131,6 @@ class TestFatturaOutNoteLine(FatturaPACommon):
             line_form.name = "just a note"
             line_form.account_id = self.env["account.account"]
         invoice = move_form.save()
-        invoice.action_post()
 
         res = self.run_wizard(invoice.id)
         self.assertTrue(res)
@@ -187,7 +184,6 @@ class TestFatturaOutNoteLine(FatturaPACommon):
             with move_form.invoice_line_ids.edit(0) as line_form:
                 line_form.price_unit = 0.0
 
-        invoice.action_post()
         res = self.run_wizard(invoice.id)
         self.assertTrue(res)
 
@@ -225,7 +221,6 @@ class TestFatturaOutNoteLine(FatturaPACommon):
             line_form.name = "just a note"
             line_form.account_id = self.env["account.account"]
         invoice = move_form.save()
-        invoice.action_post()
 
         res = self.run_wizard(invoice.id)
         self.assertTrue(res)
