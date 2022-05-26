@@ -42,7 +42,7 @@
         <field name="arch" type="xml">
 
 <xpath expr="//IdFiscaleIVA" position="attributes">
-    <attribute name="t-if">partner_id.vat</attribute>
+    <attribute name="t-if">partner_id.company_type == 'company'</attribute>
 </xpath>
         </field>
     </record>
