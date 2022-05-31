@@ -90,7 +90,7 @@ class PosOrder(models.Model):
 
     @api.model
     def create_from_ui(self, orders, draft=False):
-        res = super(PosOrder, self).create_from_ui(orders)
+        res = super(PosOrder, self).create_from_ui(orders, draft=draft)
         for order in orders:
             if order['data'].get('fiscal_receipt_number'):
                 self.update_fiscal_receipt_values(order['data'])
