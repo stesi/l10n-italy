@@ -3,7 +3,7 @@
 
     <template id="assets" inherit_id="point_of_sale.assets">
         <xpath expr="." position="inside">
-            <link rel="stylesheet" type="text/css" href="/fiscal_epos_print/static/lib/pikaday/pikaday.min.css"/>
+            <link rel="stylesheet" type="text/css" href="/fiscal_epos_print/static/libs/pikaday/pikaday.min.css"/>
             <link rel="stylesheet" type="text/css" href="/fiscal_epos_print/static/src/css/pos.css"/>
             <link rel="stylesheet" type="text/css" href="/fiscal_epos_print/static/src/css/pos_reprint.css"/>
 
