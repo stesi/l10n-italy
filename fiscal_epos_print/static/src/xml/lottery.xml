@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<!-- TODO THIS XML MUST BE DISTRIBUTED IN THE PROPER COMPONENT FILE -->
+<?xml version="1.0" encoding="UTF-8"?>
 <templates id="lottery_template" xml:space="preserve">
 
     <!-- Moved inside SetLotteryCodeButton.xml -->
@@ -18,13 +19,8 @@
                 </p>
 
                 <div class='client-detail'>
-                    <input
-                        id="lottery_code"
-                        class="detail lottery_code"
-                        type='text'
-                        t-att-value="widget.options.lottery_code || ''"
-                        placeholder="XXXXXXXX"
-                    />
+                    <input id="lottery_code" class="detail lottery_code"
+                           type='text' t-att-value="widget.options.lottery_code || ''" placeholder="XXXXXXXX"/>
                 </div>
 
                 <div class="footer">
@@ -34,10 +30,8 @@
                     <div class="button cancel">
                         Cancel
                     </div>
-                    <div
-                        id="lottery-error-message-dialog"
-                        style="color: red; font-weight: bold; font-size: 18px; font-style: italic; display: none;"
-                    >
+                    <div id="lottery-error-message-dialog"
+                         style="color: red; font-weight: bold; font-size: 18px; font-style: italic; display: none;">
                         Some fields are empty.
                     </div>
                 </div>
