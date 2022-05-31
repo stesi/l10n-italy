@@ -2,61 +2,60 @@ odoo.define("fiscal_epos_print.EpsonFP81IIComponent", function (require) {
     "use strict";
 
     var core = require("web.core");
-    var epson_epos_print = require('fiscal_epos_print.epson_epos_print');
+    var epson_epos_print = require("fiscal_epos_print.epson_epos_print");
     var _t = core._t;
     var eposDriver = epson_epos_print.eposDriver;
 
-    const { Gui } = require('point_of_sale.Gui');
-    const PosComponent = require('point_of_sale.PosComponent');
-    const Registries = require('point_of_sale.Registries');
+    const {Gui} = require("point_of_sale.Gui");
+    const PosComponent = require("point_of_sale.PosComponent");
+    const Registries = require("point_of_sale.Registries");
 
     class EpsonFP81IIComponent extends PosComponent {
-        constructor(parent, options){
+        constructor(parent, options) {
             super(parent, options);
             var self = this;
 
-            // for dragging the debug widget around
-            this.dragging  = false;
+            // For dragging the debug widget around
+            this.dragging = false;
             this.dragpos = {
-                x:0,
-                y:0
+                x: 0,
+                y: 0,
             };
 
-            function eventpos(event){
-                if(event.touches && event.touches[0]) {
+            function eventpos(event) {
+                if (event.touches && event.touches[0]) {
                     return {
                         x: event.touches[0].screenX,
-                        y: event.touches[0].screenY
-                    };
-                }else{
-                    return {
-                        x: event.screenX,
-                        y: event.screenY
+                        y: event.touches[0].screenY,
                     };
                 }
+                return {
+                    x: event.screenX,
+                    y: event.screenY,
+                };
             }
 
-            this.dragend_handler = function(event) {
+            this.dragend_handler = function () {
                 self.dragging = false;
             };
-            this.dragstart_handler = function(event) {
+            this.dragstart_handler = function (event) {
                 self.dragging = true;
                 self.dragpos = eventpos(event);
             };
-            this.dragmove_handler = function(event) {
-                if(self.dragging){
+            this.dragmove_handler = function (event) {
+                if (self.dragging) {
                     var top = this.offsetTop;
                     var left = this.offsetLeft;
-                    var pos  = eventpos(event);
-                    var dx   = pos.x - self.dragpos.x;
-                    var dy   = pos.y - self.dragpos.y;
+                    var pos = eventpos(event);
+                    var dx = pos.x - self.dragpos.x;
+                    var dy = pos.y - self.dragpos.y;
 
                     self.dragpos = pos;
 
-                    this.style.right = 'auto';
-                    this.style.bottom = 'auto';
-                    this.style.left = left + dx + 'px';
-                    this.style.top  = top  + dy + 'px';
+                    this.style.right = "auto";
+                    this.style.bottom = "auto";
+                    this.style.left = left + dx + "px";
+                    this.style.top = top + dy + "px";
                 }
                 event.preventDefault();
                 event.stopPropagation();
@@ -64,35 +63,36 @@ odoo.define("fiscal_epos_print.EpsonFP81IIComponent", function (require) {
         }
 
         mounted() {
-            // jquery reference of the component
+            // Jquery reference of the component
             this.$el = $(this.el);
-            // drag listeners
-            this.el.addEventListener('mouseleave', this.dragend_handler);
-            this.el.addEventListener('mouseup',    this.dragend_handler);
-            this.el.addEventListener('touchend',   this.dragend_handler);
-            this.el.addEventListener('touchcancel',this.dragend_handler);
-            this.el.addEventListener('mousedown',  this.dragstart_handler);
-            this.el.addEventListener('touchstart', this.dragstart_handler);
-            this.el.addEventListener('mousemove',  this.dragmove_handler);
-            this.el.addEventListener('touchmove',  this.dragmove_handler);
+            // Drag listeners
+            this.el.addEventListener("mouseleave", this.dragend_handler);
+            this.el.addEventListener("mouseup", this.dragend_handler);
+            this.el.addEventListener("touchend", this.dragend_handler);
+            this.el.addEventListener("touchcancel", this.dragend_handler);
+            this.el.addEventListener("mousedown", this.dragstart_handler);
+            this.el.addEventListener("touchstart", this.dragstart_handler);
+            this.el.addEventListener("mousemove", this.dragmove_handler);
+            this.el.addEventListener("touchmove", this.dragmove_handler);
         }
 
         show() {
-            this.$el.css({opacity:0});
-            this.$el.removeClass('oe_hidden');
-            this.$el.animate({opacity:1},250,'swing');
+            this.$el.css({opacity: 0});
+            this.$el.removeClass("oe_hidden");
+            this.$el.animate({opacity: 1}, 250, "swing");
         }
 
         hide() {
             var self = this;
-            this.$el.animate({opacity:0,},250,'swing',function() {
-                self.$el.addClass('oe_hidden');
+            this.$el.animate({opacity: 0}, 250, "swing", function () {
+                self.$el.addClass("oe_hidden");
             });
         }
 
         getPrinterOptions() {
-            var protocol = ((this.env.pos.config.use_https) ? 'https://' : 'http://');
-            var printer_url = protocol + this.env.pos.config.printer_ip + '/cgi-bin/fpmate.cgi';
+            var protocol = this.env.pos.config.use_https ? "https://" : "http://";
+            var printer_url =
+                protocol + this.env.pos.config.printer_ip + "/cgi-bin/fpmate.cgi";
             return {url: printer_url};
         }
 
@@ -108,13 +108,12 @@ odoo.define("fiscal_epos_print.EpsonFP81IIComponent", function (require) {
             var printer_options = this.getPrinterOptions();
             var fp90 = new eposDriver(printer_options, this);
             fp90.printOpenCashDrawer();
-            const { confirmed } = await Gui.showPopup('ConfirmPopup', {
-                title:_t('CashDrawer Opened'),
-                body: _t('Close'),
+            const {confirmed} = await Gui.showPopup("ConfirmPopup", {
+                title: _t("CashDrawer Opened"),
+                body: _t("Close"),
             });
             if (confirmed) {
                 fp90.resetPrinter();
-
             } else {
                 // TODO not exist
                 // this.chrome.loading_hide();
@@ -123,8 +122,8 @@ odoo.define("fiscal_epos_print.EpsonFP81IIComponent", function (require) {
 
         async reprintLastReceipt() {
             this.hide();
-//            var self = this;
-//            this._super();
+            //            Var self = this;
+            //            this._super();
 
             // TODO find the same Component method that show loading_*
             // this.chrome.loading_show();
@@ -132,13 +131,12 @@ odoo.define("fiscal_epos_print.EpsonFP81IIComponent", function (require) {
             var printer_options = this.getPrinterOptions();
             var fp90 = new eposDriver(printer_options, this);
             // ConfirmPopup
-            const { confirmed } = await Gui.showPopup('ConfirmPopup', {
-                title:_t('Reprint Last Receipt?'),
-                body: _t('Please confirm to reprint the last receipt'),
+            const {confirmed} = await Gui.showPopup("ConfirmPopup", {
+                title: _t("Reprint Last Receipt?"),
+                body: _t("Please confirm to reprint the last receipt"),
             });
             if (confirmed) {
                 fp90.printFiscalReprintLast();
-
             } else {
                 // TODO not exist
                 // this.chrome.loading_hide();
@@ -163,13 +161,13 @@ odoo.define("fiscal_epos_print.EpsonFP81IIComponent", function (require) {
             var printer_options = this.getPrinterOptions();
             var fp90 = new eposDriver(printer_options, this);
             // ConfirmPopup
-            const { confirmed } = await this.showPopup('ConfirmPopup', {
-                title:_t('Confirm Printer Fiscal Closure (Report Z)?'),
-                body: _t('Please confirm to execute the Printer Fiscal Closure'),
+            const {confirmed} = await this.showPopup("ConfirmPopup", {
+                title: _t("Confirm Printer Fiscal Closure (Report Z)?"),
+                body: _t("Please confirm to execute the Printer Fiscal Closure"),
             });
             if (confirmed) {
-//                fp90.printFiscalReport();
-                    fp90.printFiscalXZReport()
+                //                Fp90.printFiscalReport();
+                fp90.printFiscalXZReport();
             } else {
                 // TODO not exist
                 // this.chrome.loading_hide();
@@ -184,9 +182,11 @@ odoo.define("fiscal_epos_print.EpsonFP81IIComponent", function (require) {
             var printer_options = this.getPrinterOptions();
             var fp90 = new eposDriver(printer_options, this);
             // ConfirmPopup
-            const { confirmed } = await this.showPopup('ConfirmPopup', {
-                title: _t('Confirm Printer Daily Financial Report (Report X)?'),
-                body: _t('Please confirm to execute the Printer Daily Financial Report'),
+            const {confirmed} = await this.showPopup("ConfirmPopup", {
+                title: _t("Confirm Printer Daily Financial Report (Report X)?"),
+                body: _t(
+                    "Please confirm to execute the Printer Daily Financial Report"
+                ),
             });
             if (confirmed) {
                 fp90.printFiscalXReport();
@@ -197,7 +197,7 @@ odoo.define("fiscal_epos_print.EpsonFP81IIComponent", function (require) {
         }
     }
 
-    EpsonFP81IIComponent.template = 'EpsonFP81IIComponent';
+    EpsonFP81IIComponent.template = "EpsonFP81IIComponent";
 
     Registries.Component.add(EpsonFP81IIComponent);
 
