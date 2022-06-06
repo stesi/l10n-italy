@@ -18,12 +18,13 @@
     'version': '14.0.0.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','l10n_it_account_margin_tax','sale'],
+    'depends': ['base','l10n_it_account_margin_tax','sale','sale_margin'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'views/sale_order_line.xml'
+        'views/sale_order_line.xml',
+        'data/automated_action.xml'
     ],
     # only loaded in demonstration mode
     'demo': [
