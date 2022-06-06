@@ -16,7 +16,7 @@ class AccountMoveLine(models.Model):
     @api.depends('sale_line_ids','sale_line_ids.margin')
     def _compute_margin_from_sale(self):
         for aml in self:
-            aml.margin_from_sale = sum(aml.sale_line_ids.margin)
+            aml.margin_from_sale = sum(aml.sale_line_ids.mapped('margin'))
     def update_margin(self):
         for aml in self:
             if aml.margin_from_sale:
