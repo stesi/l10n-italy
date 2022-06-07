@@ -8,6 +8,13 @@
            <xpath expr="//field[@name='tax_group_id']" position="after">
                   <field name="margin_tax"/>
                 </xpath>
+            <xpath expr="//field[@name='amount']/.." position="after">
+                             <label for="orig_percentage" attrs="{'invisible':[('amount_type','not in', ('fixed', 'percent', 'division'))]}"/>
+                            <div attrs="{'invisible':[('amount_type','not in', ('fixed', 'percent', 'division'))]}">
+                                <field name="orig_percentage" class="oe_inline"/>
+                                <span class="o_form_label oe_inline" attrs="{'invisible':[('amount_type','=','fixed')]}">%</span>
+                            </div>
+            </xpath>
         </field>
     </record>
 
