@@ -18,7 +18,7 @@ class AccountMove(models.Model):
     #         super(AccountMove, am).button_draft()
     #         am.generate_margin_tax_lines()
 
-    def _recompute_tax_lines(self):
+    def _recompute_tax_lines(self,recompute_tax_base_amount=False):
         for am in self:
 
             margin_tax_lines = am.line_ids.filtered(lambda l:l.tax_ids.filtered(lambda t: t.margin_tax))
@@ -28,7 +28,7 @@ class AccountMove(models.Model):
                 am.line_ids -=margin_tax_lines_dynamic#.with_context(check_move_validity=False).unlink()
                 # am.refresh()
                 # am.with_context(check_move_validity=False)._recompute_dynamic_lines()
-            super(AccountMove, am)._recompute_tax_lines()
+            super(AccountMove, am)._recompute_tax_lines(recompute_tax_base_amount=recompute_tax_base_amount)
             if len(margin_tax_lines)>0:
                 tax_id = margin_tax_lines.mapped('tax_ids').filtered(lambda t: t.margin_tax)
                 base_amount = sum(
