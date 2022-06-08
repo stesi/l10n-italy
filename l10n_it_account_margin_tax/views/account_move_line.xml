@@ -7,9 +7,13 @@
             <field name="arch" type="xml">
             <xpath expr="//page[@id='invoice_tab']//field[@name='invoice_line_ids']//field[@name='price_unit']" position="after">
                   <field name="margin"/>
+                  <field name="is_margin_tax_line" invisible="1"/>
+                  <field name="tax_repartition_line_id" />
                 </xpath>
              <xpath expr="//page[@id='aml_tab']//field[@name='line_ids']//field[@name='price_unit']" position="after">
                <field name="margin" invisible="1"/>
+               <field name="is_margin_tax_line" invisible="1"/>
+               <field name="tax_repartition_line_id" />
            </xpath>
             </field>
         </record>

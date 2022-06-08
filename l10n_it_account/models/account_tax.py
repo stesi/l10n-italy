@@ -166,6 +166,8 @@ class AccountTax(models.Model):
 
         tax = self.env["account.tax"].with_context(context).browse(self.id)
         tax_name = tax._get_tax_name()
+        if tax.id==108:
+            a=1
         if not tax.children_tax_ids:
             base_balance = tax.base_balance
             balance = tax.balance
