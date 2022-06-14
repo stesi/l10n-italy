@@ -187,24 +187,24 @@ odoo.define("fiscal_epos_print.models", function (require) {
                 if (!t) {
                     return;
                 }
-                var tax_amount = self._compute_all(t, base, quantity);
+                var tax_amount = self._compute_all(t[0], base, quantity);
                 tax_amount = round_pr(tax_amount, currency_rounding);
                 if (!tax_amount) {
                     // Intervene here: also add taxes with 0 amount
-                    if (t.price_include) {
+                    if (t[0].price_include) {
                         total_excluded -= tax_amount;
                         base -= tax_amount;
                     }
                     // Else {
                     //     total_included += tax_amount;
                     // }
-                    if (t.include_base_amount) {
+                    if (t[0].include_base_amount) {
                         base += tax_amount;
                     }
                     var data = {
-                        id: t.id,
+                        id: t[0].id,
                         amount: tax_amount,
-                        name: t.name,
+                        name: t[0].name,
                     };
                     list_taxes.push(data);
                 }
