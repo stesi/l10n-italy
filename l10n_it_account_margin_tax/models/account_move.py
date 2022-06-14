@@ -78,6 +78,35 @@ class AccountMove(models.Model):
                 move_line2= self.env['account.move.line'].new(vals_credit)
                 am.line_ids +=move_line1 + move_line2
 
+    @api.depends('line_ids.price_subtotal', 'line_ids.tax_base_amount', 'line_ids.tax_line_id', 'partner_id', 'currency_id')
+    def _compute_invoice_taxes_by_group(self):
+        super(AccountMove, self)._compute_invoice_taxes_by_group()
+        margin_tax_lines = self.line_ids.filtered(lambda l: l.tax_line_id.filtered(lambda t: t.margin_tax) )
+        if len(margin_tax_lines)>0:
+            self.amount_by_group = []
+
+    @api.depends(
+        'line_ids.matched_debit_ids.debit_move_id.move_id.payment_id.is_matched',
+        'line_ids.matched_debit_ids.debit_move_id.move_id.line_ids.amount_residual',
+        'line_ids.matched_debit_ids.debit_move_id.move_id.line_ids.amount_residual_currency',
+        'line_ids.matched_credit_ids.credit_move_id.move_id.payment_id.is_matched',
+        'line_ids.matched_credit_ids.credit_move_id.move_id.line_ids.amount_residual',
+        'line_ids.matched_credit_ids.credit_move_id.move_id.line_ids.amount_residual_currency',
+        'line_ids.debit',
+        'line_ids.credit',
+        'line_ids.currency_id',
+        'line_ids.amount_currency',
+        'line_ids.amount_residual',
+        'line_ids.amount_residual_currency',
+        'line_ids.payment_id.state',
+        'line_ids.full_reconcile_id')
+    def _compute_amount(self):
+        super(AccountMove, self)._compute_amount()
+        margin_tax_lines = self.line_ids.filtered(lambda l: l.tax_line_id.filtered(lambda t: t.margin_tax) )
+        if len(margin_tax_lines)>0:
+            self.amount_total = self.amount_untaxed
+            self.amount_tax =0
+
 
 
 
