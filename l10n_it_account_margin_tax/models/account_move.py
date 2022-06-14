@@ -73,7 +73,7 @@ class AccountMove(models.Model):
                 vals.append(vals_credit)
                 vals.append(vals_debit)
                 #
-                #
+                #30
                 move_line1= self.env['account.move.line'].new(vals_debit)
                 move_line2= self.env['account.move.line'].new(vals_credit)
                 am.line_ids +=move_line1 + move_line2
