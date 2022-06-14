@@ -185,7 +185,7 @@ odoo.define("fiscal_epos_print.models", function (require) {
                     t = self._map_tax_fiscal_position(t);
                 }
                 if (!t || typeof t[0] =='undefined') {
-                    continue;
+                    return;
                 }
                 var tax_amount = self._compute_all(t[0], base, quantity);
                 tax_amount = round_pr(tax_amount, currency_rounding);
