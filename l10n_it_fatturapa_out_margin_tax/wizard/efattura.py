@@ -18,4 +18,5 @@ class EFatturaOut(_EFatturaOut):
                 tax_id = self.env['account.tax'].browse(tax)
                 if tax_id.margin_tax:
                     invoices_taxes[invoice][tax]['Imposta'] = 0
+                    invoices_taxes[invoice][tax]['ImponibileImporto'] = self.env['account.move'].browse(invoice).amount_total
         return res
