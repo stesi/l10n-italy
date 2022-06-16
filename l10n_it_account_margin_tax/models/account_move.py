@@ -24,7 +24,10 @@ class AccountMove(models.Model):
 
     def _recompute_tax_lines(self,recompute_tax_base_amount=False):
         for am in self:
-
+            if am.is_margin_tax_invoice and not am.company_id.mt_account_id:
+                raise ValidationError(
+                    _("Margin tax account not set")
+                )
             margin_tax_lines = am.line_ids.filtered(lambda l:l.tax_ids.filtered(lambda t: t.margin_tax))
             margin_tax_lines_dynamic = am.line_ids.filtered(lambda l:l.is_margin_tax_line)
 
