@@ -8,10 +8,14 @@ _logger = logging.getLogger(__name__)
 
 
 from odoo import models, fields, api,_
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError,ValidationError
 
 class AccountMove(models.Model):
     _inherit = 'account.move'
+    is_margin_tax_invoice=fields.Boolean(compute='_compute_is_margin_tax_invoice')
+    def _compute_is_margin_tax_invoice(self):
+        for am in self:
+            am.is_margin_tax_invoice = len(am.line_ids.filtered(lambda l: l.tax_ids.filtered(lambda t: t.margin_tax))) >0
 
     # def button_draft(self):
     #     for am in self:
@@ -106,6 +110,13 @@ class AccountMove(models.Model):
         if len(margin_tax_lines)>0:
             self.amount_total = self.amount_untaxed
             self.amount_tax =0
+    def action_post(self):
+        for am in self:
+            if am.is_margin_tax_invoice:
+                margin_tax_lines = am.invoice_line_ids.filtered(lambda l: l.tax_ids.filtered(lambda t: t.margin_tax))
+                if len(margin_tax_lines) != len(am.invoice_line_ids):
+                    raise   ValidationError(_("The invoice contains margin tax lines and non margin tax lines"))
+        return super(AccountMove, self).action_post()
 
 
 
