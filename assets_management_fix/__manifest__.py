@@ -11,7 +11,7 @@
     'website': 'https://gitlab.hubeditoriale.it/devis.meneghelli/odoo-14-asset-management',
     'license': 'AGPL-3',
     'depends': [
-        'assets_managment_fix',
+        'assets_management',
     ],
     'data': [
         'security/ir.model.access.csv',
