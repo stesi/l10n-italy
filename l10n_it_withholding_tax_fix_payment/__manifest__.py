@@ -5,7 +5,7 @@
 
 {
     "name": "ITA - Ritenute d'acconto-Fix Per Pagamenti Multipli",
-    "version": "14.0.2",
+    "version": "14.0.2.1",
     "category": "Account",
     "author": "Stesi",
     "website": "https://github.com/OCA/l10n-italy",
