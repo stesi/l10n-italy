@@ -20,3 +20,7 @@ class WizardAssetPrevisionalReport(models.TransientModel):
 
 class Report(models.TransientModel):
     _inherit = "report_asset_journal"
+
+
+class ReportCategory(models.TransientModel):
+    _inherit = "report_asset_journal_category"
