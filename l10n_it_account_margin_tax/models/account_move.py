@@ -115,7 +115,7 @@ class AccountMove(models.Model):
             self.amount_tax =0
     def action_post(self):
         for am in self:
-            if am.is_margin_tax_invoice:
+            if am.is_margin_tax_invoice and not am.move_type=='entry':
                 margin_tax_lines = am.invoice_line_ids.filtered(lambda l: l.tax_ids.filtered(lambda t: t.margin_tax))
                 if len(margin_tax_lines) != len(am.invoice_line_ids.filtered(lambda l:not l.display_type)):
                     raise   ValidationError(_("The invoice contains margin tax lines and non margin tax lines"))
