@@ -10,6 +10,7 @@ class AccountMove(models.Model):
     _inherit = "account.move"
 
     def button_draft(self):
+        account_wt = self.env['account.move']
         if self.move_type == "in_invoice":
             account_wt = self.line_ids.filtered(lambda line: line.account_id.user_type_id.type in (
                 'receivable', 'payable')).matched_debit_ids.debit_move_id.filtered(
