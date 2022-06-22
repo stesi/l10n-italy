@@ -562,7 +562,7 @@ class WizardInvoiceManageAsset(models.TransientModel):
 
             dep_vals = {'line_ids': []}
             for inv, lines in grouped_invoice_lines.items():
-                inv_num, inv_type = inv.name, inv.type
+                inv_num, inv_type = inv.name, inv.move_type
 
                 move_type = self.get_invoice_type_2_dep_line_type() \
                     .get(inv_type)
