@@ -40,6 +40,7 @@ class AccountMove(models.Model):
                 tax_id = margin_tax_lines.mapped('tax_ids').filtered(lambda t: t.margin_tax)
                 base_amount = sum(
                     margin_tax_lines.filtered(lambda t: t.margin > 0).mapped('margin'))
+                tax_base_amount = am.amount_untaxed
                 tax_amount = base_amount* tax_id.orig_percentage / 100
                 invoice_repartition_line_id = tax_id.invoice_repartition_line_ids.filtered(
                     lambda l: l.factor_percent == 100 and l.repartition_type == 'tax')
@@ -71,7 +72,7 @@ class AccountMove(models.Model):
                     "credit": tax_amount,
                     "exclude_from_invoice_tab": True,
                     "is_margin_tax_line": True,
-                    "tax_base_amount": base_amount,
+                    "tax_base_amount": tax_base_amount,
                     "tax_repartition_line_id": invoice_repartition_line_id,
                     # 'move_id': am.id
                 }
