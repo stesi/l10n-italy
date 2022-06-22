@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <template
+        id="account_invoice_it_fattura_elettronica_body_margin"
+        inherit_id="l10n_it_fatturapa_out.account_invoice_it_fattura_elettronica_body"
+    >
+            <xpath expr="//FatturaElettronicaBody//DatiBeniServizi//DatiRiepilogo//Imposta" position="attributes">
+                <attribute name="t-if">not record.is_margin_tax_invoice</attribute>
+            </xpath>
+            <xpath expr="//FatturaElettronicaBody//DatiBeniServizi//DatiRiepilogo//ImponibileImporto" position="after">
+                <Imposta t-if="record.is_margin_tax_invoice">0.00</Imposta>
+            </xpath>
+        </template>
+    </data>
+</odoo>
