@@ -11,7 +11,8 @@
     "website": "https://github.com/OCA/l10n-italy",
     "license": "",
     "depends": [
-        "l10n_it_withholding_tax"
+        "l10n_it_withholding_tax",
+        "l10n_it_withholding_tax_payment"
     ],
     "data": [
     ],
