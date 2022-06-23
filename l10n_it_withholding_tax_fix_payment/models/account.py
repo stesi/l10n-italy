@@ -10,9 +10,15 @@ class AccountMove(models.Model):
     _inherit = "account.move"
 
     def button_draft(self):
-        account_wt = self.line_ids.filtered(lambda line: line.account_id.user_type_id.type in (
-            'receivable', 'payable')).matched_credit_ids.credit_move_id.filtered(
-            lambda l1: l1.filtered(lambda l1: l1.withholding_tax_generated_by_move_id.id > 0)).move_id
+        account_wt = self.env['account.move']
+        if self.move_type == "in_invoice":
+            account_wt = self.line_ids.filtered(lambda line: line.account_id.user_type_id.type in (
+                'receivable', 'payable')).matched_debit_ids.debit_move_id.filtered(
+                lambda l1: l1.filtered(lambda l1: l1.withholding_tax_generated_by_move_id.id > 0)).move_id
+        elif self.move_type == "out_invoice":
+            account_wt = self.line_ids.filtered(lambda line: line.account_id.user_type_id.type in (
+                'receivable', 'payable')).matched_credit_ids.credit_move_id.filtered(
+                lambda l1: l1.filtered(lambda l1: l1.withholding_tax_generated_by_move_id.id > 0)).move_id
         if len(account_wt) > 0:
             account_wt.posted_before = False
             #account_wt.button_draft()
@@ -24,9 +30,15 @@ class AccountMove(models.Model):
             # if len(reconcile):
             #     reconcile.unlink()
             # account_wt.unlink()
+            if self.move_type == "in_invoice":
+                wt_moves = self.line_ids.filtered(
+                    lambda line: line.account_id.user_type_id.type in ('receivable', 'payable')) \
+                    .mapped('matched_debit_ids.wt_tax_moves')
+            elif self.move_type == "out_invoice":
+                wt_moves = self.line_ids.filtered(
+                    lambda line: line.account_id.user_type_id.type in ('receivable', 'payable')) \
+                    .mapped('matched_credit_ids.wt_tax_moves')
 
-            wt_moves = self.line_ids.filtered(lambda line: line.account_id.user_type_id.type in ('receivable', 'payable'))\
-                .mapped('matched_credit_ids.wt_tax_moves')
             for wt in wt_moves:
                 wt.unlink()
             domain = [("move_id", "=", self.id)]

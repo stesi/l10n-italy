@@ -5,13 +5,14 @@
 
 {
     "name": "ITA - Ritenute d'acconto-Fix Per Pagamenti Multipli",
-    "version": "14.0.2",
+    "version": "14.0.2.2",
     "category": "Account",
     "author": "Stesi",
     "website": "https://github.com/OCA/l10n-italy",
     "license": "",
     "depends": [
-        "l10n_it_withholding_tax"
+        "l10n_it_withholding_tax",
+        "l10n_it_withholding_tax_payment"
     ],
     "data": [
     ],
