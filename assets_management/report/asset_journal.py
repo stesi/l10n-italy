@@ -33,6 +33,7 @@ class Report(models.TransientModel):
     Accounting Data which stores sale/purchase data.
     """
     _name = 'report_asset_journal'
+    _description = 'Report Asset Journal'
     _inherit = 'report.report_xlsx.abstract'
 
     # Data fields
@@ -298,6 +299,7 @@ class Report(models.TransientModel):
 
 class ReportCategory(models.TransientModel):
     _name = 'report_asset_journal_category'
+    _description = 'Report Asset Journal Category'
     _inherit = 'report.report_xlsx.abstract'
 
     # Data fields
@@ -389,6 +391,7 @@ class ReportCategory(models.TransientModel):
 
 class ReportAsset(models.TransientModel):
     _name = 'report_asset_journal_asset'
+    _description = 'Report Asset Journal Asset'
     _inherit = 'report.report_xlsx.abstract'
 
     # Data fields
@@ -550,6 +553,7 @@ class ReportAsset(models.TransientModel):
 
 class ReportDepreciation(models.TransientModel):
     _name = 'report_asset_journal_depreciation'
+    _description = 'Report Asset Journal Depreciation'
     _inherit = 'report.report_xlsx.abstract'
     _order = 'type_name asc'
 
@@ -616,6 +620,7 @@ class ReportDepreciation(models.TransientModel):
 
 class ReportDepreciationLineByYear(models.TransientModel):
     _name = 'report_asset_journal_depreciation_line_year'
+    _description = 'Report Asset Journal Depreciation Line Year'
     _inherit = 'report.report_xlsx.abstract'
     _order = 'sequence asc'
 
@@ -862,6 +867,7 @@ class ReportDepreciationLineByYear(models.TransientModel):
 
 class ReportAccountingDoc(models.TransientModel):
     _name = 'report_asset_journal_accounting_doc'
+    _description = 'Report Asset Journal Accounting Doc'
     _inherit = 'report.report_xlsx.abstract'
     _order = 'sequence asc'
 
@@ -883,6 +889,7 @@ class ReportAccountingDoc(models.TransientModel):
 
 class ReportTotals(models.TransientModel):
     _name = 'report_asset_journal_totals'
+    _description = 'Report Asset Journal Totals'
     _inherit = 'report.report_xlsx.abstract'
     _total_fnames = [
         'amount_depreciable_updated',
