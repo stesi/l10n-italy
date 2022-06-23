@@ -9,6 +9,7 @@ _logger = logging.getLogger(__name__)
 
 class AssetJournalXslx(models.AbstractModel):
     _name = 'report.assets_management.report_asset_previsional_xlsx'
+    _description = 'report.assets_management.report_asset_previsional_xlsx'
     _inherit = 'report.report_xlsx.abstract'
 
 #    def __init__(self, pool, cr):
