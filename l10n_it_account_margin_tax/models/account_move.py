@@ -28,10 +28,12 @@ class AccountMove(models.Model):
                 raise ValidationError(
                     _("Margin tax account not set")
                 )
+
             margin_tax_lines = am.line_ids.filtered(lambda l:l.tax_ids.filtered(lambda t: t.margin_tax))
             margin_tax_lines_dynamic = am.line_ids.filtered(lambda l:l.is_margin_tax_line)
 
             if len(margin_tax_lines_dynamic)>0:
+                am = am.with_context(force_delete=True)
                 am.line_ids -=margin_tax_lines_dynamic#.with_context(check_move_validity=False).unlink()
                 # am.refresh()
                 # am.with_context(check_move_validity=False)._recompute_dynamic_lines()
@@ -110,10 +112,11 @@ class AccountMove(models.Model):
         'line_ids.full_reconcile_id')
     def _compute_amount(self):
         super(AccountMove, self)._compute_amount()
-        margin_tax_lines = self.line_ids.filtered(lambda l: l.tax_line_id.filtered(lambda t: t.margin_tax) )
-        if len(margin_tax_lines)>0:
-            self.amount_total = self.amount_untaxed
-            self.amount_tax =0
+        for am in self:
+            margin_tax_lines = am.line_ids.filtered(lambda l: l.tax_line_id.filtered(lambda t: t.margin_tax) )
+            if len(margin_tax_lines)>0:
+                am.amount_total = am.amount_untaxed
+                am.amount_tax =0
     def action_post(self):
         for am in self:
             if am.is_margin_tax_invoice and not am.move_type=='entry':
