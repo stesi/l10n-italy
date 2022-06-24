@@ -93,7 +93,8 @@ class WizardInvoiceManageAsset(models.TransientModel):
          ('in_invoice', "Vendor Bill"),
          ('out_refund', "Customer Credit Note"),
          ('in_refund', "Vendor Credit Note"),
-         ('wrong', "Wrong")],
+         ('wrong', "Wrong"),
+         ('entry', 'Accounting Record')],
         string="Invoice Type"
     )
 
