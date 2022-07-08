@@ -1,0 +1,64 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_it_stock_margin_tax
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-08 13:21+0000\n"
+"PO-Revision-Date: 2022-07-08 13:21+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_it_stock_margin_tax
+#: model:ir.model.fields,field_description:l10n_it_stock_margin_tax.field_stock_move__display_name
+#: model:ir.model.fields,field_description:l10n_it_stock_margin_tax.field_stock_production_lot__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: l10n_it_stock_margin_tax
+#: model:ir.model.fields,field_description:l10n_it_stock_margin_tax.field_stock_move__id
+#: model:ir.model.fields,field_description:l10n_it_stock_margin_tax.field_stock_production_lot__id
+msgid "ID"
+msgstr ""
+
+#. module: l10n_it_stock_margin_tax
+#: model:ir.model.fields,field_description:l10n_it_stock_margin_tax.field_stock_move____last_update
+#: model:ir.model.fields,field_description:l10n_it_stock_margin_tax.field_stock_production_lot____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: l10n_it_stock_margin_tax
+#: model:ir.model.fields,field_description:l10n_it_stock_margin_tax.field_stock_production_lot__location_id
+msgid "Location"
+msgstr "Ubicazione"
+
+#. module: l10n_it_stock_margin_tax
+#: model:ir.model,name:l10n_it_stock_margin_tax.model_stock_production_lot
+msgid "Lot/Serial"
+msgstr "Lotto/Serie"
+
+#. module: l10n_it_stock_margin_tax
+#: model:ir.model.fields,field_description:l10n_it_stock_margin_tax.field_stock_move__margin_tax
+msgid "Margin Tax"
+msgstr "Iva a margine"
+
+#. module: l10n_it_stock_margin_tax
+#: model:ir.model.fields,field_description:l10n_it_stock_margin_tax.field_stock_production_lot__margin_tax_lot
+msgid "Margin Tax Lot"
+msgstr "Iva a margine"
+
+#. module: l10n_it_stock_margin_tax
+#: model:ir.model.fields,field_description:l10n_it_stock_margin_tax.field_stock_production_lot__purchase_price
+msgid "Purchase Price"
+msgstr "Prezzo d'acquisto"
+
+#. module: l10n_it_stock_margin_tax
+#: model:ir.model,name:l10n_it_stock_margin_tax.model_stock_move
+msgid "Stock Move"
+msgstr "Movimento di magazzino"
