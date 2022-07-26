@@ -5,7 +5,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    "name": "ITA - Fattura elettronica Semplificata- Emissione",
+    "name": "ITA - Fattura elettronica Semplificata - Emissione",
     "version": "14.0.0.0.1",
     "development_status": "Beta",
     "category": "Localization/Italy",
@@ -17,10 +17,12 @@
     "depends": [
         "l10n_it_account",
         "l10n_it_fatturapa",
-        "l10n_it_fatturapa_out"
+        "l10n_it_fatturapa_out",
+        "l10n_it_fatturapa_out_rc_fix",
     ],
     "data": [
-
+        'data/invoice_it_template.xml',
+        'views/res_partner.xml',
     ],
     "installable": True
 }
