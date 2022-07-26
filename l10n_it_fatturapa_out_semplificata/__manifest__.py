@@ -1,0 +1,26 @@
+# Copyright 2014 Davide Corio
+# Copyright 2015-2016 Lorenzo Battistini - Agile Business Group
+# Copyright 2018 Sergio Zanchetta (Associazione PNLUG - Gruppo Odoo)
+# Copyright 2018 Sergio Corato
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
+{
+    "name": "ITA - Fattura elettronica Semplificata- Emissione",
+    "version": "14.0.0.0.1",
+    "development_status": "Beta",
+    "category": "Localization/Italy",
+    "summary": "Emissione fatture elettroniche",
+    "author": "Davide Corio, Agile Business Group, Innoviu,"
+    "Odoo Community Association (OCA)",
+    "website": "https://github.com/OCA/l10n-italy",
+    "license": "AGPL-3",
+    "depends": [
+        "l10n_it_account",
+        "l10n_it_fatturapa",
+        "l10n_it_fatturapa_out"
+    ],
+    "data": [
+
+    ],
+    "installable": True
+}
