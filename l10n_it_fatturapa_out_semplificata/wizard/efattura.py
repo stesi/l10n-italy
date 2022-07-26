@@ -1,25 +1,29 @@
-from odoo import models, fields, api, _
+from odoo.addons.l10n_it_fatturapa_out.wizard.efattura import (
+    EFatturaOut as EFatturaOut,
+)
+print("semplificata")
+# from odoo.addons.l10n_it_fatturapa_out_rc_fix.wizard.efattura import (EFatturaOut as EFatturaOutRCFIX)
+print("semplificata3")
 from lxml import etree
 from odoo.exceptions import UserError
-from odoo.addons.l10n_it_fatturapa_out.wizard.efattura import (
-    EFatturaOut as _EFatturaOut,
-)
 
 
-class EFatturaOut(_EFatturaOut):
+class EFatturaOut(EFatturaOut):
+
+    def get_template_values(self):
+        template_values = super().get_template_values()
+        return template_values
 
     def to_xml(self, env):
         """Create the xml file content.
         :return: The XML content as str.
         """
-        content = super(EFatturaOut, self).to_xml(env)
+        # content = super(EFatturaOut, self).to_xml(env)
         self.env = env
 
         template_values = self.get_template_values()
         if not self.partner_id.simplified_einvoice:
-            content = env.ref(
-                "l10n_it_fatturapa_out.account_invoice_it_FatturaPA_export"
-            )._render(template_values)
+            content = env.ref("l10n_it_fatturapa_out.account_invoice_it_FatturaPA_export")._render(template_values)
         else:
             content = env.ref("l10n_it_fatturapa_out_semplificata.account_invoice_it_FatturaPA_semplificata_export")._render(template_values)
         # 14.0 - occorre rimuovere gli spazi tra i tag
@@ -38,3 +42,8 @@ class EFatturaOut(_EFatturaOut):
     def __init__(self, wizard, partner_id, invoices, progressivo_invio):
         res = super(EFatturaOut, self).__init__(wizard, partner_id, invoices, progressivo_invio)
         return res
+
+# class EFatturaOut(EFatturaOutRCFIX):
+#     def __init__(self, wizard, partner_id, invoices, progressivo_invio):
+#         res = super(EFatturaOut, self).__init__(wizard, partner_id, invoices, progressivo_invio)
+#         return res

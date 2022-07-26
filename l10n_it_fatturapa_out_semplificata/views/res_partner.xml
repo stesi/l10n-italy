@@ -3,9 +3,19 @@
     <record id="res_partner_form_inherit" model="ir.ui.view">
         <field name="name">res.partner.form.inherit</field>
         <field name="model">res.partner</field>
-        <field name="inherit_id" ref="l10n_it_fatturapa.view_partner_form_e_inv"/>
+        <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='eori_code']" position="after">
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="simplified_einvoice"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="fatturapa_res_partner_form_inherit" model="ir.ui.view">
+        <field name="name">fatturapa_res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="l10n_it_fatturapa.view_partner_form_fatturapa"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='fatturapa']/group[@name='fatturapa_group']/group[2]" position="inside">
                 <field name="simplified_einvoice"/>
             </xpath>
         </field>
