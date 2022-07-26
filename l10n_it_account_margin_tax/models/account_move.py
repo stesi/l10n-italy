@@ -45,6 +45,7 @@ class AccountMove(models.Model):
                     margin_tax_lines.filtered(lambda t: t.margin > 0).mapped('margin'))
                 tax_base_amount = am.amount_untaxed
                 tax_amount = base_amount* tax_id.orig_percentage / 100
+
                 invoice_repartition_line_id = tax_id.invoice_repartition_line_ids.filtered(
                     lambda l: l.factor_percent == 100 and l.repartition_type == 'tax')
                 if len(invoice_repartition_line_id) == 0:
@@ -79,7 +80,11 @@ class AccountMove(models.Model):
                     "tax_repartition_line_id": invoice_repartition_line_id,
                     # 'move_id': am.id
                 }
-
+                if am.move_type =='in_refund':
+                    vals_debit['debit'] = 0
+                    vals_debit['credit'] = tax_amount
+                    vals_credit['credit'] = 0
+                    vals_credit['debit'] = tax_amount
                 vals = []
                 vals.append(vals_credit)
                 vals.append(vals_debit)
