@@ -1,18 +1,16 @@
-from odoo.addons.l10n_it_fatturapa_out.wizard.efattura import (
+# from odoo.addons.l10n_it_fatturapa_out.wizard.efattura import (
+from odoo.addons.l10n_it_fatturapa_out_rc.wizard.efattura import (
     EFatturaOut as EFatturaOut,
 )
-print("semplificata")
-# from odoo.addons.l10n_it_fatturapa_out_rc_fix.wizard.efattura import (EFatturaOut as EFatturaOutRCFIX)
-print("semplificata3")
 from lxml import etree
 from odoo.exceptions import UserError
 
 
 class EFatturaOut(EFatturaOut):
 
-    def get_template_values(self):
-        template_values = super().get_template_values()
-        return template_values
+    # def get_template_values(self):
+    #     template_values = super().get_template_values()
+    #     return template_values
 
     def to_xml(self, env):
         """Create the xml file content.

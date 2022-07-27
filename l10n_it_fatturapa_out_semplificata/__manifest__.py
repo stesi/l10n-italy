@@ -19,7 +19,6 @@
         "l10n_it_fatturapa",
         "l10n_it_fatturapa_out",
         "l10n_it_fatturapa_out_rc",
-        # "l10n_it_fatturapa_out_rc_fix",
     ],
     "data": [
         'data/invoice_it_template.xml',
