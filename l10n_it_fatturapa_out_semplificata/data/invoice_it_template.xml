@@ -550,8 +550,8 @@ e 'line' per riga di fattura (a seconda del livello in cui sono chiamati)
                 <DatiGenerali>
                     <DatiGeneraliDocumento>
                         <!--2.1.1-->
-<!--                        <TipoDocumento t-esc="record.fiscal_document_type_id.code" />-->
-                        <TipoDocumento>TD07</TipoDocumento>
+                        <TipoDocumento t-esc="record.fiscal_document_type_id.code" />
+<!--                        <TipoDocumento>TD07</TipoDocumento>-->
                         <Divisa
                             t-if="record.company_id.xml_divisa_value == 'keep_orig'"
                             t-esc="currency.name"
