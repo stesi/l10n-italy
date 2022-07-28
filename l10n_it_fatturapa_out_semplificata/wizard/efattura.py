@@ -12,7 +12,7 @@ import xmlschema
 
 
 class FPAValidator(FPAValidator):
-    print("s")
+
     _XSD_SCHEMA_SEMPLIFICATO = "schema_xsd_fattura_semplificata.xsd"
     _xml_schema_1_2_1_semplificato = get_module_resource(
         "l10n_it_fatturapa_out_semplificata", "data", "xsd", _XSD_SCHEMA_SEMPLIFICATO
@@ -48,9 +48,11 @@ class FPAValidator(FPAValidator):
 
 class EFatturaOut(EFatturaOut):
 
-    # def get_template_values(self):
-    #     template_values = super().get_template_values()
-    #     return template_values
+    def get_template_values(self):
+        template_values = super().get_template_values()
+        if 'formato_trasmissione' in template_values and self.partner_id.simplified_einvoice:
+            template_values['formato_trasmissione'] = 'FSM10'
+        return template_values
 
     def to_xml(self, env):
         """Create the xml file content.
@@ -72,9 +74,9 @@ class EFatturaOut(EFatturaOut):
         if not self.partner_id.simplified_einvoice:
             ok, errors = self.validate(root)
         else: # per ora invalidato controllo
-            # self._validator = FPAValidator(easy=True)
-            # ok, errors = self.validate(root)
-            ok = True
+            self._validator = FPAValidator(easy=True)
+            ok, errors = self.validate(root)
+            # ok = True
 
         if not ok:
             # XXX - da migliorare?
@@ -85,12 +87,11 @@ class EFatturaOut(EFatturaOut):
 
             content = etree.tostring(root, xml_declaration=True, encoding="utf-8")
 
-
         return content
 
-    def __init__(self, wizard, partner_id, invoices, progressivo_invio):
-        res = super(EFatturaOut, self).__init__(wizard, partner_id, invoices, progressivo_invio)
-        return res
+    # def __init__(self, wizard, partner_id, invoices, progressivo_invio):
+    #     res = super(EFatturaOut, self).__init__(wizard, partner_id, invoices, progressivo_invio)
+    #     return res
 
 # class EFatturaOut(EFatturaOutRCFIX):
 #     def __init__(self, wizard, partner_id, invoices, progressivo_invio):

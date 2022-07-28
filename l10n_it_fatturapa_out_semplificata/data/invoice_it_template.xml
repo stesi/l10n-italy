@@ -273,34 +273,35 @@ e 'line' per riga di fattura (a seconda del livello in cui sono chiamati)
         <template id="account_invoice_it_dati_trasmissione_semplificata">
             <t t-set="transmitter" t-value="company_id.e_invoice_transmitter_id" />
             <DatiTrasmissione>
-            <IdTrasmittente>
-                <IdPaese t-esc="get_vat_country(transmitter.vat)" />
-                <IdCodice
-                        t-if="transmitter.fiscalcode"
-                        t-esc="transmitter.fiscalcode"
-                    />
-                <IdCodice
-                        t-if="not transmitter.fiscalcode"
-                        t-esc="get_vat_number(transmitter.vat)"
-                    />
-            </IdTrasmittente>
+                <IdTrasmittente>
+                    <IdPaese t-esc="get_vat_country(transmitter.vat)" />
+                    <IdCodice
+                            t-if="transmitter.fiscalcode"
+                            t-esc="transmitter.fiscalcode"
+                        />
+                    <IdCodice
+                            t-if="not transmitter.fiscalcode"
+                            t-esc="get_vat_number(transmitter.vat)"
+                        />
+                </IdTrasmittente>
                 <ProgressivoInvio t-esc="progressivo_invio" />
                 <FormatoTrasmissione t-esc="formato_trasmissione" />
+                <!--<FormatoTrasmissione t-esc="FSM10" />-->
                 <CodiceDestinatario
                     t-if="codice_destinatario"
                     t-esc="codice_destinatario"
                 />
-            <ContattiTrasmittente>
-                <Telefono
-                        t-if="format_phone(transmitter.phone)"
-                        t-esc="format_phone(transmitter.phone)"
-                    />
-                <Telefono
-                        t-if="not format_phone(transmitter.phone) and format_phone(transmitter.mobile)"
-                        t-esc="format_phone(transmitter.mobile)"
-                    />
-                <Email t-if="transmitter.email" t-esc="transmitter.email" />
-            </ContattiTrasmittente>
+<!--                <ContattiTrasmittente>-->
+<!--                    <Telefono-->
+<!--                            t-if="format_phone(transmitter.phone)"-->
+<!--                            t-esc="format_phone(transmitter.phone)"-->
+<!--                        />-->
+<!--                    <Telefono-->
+<!--                            t-if="not format_phone(transmitter.phone) and format_phone(transmitter.mobile)"-->
+<!--                            t-esc="format_phone(transmitter.mobile)"-->
+<!--                        />-->
+<!--                    <Email t-if="transmitter.email" t-esc="transmitter.email" />-->
+<!--                </ContattiTrasmittente>-->
                 <PECDestinatario
                     t-if="codice_destinatario == '0000000' and partner_id.pec_destinatario"
                     t-esc="partner_id.pec_destinatario"
@@ -369,9 +370,10 @@ e 'line' per riga di fattura (a seconda del livello in cui sono chiamati)
                     />
                     <StatoLiquidazione t-esc="company_id.rea_liquidation_state" />
                 </IscrizioneREA>
-                <RegimeFiscale>
-                    <t t-esc="company_id.fatturapa_fiscal_position_id.code"/>
-                </RegimeFiscale>
+                <RegimeFiscale>RF01</RegimeFiscale>
+
+<!--                    <t t-esc="company_id.fatturapa_fiscal_position_id.code"/>-->
+
 <!--                <Contatti t-if="company_id">-->
 <!--                    <Telefono-->
 <!--                        t-if="format_phone(company_id.partner_id.phone)"-->
@@ -429,7 +431,7 @@ e 'line' per riga di fattura (a seconda del livello in cui sono chiamati)
 <!--        </template>-->
         <template id="account_invoice_it_cessionario_committente_semplificata">
             <CessionarioCommittente>
-                <IdendificativiFiscali>
+                <IdentificativiFiscali>
                     <IdFiscaleIVA t-if="not in_eu(partner_id.commercial_partner_id)">
                         <IdPaese
                             t-esc="partner_id.commercial_partner_id.country_id.code"
@@ -451,7 +453,7 @@ e 'line' per riga di fattura (a seconda del livello in cui sono chiamati)
                         t-if="partner_id.commercial_partner_id.fiscalcode"
                         t-esc="partner_id.commercial_partner_id.fiscalcode"
                     />
-                </IdendificativiFiscali>
+                </IdentificativiFiscali>
                 <AltriDatiIdentificativi>
                         <Denominazione
                             t-if="partner_id.commercial_partner_id.is_company"
@@ -548,7 +550,8 @@ e 'line' per riga di fattura (a seconda del livello in cui sono chiamati)
                 <DatiGenerali>
                     <DatiGeneraliDocumento>
                         <!--2.1.1-->
-                        <TipoDocumento t-esc="record.fiscal_document_type_id.code" />
+<!--                        <TipoDocumento t-esc="record.fiscal_document_type_id.code" />-->
+                        <TipoDocumento>TD07</TipoDocumento>
                         <Divisa
                             t-if="record.company_id.xml_divisa_value == 'keep_orig'"
                             t-esc="currency.name"
@@ -571,10 +574,10 @@ e 'line' per riga di fattura (a seconda del livello in cui sono chiamati)
 <!--                            <t t-esc="line.name"/>-->
                         </Descrizione>
                         <Importo t-esc="format_monetary(fpa_to_eur(tax_data['ImponibileImporto'], record), euro)"/>
-                        <DatiIva>
-                            <Imposta></Imposta>
+                        <DatiIVA>
+                            <Imposta t-esc="format_monetary(fpa_to_eur(tax_data['Imposta'], record), euro)"/>
                             <Aliquota t-esc="tax_data['AliquotaIVA']"/>
-                        </DatiIva>
+                        </DatiIVA>
                         <Natura
                             t-if="tax_data.get('Natura', False)"
                             t-esc="tax_data['Natura']"
@@ -631,10 +634,10 @@ e 'line' per riga di fattura (a seconda del livello in cui sono chiamati)
 <!--                </ns1:FatturaElettronica>-->
 <!--        </template>-->
         <template id="account_invoice_it_FatturaPA_semplificata_export">
-<!--            <ns1:FatturaElettronicaSemplificata xmlns:ns1="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2" t-att-versione="formato_trasmissione">-->
-<!--            <ns1:FatturaElettronicaSemplificata xmlns:ns1="https://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.0">-->
-            <ns1:FatturaElettronicaSemplificata xmlns:ns1="https://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.0">
+            <ns:FatturaElettronicaSemplificata xmlns:ns="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.0" t-att-versione="formato_trasmissione">
+<!--            <ns:FatturaElettronicaSemplificata xmlns:ns="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.0" versione="FSM10" t-att-type="FSM10">-->
                 <FatturaElettronicaHeader>
+<!--                    <t t-call="l10n_it_fatturapa_out.account_invoice_it_dati_trasmissione"/>-->
                     <t t-call="l10n_it_fatturapa_out_semplificata.account_invoice_it_dati_trasmissione_semplificata"/>
                     <t
                         t-call="l10n_it_fatturapa_out_semplificata.account_invoice_it_cedente_prestatore_semplificata"
@@ -658,7 +661,7 @@ e 'line' per riga di fattura (a seconda del livello in cui sono chiamati)
                 <t t-foreach="invoices" t-as="record">
                         <t t-call="l10n_it_fatturapa_out_semplificata.account_invoice_it_fattura_elettronica_body_semplificata"/>
                 </t>
-                </ns1:FatturaElettronicaSemplificata>
+                </ns:FatturaElettronicaSemplificata>
         </template>
     </data>
 </odoo>
