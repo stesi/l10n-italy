@@ -290,7 +290,7 @@ e 'line' per riga di fattura (a seconda del livello in cui sono chiamati)
                     <IdPaese t-esc="get_vat_country(transmitter.vat)" />
                     <IdCodice
                             t-if="transmitter.fiscalcode"
-                            t-esc="transmitter.fiscalcode"
+                            t-esc="transmitter.fiscalcode.upper()"
                         />
                     <IdCodice
                             t-if="not transmitter.fiscalcode"
@@ -329,7 +329,7 @@ e 'line' per riga di fattura (a seconda del livello in cui sono chiamati)
                 </IdFiscaleIVA>
                 <CodiceFiscale
                     t-if="partner_id.fiscalcode"
-                    t-esc="partner_id.fiscalcode"
+                    t-esc="partner_id.fiscalcode.upper()"
                 />
 <!--                <Anagrafica>-->
                 <Denominazione t-esc="partner_id.display_name" />
@@ -467,7 +467,7 @@ e 'line' per riga di fattura (a seconda del livello in cui sono chiamati)
                     <!--t-if="not partner_id.commercial_partner_id.vat" -->
                     <CodiceFiscale
                         t-if="partner_id.commercial_partner_id.fiscalcode"
-                        t-esc="partner_id.commercial_partner_id.fiscalcode"
+                        t-esc="partner_id.commercial_partner_id.fiscalcode.upper()"
                     />
                 </IdentificativiFiscali>
                 <AltriDatiIdentificativi t-if="partner_id.city and partner_id.zip and partner_id.country_id">
@@ -580,30 +580,32 @@ e 'line' per riga di fattura (a seconda del livello in cui sono chiamati)
                         <Numero t-esc="record.name" />
                     </DatiGeneraliDocumento>
                 </DatiGenerali>
-                <DatiBeniServizi>
+<!--                <DatiBeniServizi>-->
                     <t t-set="line_counter" t-value="0" />
 
 <!--                    <t t-foreach="record.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)" t-as="line">-->
                     <t t-foreach="list(all_taxes[record.id].values())" t-as="tax_data">
-                        <t t-set="line_counter" t-value="line_counter + 1" />
-                        <Descrizione>
-<!--                            <t t-esc="line.name"/>-->
-                        </Descrizione>
-                        <Importo t-esc="format_monetary(fpa_to_eur(tax_data['ImponibileImporto'], record), euro)"/>
-                        <DatiIVA>
-                            <Imposta t-esc="format_monetary(fpa_to_eur(tax_data['Imposta'], record), euro)"/>
-                            <Aliquota t-esc="tax_data['AliquotaIVA']"/>
-                        </DatiIVA>
-                        <Natura
-                            t-if="tax_data.get('Natura', False)"
-                            t-esc="tax_data['Natura']"
-                        />
-                        <RiferimentoNormativo
-                            t-if="tax_data.get('RiferimentoNormativo', False)"
-                            t-esc="encode_for_export(tax_data['RiferimentoNormativo'], 100)"
-                        />
+                        <DatiBeniServizi>
+                            <t t-set="line_counter" t-value="line_counter + 1" />
+    <!--                        <Descrizione>encode_for_export('', 1000)</Descrizione>-->
+                            <Descrizione t-esc="'Descrizione1'"/>
+    <!--                            <t t-esc="line.name"/>-->
+                            <Importo t-esc="format_monetary(fpa_to_eur(tax_data['ImponibileImporto'], record), euro)"/>
+                            <DatiIVA>
+                                <Imposta t-esc="format_monetary(fpa_to_eur(tax_data['Imposta'], record), euro)"/>
+                                <Aliquota t-esc="tax_data['AliquotaIVA']"/>
+                            </DatiIVA>
+                            <Natura
+                                t-if="tax_data.get('Natura', False)"
+                                t-esc="tax_data['Natura']"
+                            />
+                            <RiferimentoNormativo
+                                t-if="tax_data.get('RiferimentoNormativo', False)"
+                                t-esc="encode_for_export(tax_data['RiferimentoNormativo'], 100)"
+                            />
+                            </DatiBeniServizi>
                     </t>
-                </DatiBeniServizi>
+<!--                </DatiBeniServizi>-->
                 <Allegati t-foreach="record.fatturapa_doc_attachments.ir_attachment_id" t-as="doc_id">
                     <NomeAttachment t-esc="get_nome_attachment(doc_id)" />
                     <!--                    <AlgoritmoCompressione t-esc=""/>-->
