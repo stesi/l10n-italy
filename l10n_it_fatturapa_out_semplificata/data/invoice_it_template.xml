@@ -584,25 +584,27 @@ e 'line' per riga di fattura (a seconda del livello in cui sono chiamati)
                     <t t-set="line_counter" t-value="0" />
 
 <!--                    <t t-foreach="record.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)" t-as="line">-->
-                    <t t-foreach="list(all_taxes[record.id].values())" t-as="tax_data">
+<!--                    <t t-foreach="list(all_taxes[record.id].values())" t-as="tax_data">-->
+                    <t t-foreach="record.invoice_line_ids" t-as="line">
                         <DatiBeniServizi>
                             <t t-set="line_counter" t-value="line_counter + 1" />
     <!--                        <Descrizione>encode_for_export('', 1000)</Descrizione>-->
-                            <Descrizione t-esc="'Descrizione1'"/>
+                            <Descrizione t-esc="line.name"/>
     <!--                            <t t-esc="line.name"/>-->
-                            <Importo t-esc="format_monetary(fpa_to_eur(tax_data['ImponibileImporto'], record), euro)"/>
+<!--                            <Importo t-esc="format_monetary(fpa_to_eur(tax_data['ImponibileImporto'], record), euro)"/>-->
+                            <Importo t-esc="format_monetary(fpa_to_eur(line.price_total, line.move_id), euro)"/>
                             <DatiIVA>
-                                <Imposta t-esc="format_monetary(fpa_to_eur(tax_data['Imposta'], record), euro)"/>
-                                <Aliquota t-esc="tax_data['AliquotaIVA']"/>
+                                <Imposta t-esc="format_monetary(line.price_total - line.price_subtotal, euro)"/>
+                                <Aliquota t-if="len(line.tax_ids)>0" t-esc="format_numbers(line.tax_ids[0].amount)"/>
                             </DatiIVA>
-                            <Natura
-                                t-if="tax_data.get('Natura', False)"
-                                t-esc="tax_data['Natura']"
-                            />
-                            <RiferimentoNormativo
-                                t-if="tax_data.get('RiferimentoNormativo', False)"
-                                t-esc="encode_for_export(tax_data['RiferimentoNormativo'], 100)"
-                            />
+<!--                            <Natura-->
+<!--                                t-if="tax_data.get('Natura', False)"-->
+<!--                                t-esc="tax_data['Natura']"-->
+<!--                            />-->
+<!--                            <RiferimentoNormativo-->
+<!--                                t-if="tax_data.get('RiferimentoNormativo', False)"-->
+<!--                                t-esc="encode_for_export(tax_data['RiferimentoNormativo'], 100)"-->
+<!--                            />-->
                             </DatiBeniServizi>
                     </t>
 <!--                </DatiBeniServizi>-->
