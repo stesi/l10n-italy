@@ -246,7 +246,16 @@ e 'line' per riga di fattura (a seconda del livello in cui sono chiamati)
                     t-if="partner_id.street2"
                     t-esc="partner_id.street + '\n' + partner_id.street2"
                 /><t t-if="not partner_id.street2" t-esc="partner_id.street" /></t>
-            <Indirizzo t-esc="encode_for_export(indirizzo, 60)" />
+
+<!--            <t t-set="comune"/>-->
+<!--            <t t-if="partner_id.city != False">-->
+<!--                <t t-set="comune" t-value="encode_for_export(partner_id.city, 60)"/>-->
+<!--            </t>-->
+<!--            <t t-else="">-->
+<!--                <t t-set="comune" t-value=" "/>-->
+<!--            </t>-->
+            <Indirizzo t-if="indirizzo" t-esc="encode_for_export(indirizzo, 60)" />
+            <Indirizzo t-if="not indirizzo" t-esc="encode_for_export(' ', 60)"/>
             <!--            <NumeroCivico t-esc=""/>-->
 <!-- XXX da controllare, if vecchio codice fa diversamente
             <CAP><t t-if="partner_id.country_id.code == 'IT'" t-esc="partner_id.zip" /><t t-if="partner_id.country_id.code != 'IT'" t-esc="'00000'" /></CAP>
@@ -259,7 +268,10 @@ e 'line' per riga di fattura (a seconda del livello in cui sono chiamati)
                 t-if="partner_id.codice_destinatario != 'XXXXXXX' and partner_id.zip"
                 t-esc="partner_id.zip"
             />
-            <Comune t-esc="encode_for_export(partner_id.city, 60)" />
+
+<!--            <Comune t-esc="comune"/>-->
+            <Comune t-if="partner_id.city != False" t-esc="encode_for_export(partner_id.city, 60)" />
+            <Comune t-else="not partner_id.city" t-esc="encode_for_export(' ', 60)"/>
             <Provincia
                 t-if="partner_id.country_id.code == 'IT'"
                 t-esc="partner_id.state_id.code"
@@ -268,7 +280,8 @@ e 'line' per riga di fattura (a seconda del livello in cui sono chiamati)
                 t-if="partner_id.codice_destinatario == 'XXXXXXX'"
                 t-esc="'EE'"
             />
-            <Nazione t-esc="partner_id.country_id.code" />
+            <Nazione t-if="partner_id.country_id" t-esc="partner_id.country_id.code"/>
+            <Nazione t-if="not partner_id.country_id" t-esc="'IT'"/>
         </template>
         <template id="account_invoice_it_dati_trasmissione_semplificata">
             <t t-set="transmitter" t-value="company_id.e_invoice_transmitter_id" />
@@ -337,14 +350,17 @@ e 'line' per riga di fattura (a seconda del livello in cui sono chiamati)
 <!--                <RegimeFiscale>RF01</RegimeFiscale>-->
 <!--                &lt;!&ndash; see https://github.com/OCA/l10n-italy/issues/2557&ndash;&gt;-->
                 <Sede>
+<!--                    <t-->
+<!--                        t-call="l10n_it_fatturapa_out.account_invoice_it_FatturaPA_sede"-->
+<!--                    />-->
                     <t
-                        t-call="l10n_it_fatturapa_out.account_invoice_it_FatturaPA_sede"
+                        t-call="l10n_it_fatturapa_out_semplificata.account_invoice_it_FatturaPA_sede"
                     />
                 </Sede>
                 <StabileOrganizzazione
                     t-if="company_id and company_id.fatturapa_stabile_organizzazione"
                 >
-                    <t t-call="l10n_it_fatturapa_out.account_invoice_it_FatturaPA_sede">
+                    <t t-call="l10n_it_fatturapa_out_semplificata.account_invoice_it_FatturaPA_sede">
                         <t
                             t-set="partner_id"
                             t-value="company_id.fatturapa_stabile_organizzazione"
@@ -454,7 +470,7 @@ e 'line' per riga di fattura (a seconda del livello in cui sono chiamati)
                         t-esc="partner_id.commercial_partner_id.fiscalcode"
                     />
                 </IdentificativiFiscali>
-                <AltriDatiIdentificativi>
+                <AltriDatiIdentificativi t-if="partner_id.city and partner_id.zip and partner_id.country_id">
                         <Denominazione
                             t-if="partner_id.commercial_partner_id.is_company"
                             t-esc="encode_for_export(partner_id.commercial_partner_id.display_name, 80)"
@@ -469,7 +485,7 @@ e 'line' per riga di fattura (a seconda del livello in cui sono chiamati)
                         />
                         <!--                        <Titolo t-esc=""/>-->
                         <Sede>
-                            <t t-call="l10n_it_fatturapa_out.account_invoice_it_FatturaPA_sede">
+                            <t t-call="l10n_it_fatturapa_out_semplificata.account_invoice_it_FatturaPA_sede">
                                 <t t-set="partner_id" t-value="partner_id" />
                             </t>
                         </Sede>
