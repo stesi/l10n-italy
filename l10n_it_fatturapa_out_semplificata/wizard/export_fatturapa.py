@@ -1,4 +1,5 @@
 from odoo import models, fields, api, _
+from .efattura import EFatturaOut
 
 
 class WizardExportFatturapa(models.TransientModel):
@@ -7,4 +8,7 @@ class WizardExportFatturapa(models.TransientModel):
     # def exportFatturaPA(self):
     #     action = super(WizardExportFatturapa, self).exportFatturaPA()
     #     return action
-
+    @api.model
+    def _get_efattura_class(self):
+        res = super(WizardExportFatturapa, self)._get_efattura_class()
+        return EFatturaOut

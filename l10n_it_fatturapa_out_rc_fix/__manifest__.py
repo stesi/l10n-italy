@@ -13,9 +13,10 @@
     "installable": True,
     "auto_install": True,
     "depends": [
-        "l10n_it_fatturapa_out",
-        "l10n_it_reverse_charge",
-        "l10n_it_fatturapa_out_rc",
+        # "l10n_it_fatturapa_out",
+        # "l10n_it_reverse_charge",
+        # "l10n_it_fatturapa_out_rc",
+        "l10n_it_fatturapa_out_semplificata",
     ],
     "data": [
         "views/invoice_it_template.xml"

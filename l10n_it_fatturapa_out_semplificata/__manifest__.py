@@ -18,11 +18,12 @@
         "l10n_it_account",
         "l10n_it_fatturapa",
         "l10n_it_fatturapa_out",
-        "l10n_it_fatturapa_out_rc_fix",
+        "l10n_it_fatturapa_out_rc",
     ],
     "data": [
         'data/invoice_it_template.xml',
         'views/res_partner.xml',
+
     ],
     "installable": True
 }
