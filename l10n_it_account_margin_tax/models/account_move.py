@@ -80,7 +80,7 @@ class AccountMove(models.Model):
                     "tax_repartition_line_id": invoice_repartition_line_id,
                     # 'move_id': am.id
                 }
-                if am.move_type =='in_refund':
+                if am.move_type in ['in_refund','out_refund']:
                     vals_debit['debit'] = 0
                     vals_debit['credit'] = tax_amount
                     vals_credit['credit'] = 0
