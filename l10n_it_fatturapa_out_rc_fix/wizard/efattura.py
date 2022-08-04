@@ -60,17 +60,20 @@ class EFatturaOut(_EFatturaOut):
                 aliquota_float = tax_line_id.amount
                 key = _key(tax_line_id)
                 imponibile_importo = 0 # fix problem with valuta estera
+                imponibile_importo = tax_id.tax_base_amount
                 if (tax_id.tax_base_amount * aliquota_float / 100) == tax_id.price_total:
-                    imponibile_importo = tax_id.tax_base_amount
+                    imposta = tax_id.price_total
                 else:
-                    imponibile_importo = (tax_id.price_total * 100 / aliquota_float)
+                    # imponibile_importo = (tax_id.price_total * 100 / aliquota_float)
+                    imposta = (tax_id.tax_base_amount * aliquota_float / 100)
                 out_computed[key] = {
                     "AliquotaIVA": aliquota,
                     "Natura": tax_line_id.kind_id.code,
                     # 'Arrotondamento':'',
                     # "ImponibileImporto": tax_id.tax_base_amount,
                     "ImponibileImporto": imponibile_importo,
-                    "Imposta": tax_id.price_total,
+                    # "Imposta": tax_id.price_total,
+                    "Imposta": imposta,
                     "EsigibilitaIVA": tax_line_id.payability,
                 }
                 if tax_line_id.law_reference:
