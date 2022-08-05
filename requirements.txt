@@ -5,3 +5,5 @@ elementpath
 openupgradelib
 unidecode
 xmlschema
+python-fsutil
+python-slugify
