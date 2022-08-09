@@ -4,7 +4,7 @@
 {
     "name": "Fix ITA - Emissione e-fattura con reverse charge",
     "summary": "Integrazione l10n_it_fatturapa_out e l10n_it_reverse_charge Fix",
-    "version": "14.0.1",
+    "version": "14.0.1.1",
     "website": "https://github.com/OCA/l10n-italy",
     "author": "Stesi",
     "maintainers": ["dirobertovincenzo"],
