@@ -29,7 +29,9 @@ class SaleOrderLine(models.Model):
     @api.onchange('margin_tax')
     def margin_tax_onchange(self):
         for line in self:
+            old_name = line.name
             line.product_id_change()
+            line.name = old_name
 
     def _prepare_invoice_line(self, **optional_values):
         res = super(SaleOrderLine, self)._prepare_invoice_line(**optional_values)

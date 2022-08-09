@@ -37,7 +37,8 @@ class FPAValidator(FPAValidator):
             self._validator = xmlschema.XMLSchema(
                 # self._xml_schema_1_2_1_semplificato,
                 get_module_resource(
-                    "l10n_it_fatturapa_out_semplificata", "data", "xsd", "schema_xsd_fattura_semplificata.xsd"
+                    # "l10n_it_fatturapa_out_semplificata", "data", "xsd", "schema_xsd_fattura_semplificata.xsd"
+                    "l10n_it_fatturapa_out_semplificata", "data", "xsd", "Schema_VFSM10.xsd"
                 ),
                 locations=locations,
                 validation="lax",
