@@ -10,44 +10,45 @@ class AccountMove(models.Model):
     _inherit = "account.move"
 
     def button_draft(self):
-        account_wt = self.env['account.move']
-        if self.move_type == "in_invoice":
-            account_wt = self.line_ids.filtered(lambda line: line.account_id.user_type_id.type in (
-                'receivable', 'payable')).matched_debit_ids.debit_move_id.filtered(
-                lambda l1: l1.filtered(lambda l1: l1.withholding_tax_generated_by_move_id.id > 0)).move_id
-        elif self.move_type == "out_invoice":
-            account_wt = self.line_ids.filtered(lambda line: line.account_id.user_type_id.type in (
-                'receivable', 'payable')).matched_credit_ids.credit_move_id.filtered(
-                lambda l1: l1.filtered(lambda l1: l1.withholding_tax_generated_by_move_id.id > 0)).move_id
-        if len(account_wt) > 0:
-            account_wt.posted_before = False
-            #account_wt.button_draft()
-            account_wt.button_cancel()
+        for move in self:
+            account_wt = self.env['account.move']
+            if move.move_type == "in_invoice":
+                account_wt = move.line_ids.filtered(lambda line: line.account_id.user_type_id.type in (
+                    'receivable', 'payable')).matched_debit_ids.debit_move_id.filtered(
+                    lambda l1: l1.filtered(lambda l1: l1.withholding_tax_generated_by_move_id.id > 0)).move_id
+            elif move.move_type == "out_invoice":
+                account_wt = move.line_ids.filtered(lambda line: line.account_id.user_type_id.type in (
+                    'receivable', 'payable')).matched_credit_ids.credit_move_id.filtered(
+                    lambda l1: l1.filtered(lambda l1: l1.withholding_tax_generated_by_move_id.id > 0)).move_id
+            if len(account_wt) > 0:
+                account_wt.posted_before = False
+                #account_wt.button_draft()
+                account_wt.button_cancel()
 
-            # reconcile = self.line_ids.filtered(lambda line: line.account_id.user_type_id.type in (
-            # 'receivable', 'payable')).matched_credit_ids.credit_move_id.filtered(
-            # lambda l1: l1.filtered(lambda l1: l1.withholding_tax_generated_by_move_id.id > 0))
-            # if len(reconcile):
-            #     reconcile.unlink()
-            # account_wt.unlink()
-            if self.move_type == "in_invoice":
-                wt_moves = self.line_ids.filtered(
-                    lambda line: line.account_id.user_type_id.type in ('receivable', 'payable')) \
-                    .mapped('matched_debit_ids.wt_tax_moves')
-            elif self.move_type == "out_invoice":
-                wt_moves = self.line_ids.filtered(
-                    lambda line: line.account_id.user_type_id.type in ('receivable', 'payable')) \
-                    .mapped('matched_credit_ids.wt_tax_moves')
+                # reconcile = self.line_ids.filtered(lambda line: line.account_id.user_type_id.type in (
+                # 'receivable', 'payable')).matched_credit_ids.credit_move_id.filtered(
+                # lambda l1: l1.filtered(lambda l1: l1.withholding_tax_generated_by_move_id.id > 0))
+                # if len(reconcile):
+                #     reconcile.unlink()
+                # account_wt.unlink()
+                if move.move_type == "in_invoice":
+                    wt_moves = move.line_ids.filtered(
+                        lambda line: line.account_id.user_type_id.type in ('receivable', 'payable')) \
+                        .mapped('matched_debit_ids.wt_tax_moves')
+                elif move.move_type == "out_invoice":
+                    wt_moves = move.line_ids.filtered(
+                        lambda line: line.account_id.user_type_id.type in ('receivable', 'payable')) \
+                        .mapped('matched_credit_ids.wt_tax_moves')
 
-            for wt in wt_moves:
-                wt.unlink()
-            domain = [("move_id", "=", self.id)]
-            wt_statements = self.env["withholding.tax.statement"].search(domain)
-            for wt in wt_statements:
-                wt.unlink()
-        # wt_lines = self.withholding_tax_line_ids
-        # for wt in wt_lines:
-        #     wt.unlink()
+                for wt in wt_moves:
+                    wt.unlink()
+                domain = [("move_id", "=", move.id)]
+                wt_statements = self.env["withholding.tax.statement"].search(domain)
+                for wt in wt_statements:
+                    wt.unlink()
+            # wt_lines = self.withholding_tax_line_ids
+            # for wt in wt_lines:
+            #     wt.unlink()
 
 
         return super(AccountMove, self).button_draft()
