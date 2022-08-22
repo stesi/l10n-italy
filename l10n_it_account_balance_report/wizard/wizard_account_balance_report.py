@@ -57,6 +57,7 @@ class ReportAccountBalanceWizard(models.TransientModel):
         trial_wiz_obj = self.env["trial.balance.report.wizard"]
         trial_wiz_vals = self.prepare_trial_balance_vals()
         trial_wiz = trial_wiz_obj.create(trial_wiz_vals)
+        trial_wiz.fy_start_date = trial_wiz.date_from
         common_vals = self._get_common_report_values()
         return {
             **common_vals,
