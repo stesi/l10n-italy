@@ -263,7 +263,7 @@ msgstr ""
 #: code:addons/l10n_it_account_balance_report/report/account_balance_report_xlsx.py:0
 #, python-format
 msgid "DEFICIT"
-msgstr ""
+msgstr "PERDITA"
 
 #. module: l10n_it_account_balance_report
 #: model_terms:ir.ui.view,arch_db:l10n_it_account_balance_report.account_balance_report_totals
@@ -600,7 +600,7 @@ msgstr "Nome col. destra"
 #: code:addons/l10n_it_account_balance_report/report/account_balance_report_xlsx.py:0
 #, python-format
 msgid "SURPLUS"
-msgstr ""
+msgstr "UTILE"
 
 #. module: l10n_it_account_balance_report
 #: model_terms:ir.ui.view,arch_db:l10n_it_account_balance_report.account_balance_report_totals
