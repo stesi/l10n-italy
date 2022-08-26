@@ -47,7 +47,10 @@ class ReportAccountBalanceWizard(models.TransientModel):
 
     def export_account_balance(self, report_type=None):
         self.ensure_one()
-        report_obj = self.env["account_balance_report"]
+        if report_type == 'xlsx':
+            report_obj = self.env["account_balance_report_xlsx"]
+        else:
+            report_obj = self.env["account_balance_report"]
         report_vals = self.prepare_report_vals()
         report = report_obj.create(report_vals)
         return report.print_report(report_type)

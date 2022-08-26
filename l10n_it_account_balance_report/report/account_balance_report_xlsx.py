@@ -2,8 +2,10 @@
 
 import logging
 
-from odoo import _, models
+from odoo import _, models,fields
 from odoo.tools.float_utils import float_compare, float_is_zero, float_round
+
+
 
 _logger = logging.getLogger(__name__)
 
@@ -18,9 +20,77 @@ def order_currency_amount(curr, val):
 
 
 class AccountBalanceReportXslx(models.AbstractModel):
-    _name = "report.l10n_it_a_b_r.account_balance_report_xlsx"
+    _name = "account_balance_report_xlsx"
     _description = "XLSX account balance report"
     _inherit = "report.account_financial_report.abstract_report_xlsx"
+
+    company_id = fields.Many2one('res.company', 'Company', required=True, index=True,
+                                 default=lambda self: self.env.company)
+    GROUP_TYPE = "group_type"
+    ACC_TYPE = "account_type"
+
+    account_balance_report_type = fields.Selection(
+        [("profit_loss", "Profit & Loss"), ("balance_sheet", "Balance Sheet")],
+    )
+
+    company_id = fields.Many2one(
+        comodel_name="res.company",
+        default=lambda self: self.env.company.id,
+        required=False,
+        string="Company",
+    )
+
+    date_from = fields.Date()
+    date_to = fields.Date()
+
+    foreign_currency = fields.Boolean(
+        string="Show foreign currency",
+        help="Display foreign currency for move lines, unless "
+             "account currency is not setup through chart of accounts "
+             "will display initial and final balance in that currency.",
+    )
+
+    hide_account_at_0 = fields.Boolean(
+        string="Hide accounts at 0",
+        default=True,
+        help="When this option is enabled, the trial balance will "
+             "not display accounts that have initial balance = "
+             "debit = credit = end balance = 0",
+    )
+
+    left_col_name = fields.Char()
+    right_col_name = fields.Char()
+    only_posted_moves = fields.Boolean(string="Display only posted moves")
+    section_credit_ids = fields.One2many(
+        "account_balance_report_account", "report_credit_id"
+    )
+    section_debit_ids = fields.One2many(
+        "account_balance_report_account", "report_debit_id"
+    )
+
+    show_hierarchy = fields.Boolean(
+        string="Show hierarchy",
+        help="Use when your account groups are hierarchical",
+    )
+    limit_hierarchy_level = fields.Boolean("Limit hierarchy levels")
+    show_hierarchy_level = fields.Integer("Hierarchy Levels to display", default=1)
+    hide_parent_hierarchy_level = fields.Boolean(
+        "Do not display parent levels", default=False
+    )
+
+    show_partner_details = fields.Boolean()
+
+    target_move = fields.Selection(
+        [("posted", "All Posted Entries"), ("all", "All Entries")],
+        string="Target Moves",
+    )
+
+    title = fields.Char()
+    total_balance = fields.Float(digits=(16, 2))
+    total_credit = fields.Float(digits=(16, 2))
+    total_debit = fields.Float(digits=(16, 2))
+
+    trial_balance_wiz_id = fields.Many2one(comodel_name="trial.balance.report.wizard")
 
     def _get_report_name(self, report):
         """
@@ -190,6 +260,7 @@ class AccountBalanceReportXslx(models.AbstractModel):
             self.sheet.write_string(self.row_pos, 1, value, value_format)
             self.row_pos += 1
         self.row_pos += 1
+
 
     def _generate_report_content(self, workbook, report):
         """Creates actual xls report"""

@@ -92,7 +92,8 @@ class ReportAccountBalanceReport(models.TransientModel):
         self.ensure_one()
         tb_vals = self.trial_balance_wiz_id._prepare_report_trial_balance()
         trial_obj = self.env["report.account_financial_report.trial_balance"]
-        tb_data = trial_obj._get_report_values(None, tb_vals)
+        tb_data = trial_obj.with_context(remove_id_profit_loss = True)._get_report_values(None, tb_vals)
+
         data = self.compute_data_for_report(tb_data)
 
         report_name = self._get_report_name(report_type)
@@ -121,7 +122,7 @@ class ReportAccountBalanceReport(models.TransientModel):
 
     def _get_report_name(self, report_type=None):
         if report_type == "xlsx":
-            report_name = "l10n_it_a_b_r.account_balance_report_xlsx"
+            report_name = "l10n_it_account_balance_report.account_balance_report_xlsx"
         elif report_type in ("qweb-pdf", "qweb-html"):
             report_name = get_xmlid("account_balance_report_qweb")
         else:
@@ -185,7 +186,9 @@ class ReportAccountBalanceReport(models.TransientModel):
         else:
             lines = tb_data["accounts_data"].values()
 
+
         for ln_data in lines:
+
             section = self.get_report_section(valid_sections, ln_data)
 
             if not (section and section in valid_sections):
