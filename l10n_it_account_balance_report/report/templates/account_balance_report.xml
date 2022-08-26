@@ -183,7 +183,7 @@
     </template>
 
     <template id="account_balance_report_title">
-        <h1 style="text-align:center;font-size:14px;">
+        <h1 style="text-align:center;font-size:14px;font-weight:bold">
             <span t-field="o.title" />
         </h1>
     </template>
