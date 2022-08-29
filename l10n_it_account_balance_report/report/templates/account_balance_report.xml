@@ -544,7 +544,7 @@
             <!-- Display total balance -->
             <div class="act_as_row lines" style="width: 100%;">
                 <div class="act_as_cell right" style="width: 50%;">
-                    <t t-if="o.total_credit &gt; o.total_debit">
+                    <t t-if="o.total_credit &gt; o.total_debit and o.account_balance_report_type == 'profit_loss'">
                         <span
                             style="font-size: 12px; margin-right: 4px; text-align: right; font-weight: bold;"
                         >
@@ -556,11 +556,21 @@
                     </t>
                 </div>
                 <div class="act_as_cell right" style="width: 50%;">
-                    <t t-if="o.total_debit &gt; o.total_credit">
+                    <t t-if="o.total_debit &gt; o.total_credit and o.account_balance_report_type == 'profit_loss'">
                         <span
                             style="font-size: 12px; margin-right: 4px; text-align: right; font-weight: bold;"
                         >
                             DEFICIT: <t
+                                t-raw="o.total_balance"
+                                t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
+                            />
+                        </span>
+                    </t>
+                    <t t-elif="o.total_debit &gt; o.total_credit and o.account_balance_report_type == 'balance_sheet'">
+                        <span
+                            style="font-size: 12px; margin-right: 4px; text-align: right; font-weight: bold;"
+                        >
+                            SURPLUS: <t
                                 t-raw="o.total_balance"
                                 t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
                             />
