@@ -544,7 +544,8 @@
             <!-- Display total balance -->
             <div class="act_as_row lines" style="width: 100%;">
                 <div class="act_as_cell right" style="width: 50%;">
-                    <t t-if="o.total_credit &gt; o.total_debit and o.account_balance_report_type == 'profit_loss'">
+                    <t t-if="o.total_credit &gt; o.total_debit">
+<!--                        and o.account_balance_report_type == 'profit_loss'-->
                         <span
                             style="font-size: 12px; margin-right: 4px; text-align: right; font-weight: bold;"
                         >
