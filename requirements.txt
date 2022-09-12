@@ -4,6 +4,7 @@ codicefiscale
 elementpath
 openupgradelib
 unidecode
-xmlschema
 python-fsutil
 python-slugify
+xmlschema>=1.7.0
+
