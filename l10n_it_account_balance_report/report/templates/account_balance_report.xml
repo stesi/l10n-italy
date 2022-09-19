@@ -95,6 +95,7 @@
                         <t t-if="o.hide_account_at_0">
                             <t t-set="style" t-value="'font-size: 10px;'" />
                         </t>
+                        <t t-set="value_type" t-value="'debit'"/>
                         <t t-if="o.show_hierarchy">
                             <t
                                 t-set="style"
@@ -133,6 +134,7 @@
                     <t
                         t-call="l10n_it_account_balance_report.account_balance_report_lines_header"
                     />
+                    <t t-set="value_type" t-value="'credit'"/>
                     <!-- Display credit lines -->
                     <t
                         t-foreach="o.section_credit_ids.filtered(lambda l: not l.hide_line)"
@@ -320,19 +322,85 @@
                         class="o_account_financial_reports_web_action_monetary_multi"
                         t-att-style="style"
                     >
+
                         <t t-if="not line.account_id and line.group_id">
-                            <t
-                                t-att-style="style"
-                                t-raw="line.ending_balance"
-                                t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
-                            />
+
+                            <t t-if="line.ending_balance &lt; 0">
+                                <t t-if="value_type == 'credit'">
+    <!--                                <t t-set="account_value" t-value="line.ending_balance"/>-->
+                                     <t
+                                    t-att-style="style"
+                                    t-raw="line.ending_balance * -1"
+                                    t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
+                                    />
+                                    <t t-esc="' | D'"/>
+    <!--                                <t t-set="account_value" t-value="str(line.ending_balance * -1) + ' D'"/>-->
+                                </t>
+                                <t t-else="value_type == 'debit'">
+                                      <t
+                                    t-att-style="style"
+                                    t-raw="line.ending_balance * -1"
+                                    t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
+                                    />
+                                    <t t-esc="' | A'"/>
+                                </t>
+                            </t>
+                            <t t-else="">
+                                <t t-if="value_type == 'credit'">
+                                    <t
+                                        t-att-style="style"
+                                        t-raw="line.ending_balance"
+                                        t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
+                                    />
+                                    <t t-esc="'| A'"/>
+                                </t>
+                                <t t-else="value_type == 'debit'">
+                                    <t
+                                        t-att-style="style"
+                                        t-raw="line.ending_balance"
+                                        t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
+                                    />
+                                    <t t-esc="'| D'"/>
+                                </t>
+                            </t>
                         </t>
                         <t t-else="">
-                            <t
-                                t-att-style="style"
-                                t-raw="line.balance"
-                                t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
-                            />
+                            <t t-if="line.balance &lt; 0">
+                                <t t-if="value_type == 'credit'">
+                                     <t
+                                        t-att-style="style"
+                                        t-raw="line.balance * -1"
+                                        t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
+                                    />
+                                    <t t-esc="'| D'"/>
+                                </t>
+                                <t t-else="value_type == 'debit'">
+                                    <t
+                                        t-att-style="style"
+                                        t-raw="line.balance * -1"
+                                        t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
+                                    />
+                                    <t t-esc="'| A'"/>
+                                </t>
+                            </t>
+                            <t t-else="">
+                                <t t-if="value_type == 'credit'">
+                                    <t
+                                        t-att-style="style"
+                                        t-raw="line.balance"
+                                        t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
+                                    />
+                                    <t t-esc="'| A'"/>
+                                </t>
+                                <t t-else="value_type == 'debit'">
+                                    <t
+                                        t-att-style="style"
+                                        t-raw="line.balance"
+                                        t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
+                                    />
+                                    <t t-esc="'| D'"/>
+                                </t>
+                            </t>
                         </t>
                     </a>
 
