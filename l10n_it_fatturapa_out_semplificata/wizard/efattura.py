@@ -1,50 +1,17 @@
 # from odoo.addons.l10n_it_fatturapa_out.wizard.efattura import (
-from odoo.addons.l10n_it_fatturapa_out.wizard.efattura import (
-    FPAValidator as FPAValidator
+
+from odoo.addons.l10n_it_account.tools.account_tools import (
+    encode_for_export,
+    fpa_schema,
 )
-from odoo.addons.l10n_it_fatturapa_out_rc.wizard.efattura import (
+
+from odoo.addons.l10n_it_fatturapa_out.wizard.efattura import (
     EFatturaOut as EFatturaOut,
 )
 from lxml import etree
 from odoo.exceptions import UserError
 from odoo.modules.module import get_module_resource
 import xmlschema
-
-
-class FPAValidator(FPAValidator):
-
-    _XSD_SCHEMA_SEMPLIFICATO = "schema_xsd_fattura_semplificata.xsd"
-    _xml_schema_1_2_1_semplificato = get_module_resource(
-        "l10n_it_fatturapa_out_semplificata", "data", "xsd", _XSD_SCHEMA_SEMPLIFICATO
-    )
-    _old_xsd_specs = get_module_resource(
-        "l10n_it_fatturapa", "data", "xsd", "xmldsig-core-schema.xsd"
-    )
-
-    def __init__(self, easy=False):
-        self.error_log = []
-        locations = {"http://www.w3.org/2000/09/xmldsig#": self._old_xsd_specs}
-        if not easy:
-            self._validator = xmlschema.XMLSchema(
-                self._xml_schema_1_2_1,
-                locations=locations,
-                validation="lax",
-                allow="local",
-                loglevel=20,
-            )
-        else:
-            # self._xml_schema_1_2_1_semplificato
-            self._validator = xmlschema.XMLSchema(
-                # self._xml_schema_1_2_1_semplificato,
-                get_module_resource(
-                    # "l10n_it_fatturapa_out_semplificata", "data", "xsd", "schema_xsd_fattura_semplificata.xsd"
-                    "l10n_it_fatturapa_out_semplificata", "data", "xsd", "Schema_VFSM10.xsd"
-                ),
-                locations=locations,
-                validation="lax",
-                allow="local",
-                loglevel=20,
-            )
 
 
 class EFatturaOut(EFatturaOut):
@@ -73,20 +40,27 @@ class EFatturaOut(EFatturaOut):
 
         # nel caso in cui il partner preveda la fattura semplificata devo validarlo diversamente
         if not self.partner_id.simplified_einvoice:
-            ok, errors = self.validate(root)
+            errors = list(fpa_schema.iter_errors(root))
         else: # per ora invalidato controllo
-            self._validator = FPAValidator(easy=True)
-            ok, errors = self.validate(root)
+            fpa_schema = get_module_resource(
+                "l10n_it_fatturapa_out_semplificata",
+                "data",
+                "xsd",
+                "schema_xsd_fattura_semplificata.xsd",
+            )
+            errors = list(fpa_schema.iter_errors(root))
             # ok = True
 
-        if not ok:
+        # if not ok:
+        # errors = list(fpa_schema.iter_errors(root))
+        if errors:
             # XXX - da migliorare?
             # i controlli precedenti dovrebbero escludere errori di sintassi XML
             # with open("/tmp/fatturaout.xml", "wb") as o:
             #    o.write(etree.tostring(root, xml_declaration=True, encoding="utf-8"))
             raise UserError("\n".join(str(e) for e in errors))
 
-            content = etree.tostring(root, xml_declaration=True, encoding="utf-8")
+        content = etree.tostring(root, xml_declaration=True, encoding="utf-8")
 
         return content
 
