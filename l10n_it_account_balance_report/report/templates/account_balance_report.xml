@@ -106,6 +106,20 @@
                                     t-set="style"
                                     t-value="style + 'font-weight: bold; color: blue;'"
                                 />
+                                <t t-if="line.ending_balance &lt; 0">
+                                    <t
+                                        t-set="style"
+                                        t-value="style.replace('color: blue;','') + ' color: red;'"
+                                    />
+                                </t>
+                            </t>
+                            <t t-else="">
+                                <t t-if="line.balance &lt; 0">
+                                    <t
+                                        t-set="style"
+                                        t-value="style + ' color: red;'"
+                                    />
+                                </t>
                             </t>
                             <t t-if="limit_hierarchy_level">
                                 <t
@@ -152,6 +166,20 @@
                                     t-set="style"
                                     t-value="style + 'font-weight: bold; color: blue;'"
                                 />
+                                 <t t-if="line.ending_balance &lt; 0">
+                                        <t
+                                            t-set="style"
+                                            t-value="style.replace('color: blue;','') + ' color: red;'"
+                                        />
+                                 </t>
+                            </t>
+                            <t t-else="">
+                                <t t-if="line.balance &lt; 0">
+                                    <t
+                                        t-set="style"
+                                        t-value="style + ' color: red;'"
+                                    />
+                                </t>
                             </t>
                             <t
                                 t-set="style"
