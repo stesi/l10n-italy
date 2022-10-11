@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="address_b2b_pec" inherit_id="website_sale.address" name="Show b2b fields PEC" customize_show="True">
+        <xpath expr="//div[@id='div_phone']" position="after">
+            <t t-if="website_sale_order.partner_id.country_id == request.env.ref('base.it') and mode == ('new', 'billing') or (mode == ('edit', 'billing'))">
+                <div t-attf-class="form-group #{error.get('pec_mail') and 'o_has_error' or ''} col-lg-6" id="div_pec_mail">
+                    <label class="col-form-label" for="pec_mail">PEC </label>
+                    <input type="email" name="pec_mail"
+                           t-att-readonly="None if website_sale_order.partner_id.company_type in ['company'] else '1'"
+                           t-attf-class="form-control #{error.get('pec_mail') and 'is-invalid' or ''}"
+                           t-att-value="'pec_mail' in checkout and checkout['pec_mail']"
+                           t-att-title="None if website_sale_order.partner_id.company_type in ['company'] else 'For change PEC you have to be a Company, if you are, please contact system Administrator.'"/>
+                </div>
+            </t>
+        </xpath>
+    </template>
+
+    <template
+        id="portal_my_details"
+        name="Add PEC in Portal"
+        inherit_id="portal.portal_my_details">
+
+        <xpath expr="//div[hasclass('o_portal_details')]/div[1]/div[1]/div[7]" position="after">
+            <t t-if="partner.country_id == request.env.ref('base.it')">
+                <div t-attf-class="form-group #{error.get('pec_mail') and 'o_has_error' or ''} col-xl-6">
+                    <label class="col-form-label label-optional" for="pec_mail">PEC</label>
+                    <input
+                        type="email"
+                        name="pec_mail"
+                        t-att-readonly="None if partner.company_type in ['company'] else '1'"
+                        t-attf-class="form-control #{error.get('pec_mail') and 'is-invalid' or ''}"
+                        t-att-value="pec_mail or partner.pec_mail"
+                        t-att-title="None if partner.company_type in ['company'] else 'For change PEC you have to be a Company, if you are, please contact system Administrator.'"/>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>
