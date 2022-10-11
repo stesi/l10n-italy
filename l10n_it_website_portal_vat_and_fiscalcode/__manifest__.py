@@ -11,6 +11,7 @@
     "depends": [
         "l10n_it_fiscalcode",
         "portal",
+        "website_sale"
     ],
     "data": [
         "views/portal_templates.xml",
