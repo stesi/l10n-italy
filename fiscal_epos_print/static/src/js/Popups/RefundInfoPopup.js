@@ -1,19 +1,20 @@
-odoo.define("fiscal_epos_print.RefundInfoPopup", function (require) {
-    "use strict";
+odoo.define('fiscal_epos_print.RefundInfoPopup', function(require) {
+    'use strict';
 
-    const {useState, useRef} = owl.hooks;
-    const AbstractAwaitablePopup = require("point_of_sale.AbstractAwaitablePopup");
-    const Registries = require("point_of_sale.Registries");
+    const { useState, useRef } = owl.hooks;
+    const AbstractAwaitablePopup = require('point_of_sale.AbstractAwaitablePopup');
+    const Registries = require('point_of_sale.Registries');
 
     class RefundInfoPopup extends AbstractAwaitablePopup {
+
         constructor() {
             super(...arguments);
 
-            this.state = useState({inputValue: this.props.startingValue});
-            this.inputRefundReport = useRef("inputRefundReport");
-            this.inputRefundDate = useRef("inputRefundDate");
-            this.inputRefundDocNum = useRef("inputRefundDocNum");
-            this.inputRefundCashFiscalSerial = useRef("inputRefundCashFiscalSerial");
+            this.state = useState({ inputValue: this.props.startingValue });
+            this.inputRefundReport = useRef('inputRefundReport');
+            this.inputRefundDate = useRef('inputRefundDate');
+            this.inputRefundDocNum = useRef('inputRefundDocNum');
+            this.inputRefundCashFiscalSerial = useRef('inputRefundCashFiscalSerial');
             this.inputDatePicker = null;
             // TODO to be removed;
             // this.refund_report = null;
@@ -39,58 +40,52 @@ odoo.define("fiscal_epos_print.RefundInfoPopup", function (require) {
         //     this.initializeDatePicker();
         // }
 
+
         clickConfirmRefund() {
             this.$el = $(this.el);
             var self = this;
             function allValid() {
-                return self.$el
-                    .find("input")
-                    .toArray()
-                    .every(function (element) {
-                        return element.value && element.value !== "";
-                    });
+                return self.$el.find('input').toArray().every(function(element) {
+                    return element.value && element.value != ''
+                })
             }
 
             if (allValid()) {
-                this.$el.find("#error-message-dialog").hide();
+                this.$el.find('#error-message-dialog').hide()
 
                 var order = this.env.pos.get_order();
-                order.refund_report = this.$el.find("#refund_report").val();
-                order.refund_date = this.$el.find("#refund_date").val();
-                order.refund_doc_num = this.$el.find("#refund_doc_num").val();
-                order.refund_cash_fiscal_serial = this.$el
-                    .find("#refund_cash_fiscal_serial")
-                    .val();
-                this.trigger("close-popup");
-                if (
-                    this.props.update_refund_info_button &&
-                    this.props.update_refund_info_button instanceof Function
-                ) {
+                order.refund_report = this.$el.find('#refund_report').val();
+                order.refund_date = this.$el.find('#refund_date').val();
+                order.refund_doc_num = this.$el.find('#refund_doc_num').val();
+                order.refund_cash_fiscal_serial = this.$el.find('#refund_cash_fiscal_serial').val();
+                this.trigger('close-popup');
+                if (this.props.update_refund_info_button && this.props.update_refund_info_button instanceof Function) {
                     this.props.update_refund_info_button();
                 }
             } else {
-                this.$el.find("#error-message-dialog").show();
+                this.$el.find('#error-message-dialog').show();
             }
         }
 
         initializeDatePicker() {
+            var self = this;
             this.$el = $(this.el);
-            var element = this.$el.find("#refund_date").get(0);
+            var element = this.$el.find('#refund_date').get(0);
             if (element && !this.datepicker) {
-                // eslint-disable-next-line
                 this.datepicker = new Pikaday({
                     field: element,
                 });
             }
         }
+
     }
 
-    RefundInfoPopup.template = "RefundInfoPopup";
+    RefundInfoPopup.template = 'RefundInfoPopup';
 
     RefundInfoPopup.defaultProps = {
-        confirmText: "Ok",
-        cancelText: "Cancel",
-        body: "",
+        confirmText: 'Ok',
+        cancelText: 'Cancel',
+        body: '',
     };
 
     Registries.Component.add(RefundInfoPopup);

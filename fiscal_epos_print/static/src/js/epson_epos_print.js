@@ -2,16 +2,16 @@ odoo.define("fiscal_epos_print.epson_epos_print", function (require) {
     "use strict";
 
     var core = require("web.core");
-    var utils = require("web.utils");
-    // Var PosDB = require('point_of_sale.DB');
+    var utils = require('web.utils');
+    // var PosDB = require('point_of_sale.DB');
     // var rpc = require('web.rpc');
     var _t = core._t;
     var round_pr = utils.round_precision;
 
-    const {Gui} = require("point_of_sale.Gui");
+    const { Gui } = require('point_of_sale.Gui');
 
-    function addPadding(str, padding = 4) {
-        var pad = new Array(padding).fill(0).join("") + str;
+    function addPadding(str, padding=4) {
+        var pad = new Array(padding).fill(0).join('') + str;
         return pad.substr(pad.length - padding, padding);
     }
 
@@ -30,7 +30,6 @@ odoo.define("fiscal_epos_print.epson_epos_print", function (require) {
         return error;
     }
 
-    // eslint-disable-next-line
     function decodeFpStatus(printerStatus) {
         var printer = "";
         var ej = "";
@@ -79,7 +78,7 @@ odoo.define("fiscal_epos_print.epson_epos_print", function (require) {
                 break;
             case "1":
                 receipt = false;
-                // Receipt = "Fiscale/Non fiscale chiuso";
+                //receipt = "Fiscale/Non fiscale chiuso";
                 break;
             case "2":
                 receipt = _t("Non fiscal open");
@@ -88,9 +87,7 @@ odoo.define("fiscal_epos_print.epson_epos_print", function (require) {
                 receipt = _t("Payment in progress");
                 break;
             case "4":
-                receipt = _t(
-                    "Error on last ESC/POS command with Fiscal/Non fiscal closed"
-                );
+                receipt = _t("Error on last ESC/POS command with Fiscal/Non fiscal closed");
                 break;
             case "5":
                 receipt = _t("Negative receipt");
@@ -117,141 +114,86 @@ odoo.define("fiscal_epos_print.epson_epos_print", function (require) {
         return printer || ej || receipt;
     }
 
-    function getStatusField(tag) {
-        return tag === "printerStatus" || tag === "fsStatus";
+    function getStatusField(tag){
+        return tag === 'printerStatus' || tag === 'fsStatus';
     }
 
     var eposDriver = core.Class.extend({
-        init: function (options, sender) {
+        init: function(options, sender) {
             var self = this;
-            var opts = options || {};
-            this.url = opts.url || "http://192.168.1.1/cgi-bin/fpmate.cgi";
-            // eslint-disable-next-line
+            options = options || {};
+            this.url = options.url || 'http://192.168.1.1/cgi-bin/fpmate.cgi';
             this.fiscalPrinter = new epson.fiscalPrint();
             this.sender = sender;
-            this.order = opts.order || null;
-            // eslint-disable-next-line
-            this.fiscalPrinter.onreceive = function (res, tag_list_names, add_info) {
+            this.order = options.order || null;
+            this.fiscalPrinter.onreceive = function(res, tag_list_names, add_info) {
                 // TODO not exist
                 // sender.chrome.loading_hide();
-                var tagStatus = tag_list_names
-                    ? tag_list_names.filter(getStatusField)
-                    : [];
+                var tagStatus = (tag_list_names ? tag_list_names.filter(getStatusField) : []);
                 var msgPrinter = "";
-                var info = "";
 
                 if (tagStatus.length > 0 && res.success) {
-                    info = add_info[tagStatus[0]];
+                    var info = add_info[tagStatus[0]];
                     res.success = !isErrorStatus(info);
                 }
 
-                var order = "";
                 if (!res.success) {
-                    if (self.order !== null) {
-                        order = self.order;
-                        order.fiscal_printer_debug_info =
-                            JSON.stringify(res) +
-                            "\n" +
-                            JSON.stringify(tag_list_names) +
-                            "\n" +
-                            JSON.stringify(add_info);
+                    if (self.order != null) {
+                        var order = self.order;
+                        order.fiscal_printer_debug_info = JSON.stringify(res) + '\n' + JSON.stringify(tag_list_names) + '\n' + JSON.stringify(add_info);
                         // TODO is push_orders or push_single_order
                         // sender.env.pos.push_orders(order);
                         // sender.env.pos.push_single_order(order);
                     }
                     if (tagStatus.length > 0) {
-                        info = add_info[tagStatus[0]];
-                        msgPrinter = decodeFpStatus(info);
+                        var info = add_info[tagStatus[0]];
+                        var msgPrinter = decodeFpStatus(info);
                     }
                     // TODO
                     // sender.chrome.screens['receipt'].lock_screen(true);
                     // TODO is this correct?
-                    Gui.showPopup("ErrorPopup", {
-                        title: _t("Connection to the printer failed"),
-                        body:
-                            _t(
-                                "An error happened while sending data to the printer. Error code: "
-                            ) +
-                            (res.code || "") +
-                            "\n" +
-                            _t("Error Message: ") +
-                            msgPrinter,
+                    Gui.showPopup('ErrorPopup', {
+                        'title': _t('Connection to the printer failed'),
+                        'body': _t('An error happened while sending data to the printer. Error code: ') + (res.code || '') + '\n' + _t('Error Message: ') + msgPrinter,
                     });
                     return;
                 }
 
-                if (add_info.responseCommand === "1138") {
-                    // Coming from FiscalPrinterADEFilesButtonWidget
-                    var to_be_sent =
-                        add_info.responseData[9] +
-                        add_info.responseData[10] +
-                        add_info.responseData[11] +
-                        add_info.responseData[12];
-                    var old =
-                        add_info.responseData[13] +
-                        add_info.responseData[14] +
-                        add_info.responseData[15] +
-                        add_info.responseData[16];
-                    var rejected =
-                        add_info.responseData[17] +
-                        add_info.responseData[18] +
-                        add_info.responseData[19] +
-                        add_info.responseData[20];
-                    var msg =
-                        _t("Files waiting to be sent: ") +
-                        to_be_sent +
-                        "; " +
-                        _t("Old files: ") +
-                        old +
-                        "; " +
-                        _t("Rejected files: ") +
-                        rejected;
+                if (add_info.responseCommand == "1138") {
+                    // coming from FiscalPrinterADEFilesButtonWidget
+                    var to_be_sent = add_info.responseData[9] + add_info.responseData[10] + add_info.responseData[11] + add_info.responseData[12];
+                    var old = add_info.responseData[13] + add_info.responseData[14] + add_info.responseData[15] + add_info.responseData[16];
+                    var rejected = add_info.responseData[17] + add_info.responseData[18] + add_info.responseData[19] + add_info.responseData[20];
+                    var msg = _t("Files waiting to be sent: ") + to_be_sent + "; " + _t("Old files: ") + old + "; " + _t("Rejected files: ") + rejected;
                     // TODO is this correct?
-                    Gui.showPopup("ErrorPopup", {
-                        title: _t("IRA files"),
-                        body: msg,
+                    Gui.showPopup('ErrorPopup', {
+                        'title': _t('IRA files'),
+                        'body': msg,
                     });
                     return;
                 }
 
-                // Is it a receipt data?
-                if (
-                    add_info.fiscalReceiptNumber &&
-                    add_info.fiscalReceiptAmount &&
-                    add_info.fiscalReceiptDate &&
-                    add_info.zRepNumber
-                ) {
+                // is it a receipt data?
+                if (add_info.fiscalReceiptNumber && add_info.fiscalReceiptAmount && add_info.fiscalReceiptDate && add_info.zRepNumber) {
                     // TODO
                     // sender.chrome.screens['receipt'].lock_screen(false);
-                    order = self.order;
+                    var order = self.order;
                     order._printed = true;
                     if (!order.fiscal_receipt_number) {
-                        order.fiscal_receipt_number = parseInt(
-                            add_info.fiscalReceiptNumber,
-                            10
-                        );
-                        order.fiscal_receipt_amount = parseFloat(
-                            add_info.fiscalReceiptAmount.replace(",", ".")
-                        );
-                        var fiscalReceiptDate = new Date(
-                            add_info.fiscalReceiptDate.replace(
-                                /(\d{1,2})\/(\d{1,2})\/(\d{4})/,
-                                "$3/$2/$1"
-                            )
-                        );
-                        order.fiscal_receipt_date = moment(fiscalReceiptDate).format(
-                            "YYYY-MM-DD"
-                        );
+                        order.fiscal_receipt_number = parseInt(add_info.fiscalReceiptNumber);
+                        order.fiscal_receipt_amount = parseFloat(add_info.fiscalReceiptAmount.replace(',', '.'));
+                        var fiscalReceiptDate = new Date(add_info.fiscalReceiptDate.replace(/(\d{1,2})\/(\d{1,2})\/(\d{4})/, '$3/$2/$1'));
+                        order.fiscal_receipt_date = moment(fiscalReceiptDate).format('YYYY-MM-DD');
                         order.fiscal_z_rep_number = add_info.zRepNumber;
-                        order.fiscal_printer_serial =
-                            sender.env.pos.config.fiscal_printer_serial;
+                        order.fiscal_printer_serial = sender.env.pos.config.fiscal_printer_serial;
                         sender.env.pos.db.add_order(order.export_as_JSON());
-                        // Try to save the order
+                        // try to save the order
                         // TODO is push_orders or push_single_order
                         // sender.env.pos.push_orders();
                         // sender.env.pos.push_single_order();
                     }
-                    if (sender.env.pos.config.fiscal_cashdrawer) {
+                    if(sender.env.pos.config.fiscal_cashdrawer)
+                    {
                         self.printOpenCashDrawer();
                         self.resetPrinter();
                     }
@@ -261,29 +203,28 @@ odoo.define("fiscal_epos_print.epson_epos_print", function (require) {
                     }
                     return;
                 }
-            };
-            this.fiscalPrinter.onerror = function () {
+            }
+            this.fiscalPrinter.onerror = function() {
                 // TODO not exist
                 // sender.chrome.loading_hide();
                 // sender.chrome.screens['receipt'].lock_screen(true);
                 // TODO is this correct?
-                Gui.showPopup("ErrorPopup", {
-                    title: _t("Network error"),
-                    body: _t("Printer can not be reached"),
+                Gui.showPopup('ErrorPopup', {
+                    'title': _t('Network error'),
+                    'body': _t('Printer can not be reached')
                 });
-            };
+            }
         },
 
         encodeXml: function (string) {
             var xml_special_to_escaped_one_map = {
-                "&": "&amp;",
-                '"': "&quot;",
-                "<": "&lt;",
-                ">": "&gt;",
+                '&': '&amp;',
+                '"': '&quot;',
+                '<': '&lt;',
+                '>': '&gt;'
             };
 
-            // eslint-disable-next-line
-            return string.replace(/([\&"<>])/g, function (str, item) {
+            return string.replace(/([\&"<>])/g, function(str, item) {
                 return xml_special_to_escaped_one_map[item];
             });
         },
@@ -291,283 +232,229 @@ odoo.define("fiscal_epos_print.epson_epos_print", function (require) {
         /*
           Prints a sale item line.
         */
-        printRecItem: function (args) {
-            var tag =
-                "<printRecItem" +
-                ' description="' +
-                this.encodeXml(args.description || "") +
-                '"' +
-                ' quantity="' +
-                (args.quantity || "1") +
-                '"' +
-                ' unitPrice="' +
-                (args.unitPrice || "") +
-                '"' +
-                ' department="' +
-                (args.department || "1") +
-                '"' +
-                ' justification="' +
-                (args.justification || "1") +
-                '"' +
-                ' operator="' +
-                (args.operator || "1") +
-                '"' +
-                " />";
+        printRecItem: function(args) {
+            var tag = '<printRecItem'
+                + ' description="' + this.encodeXml(args.description || '') + '"'
+                + ' quantity="' + (args.quantity || '1') + '"'
+                + ' unitPrice="' + (args.unitPrice || '') + '"'
+                + ' department="' + (args.department || '1') + '"'
+                + ' justification="' + (args.justification || '1') + '"'
+                + ' operator="' + (args.operator || '1') + '"'
+                + ' />';
             return tag;
         },
 
         /*
           Prints a sale refund item line.
         */
-        printFiscalRefundDetails: function (args) {
-            var message =
-                "REFUND " +
-                addPadding(args.refund_report) +
-                " " +
-                addPadding(args.refund_doc_num) +
-                " " +
-                // Day
-                args.refund_date.substr(8, 2) +
-                // Month
-                args.refund_date.substr(5, 2) +
-                // Year
-                args.refund_date.substr(0, 4) +
-                " " +
-                args.refund_cash_fiscal_serial;
+        printFiscalRefundDetails: function(args) {
+            var message = 'REFUND ' +
+                addPadding(args.refund_report) + ' ' +
+                addPadding(args.refund_doc_num) + ' ' +
+                args.refund_date.substr(8, 2) + // day
+                args.refund_date.substr(5, 2) + // month
+                args.refund_date.substr(0, 4) + // year
+                ' ' + args.refund_cash_fiscal_serial;
 
-            var tag =
-                "<printRecMessage" +
-                ' messageType="4" message="' +
-                this.encodeXml(message) +
-                '" font="1" index="1"' +
-                ' operator="' +
-                (args.operator || "1") +
-                '"' +
-                " />\n";
+            var tag = '<printRecMessage operator="' + (args.operator || '1') + '"'
+                + ' messageType="4" message="' + this.encodeXml(message) + '" font="1" index="1"'
+                + ' />\n';
             return tag;
         },
 
         /*
           Prints a sale refund item line.
+          Prints refund items on a commercial refund document if flag SET 14/58 = 1 (from display 3333 > 14 > 58 > X).
         */
-        printRecRefund: function (args) {
-            var tag =
-                "<printRecRefund" +
-                ' description="' +
-                this.encodeXml(args.description || "") +
-                '"' +
-                ' quantity="' +
-                (args.quantity || "1") +
-                '"' +
-                ' unitPrice="' +
-                (args.unitPrice || "") +
-                '"' +
-                ' department="' +
-                (args.department || "1") +
-                '"' +
-                ' justification="' +
-                (args.justification || "1") +
-                '"' +
-                ' operator="' +
-                (args.operator || "1") +
-                '"' +
-                " />";
+        printRecRefund: function(args) {
+            var tag = '<printRecRefund'
+                + ' operator="' + (args.operator || '1') + '"'
+                + ' description="' + this.encodeXml(args.description || '') + '"'
+                + ' quantity="' + (args.quantity || '1') + '"'
+                + ' unitPrice="' + (args.unitPrice || '') + '"'
+                + ' department="' + (args.department || '1') + '"'
+                + ' justification="' + (args.justification || '1') + '"'
+                + ' />';
             return tag;
         },
 
         /*
           Adds a discount to the last line.
         */
-        printRecItemAdjustment: function (args) {
-            var tag =
-                "<printRecItemAdjustment" +
-                ' operator="' +
-                (args.operator || "1") +
-                '"' +
-                ' adjustmentType="' +
-                (args.adjustmentType || 0) +
-                '"' +
-                ' description="' +
-                this.encodeXml(args.description || "") +
-                '"' +
-                ' amount="' +
-                (args.amount || "") +
-                '"' +
-                ' department="' +
-                (args.department || "") +
-                '"' +
-                ' justification="' +
-                (args.justification || "2") +
-                '"' +
-                " />";
+        printRecItemAdjustment: function(args) {
+            var tag = '<printRecItemAdjustment'
+                + ' operator="' + (args.operator || '1') + '"'
+                + ' adjustmentType="' + (args.adjustmentType || 0) + '"'
+                + ' description="' + this.encodeXml(args.description || '' ) + '"'
+                + ' amount="' + (args.amount || '') + '"'
+                + ' department="' + (args.department || '') + '"'
+                + ' justification="' + (args.justification || '2') + '"'
+                + ' />';
             return tag;
         },
 
         /*
           Prints a payment.
         */
-        printRecTotal: function (args) {
-            var tag =
-                "<printRecTotal" +
-                ' operator="' +
-                (args.operator || "1") +
-                '"' +
-                ' description="' +
-                this.encodeXml(args.description || _t("Payment")) +
-                '"' +
-                ' payment="' +
-                (args.payment || "") +
-                '"' +
-                ' paymentType="' +
-                (args.paymentType || "0") +
-                '"' +
-                ' index="' +
-                (args.paymentIndex || "0") +
-                '"' +
-                " />";
+        printRecTotal: function(args) {
+            var tag = '<printRecTotal'
+                + ' operator="' + (args.operator || '1') + '"'
+                + ' description="' + this.encodeXml(args.description || _t('Payment')) + '"'
+                + ' payment="' + (args.payment || '') + '"'
+                + ' paymentType="' + (args.paymentType || '0') + '"'
+                + ' index="' + (args.paymentIndex || '0') + '"'
+                + ' />';
             return tag;
         },
 
-        printRecTotalRefund: function (args) {
-            var tag = '<printRecTotal operator="' + (args.operator || "1") + '" />';
+        printRecTotalRefund: function(args) {
+            var tag = '<printRecTotal'
+                + ' operator="' + (args.operator || '1') + '"'
+                + ' description="' + this.encodeXml(args.description || _t('Payment')) + '"'
+                + ' payment="' + (args.payment || '') + '"'
+                + ' paymentType="' + (args.paymentType || '0') + '"'
+                + ' index="' + (args.paymentIndex || '1') + '"'
+                + ' justification="' + (args.paymentjustification || '1') + '"'
+                + ' />';
             return tag;
         },
 
         // Remember that the header goes after <printerFiscalReceipt>
-        // but before <beginFiscalReceipt /> otherwise it will not be printed
+        // but before <beginFiscalReceipt operator="1"/> otherwise it will not be printed
         // as additional header messageType=1
-        printFiscalReceiptHeader: function (receipt) {
+        printFiscalReceiptHeader: function(receipt){
             var self = this;
-            var msg = "";
-            if (receipt.header !== "" && receipt.header.length > 0) {
+            var msg = '';
+            if (receipt.header != '' && receipt.header.length > 0) {
                 var hdr = receipt.header.split(/\r\n|\r|\n/);
-                _.each(hdr, function (m, i) {
-                    msg +=
-                        "<printRecMessage" +
-                        ' messageType="1" message="' +
-                        self.encodeXml(m) +
-                        '" font="1" index="' +
-                        (i + 1) +
-                        '"' +
-                        ' operator="' +
-                        (receipt.operator || "1") +
-                        '" />';
-                });
+                _.each(hdr, function(m, i) {
+                    msg += '<printRecMessage' + ' messageType="1" message="' + self.encodeXml(m)
+                         + '" font="1" index="' + (i+1) + '"'
+                         + ' operator="' + (receipt.operator || '1') + '" />'
+                    });
             }
             return msg;
         },
 
-        // Remember that the footer goes within <printerFiscalReceipt><beginFiscalReceipt />
-        // as PROMO code messageType=3
-        printFiscalReceiptFooter: function (receipt) {
+        // Stampa del CF Su Scontrino - modalità definita da epson
+
+        printFiscaldirectIOCodiceFiscale: function(receipt){
             var self = this;
-            var msg = "";
-            if (receipt.footer !== "" && receipt.footer.length > 0) {
-                var hdr = receipt.footer.split(/\r\n|\r|\n/);
-                _.each(hdr, function (m, i) {
-                    msg +=
-                        "<printRecMessage" +
-                        ' messageType="3" message="' +
-                        self.encodeXml(m) +
-                        '" font="1" index="' +
-                        (i + 1) +
-                        '"' +
-                        ' operator="' +
-                        (receipt.operator || "1") +
-                        '" />';
-                });
+            var msg = '';
+            if (receipt.header != '' && receipt.header.length > 0) {
+                var hdr = receipt.header.split(/\r\n|\r|\n/);
+                _.each(hdr, function(m, i) {
+                    if(self.encodeXml(m)){
+                        msg += '<directIO' + ' command="1061" data="01' + self.encodeXml(m) + '" />'
+                    }
+
+                    });
             }
             return msg;
         },
 
-        printDisplayText: function (msg) {
-            var xml =
-                "<printerCommand>" +
-                "<displayText " +
-                ' operator="1" text="' +
-                this.encodeXml(msg || "") +
-                '"' +
-                " /></printerCommand>";
+        // Remember that the footer goes within <printerFiscalReceipt><beginFiscalReceipt operator="1" />
+        // as PROMO code messageType=3
+        printFiscalReceiptFooter: function(receipt){
+            var self = this;
+            var msg = '';
+            if (receipt.footer != '' && receipt.footer.length > 0) {
+                var hdr = receipt.footer.split(/\r\n|\r|\n/);
+                _.each(hdr, function(m, i) {
+                    msg += '<printRecMessage' + ' messageType="3" message="' + self.encodeXml(m)
+                         + '" font="1" index="' + (i+1) + '"'
+                         + ' operator="' + (receipt.operator || '1') + '" />'
+                    });
+            }
+            return msg;
+        },
+
+        printDisplayText: function(msg) {
+            var xml = '<printerCommand>'
+                + '<displayText '
+                + ' operator="1" text="' + this.encodeXml(msg || '') + '"'
+                + ' /></printerCommand>';
             this.fiscalPrinter.send(this.url, xml);
         },
 
         /*
         Print the order.id into fiscal receipt for the refund
         */
-        printOrderId: function (receipt) {
-            var message = receipt.name;
-            // <printRecMessage operator="1" message="Second Additional Row Type 3" messageType="3" index="2" font="1" />
-            var tag =
-                "<printRecMessage" +
-                ' messageType="3" message="' +
-                this.encodeXml(message) +
-                '" font="1" index="4"' +
-                ' operator="' +
-                (receipt.operator || "1") +
-                '"' +
-                " />\n";
+        printOrderId: function(receipt) {
+            var message = (receipt.name)
+//<printRecMessage operator="1" message="Second Additional Row Type 3" messageType="3" index="2" font="1" />
+            var tag = '<printRecMessage'
+                + ' operator="' + (receipt.operator || '1') + '"'
+                + ' messageType="3" message="' + this.encodeXml(message) + '" font="1" index="4"'
+                + ' />\n';
             return tag;
         },
 
         /*
           Prints a receipt
         */
-        printFiscalReceipt: function (receipt) {
+        printFiscalReceipt: function(receipt) {
             var self = this;
-            var has_refund = _.every(receipt.orderlines, function (line) {
+            var has_refund = _.every(receipt.orderlines, function(line) {
                 return line.quantity < 0;
             });
-            var xml = "<printerFiscalReceipt><beginFiscalReceipt/>";
-            // Header must be printed before beginning a fiscal receipt
-            xml += this.printFiscalReceiptHeader(receipt);
+            // TODO check if the printer is fiscalized it require "beginFiscalReceipt" tag
+            var xml = '<printerFiscalReceipt>';//<beginFiscalReceipt operator="1" />';
+            // header must be printed before beginning a fiscal receipt
+
+            //xml += this.printFiscalReceiptHeader(receipt);
+
+            xml += this.printFiscaldirectIOCodiceFiscale(receipt);
+
             // TODO now it's seems to be mandatory for refund too
-            // if (!has_refund) {
-            //     xml += '<beginFiscalReceipt/>';
-            // }
-            if (has_refund) {
+//            if (!has_refund) {
+//                xml += '<beginFiscalReceipt operator="1" />';
+//            }
+            if (has_refund)
+            {
                 xml += this.printFiscalRefundDetails({
-                    refund_date: receipt.refund_date,
-                    refund_report: receipt.refund_report,
-                    refund_doc_num: receipt.refund_doc_num,
-                    refund_cash_fiscal_serial: receipt.refund_cash_fiscal_serial,
-                });
+                        refund_date: receipt.refund_date,
+                        refund_report: receipt.refund_report,
+                        refund_doc_num: receipt.refund_doc_num,
+                        refund_cash_fiscal_serial: receipt.refund_cash_fiscal_serial});
+                xml += '<beginFiscalReceipt operator="1" />';
             }
-            _.each(receipt.orderlines, function (l) {
+            _.each(receipt.orderlines, function(l, i, list) {
                 if (l.price >= 0) {
-                    if (l.quantity >= 0) {
+                    if(l.quantity>=0) {
                         xml += self.printRecItem({
                             description: l.product_name,
                             quantity: l.quantity,
                             unitPrice: l.full_price,
-                            department: l.tax_department.code,
+                            department: l.tax_department.code
                         });
                         if (l.discount) {
                             xml += self.printRecItemAdjustment({
                                 adjustmentType: 0,
-                                description: _t("Discount") + " " + l.discount + "%",
-                                amount: round_pr(
-                                    l.quantity * l.full_price - l.price_display,
-                                    self.sender.env.pos.currency.rounding
-                                ),
+                                description: _t('Discount') + ' ' + l.discount + '%',
+                                amount: round_pr((l.quantity * l.full_price) - l.price_display, self.sender.env.pos.currency.rounding),
                             });
                         }
-                    } else {
+                    }
+                    else
+                    {
                         xml += self.printRecRefund({
-                            description: _t("Refund >>> ") + l.product_name,
+                            description: _t('Refund >>> ') + l.product_name,
                             quantity: l.quantity * -1.0,
                             unitPrice: l.price,
-                            department: l.tax_department.code,
+                            department: l.tax_department.code
                         });
 
                         // TODO This line of code is added by us, check if it's right
-                        xml += self.printRecItem({
-                            description: _t("Refund cash"),
-                            quantity: l.quantity * -1.0,
-                            unitPrice: l.price,
-                            department: l.tax_department.code,
-                        });
+//                        xml += self.printRecItem({
+//                            description: _t('Refund cash'),
+//                            quantity: l.quantity * -1.0,
+//                            unitPrice: l.price,
+//                            department: l.tax_department.code
+//                        });
                     }
-                } else {
+                }
+                else {
                     xml += self.printRecItemAdjustment({
                         adjustmentType: 3,
                         description: l.product_name,
@@ -576,31 +463,38 @@ odoo.define("fiscal_epos_print.epson_epos_print", function (require) {
                     });
                 }
             });
-            // Footer can go only as promo code so within a fiscal receipt body
+            // footer can go only as promo code so within a fiscal receipt body
             xml += this.printFiscalReceiptFooter(receipt);
             if (receipt.lottery_code) {
                 // TX
                 // 1 135   OP   ID CODE   NU
                 // Example: 113501ABCDEFGN        0000
                 // Pad with spaces to make the code field always 16 characters.
-                xml +=
-                    '<directIO command="1135" data="01' +
-                    receipt.lottery_code.padEnd(16, " ") +
-                    '0000" />';
+                xml += '<directIO command="1135" data="01' + receipt.lottery_code.padEnd(16, ' ') + '0000" />';
             }
             // TODO is always the same Total for refund and payments?
-            _.each(receipt.paymentlines, function (l) {
-                // Amount always positive because it's used for refund too
-                xml += self.printRecTotal({
+            _.each(receipt.paymentlines, function(l, i, list) {
+                // amount always positive because it's used for refund too
+                if (!has_refund){
+                    xml += self.printRecTotal({
                     payment: Math.abs(l.amount),
                     paymentType: l.type,
                     paymentIndex: l.type_index,
                     description: l.journal,
-                });
+                    });
+                } else if (has_refund) {
+                    xml += self.printRecTotalRefund({
+                    payment: Math.abs(l.amount),
+                    paymentType: l.type,
+                    paymentIndex: l.type_index,
+                    description: l.journal,
+                    });
+                }
+
             });
-            // If (has_refund) {
-            //     xml += self.printRecTotalRefund({});
-            // }
+//             if (has_refund) {
+//                 xml += self.printRecTotalRefund({});
+//             }
             // else {
             //     _.each(receipt.paymentlines, function(l, i, list) {
             //         xml += self.printRecTotal({
@@ -611,8 +505,9 @@ odoo.define("fiscal_epos_print.epson_epos_print", function (require) {
             //         });
             //     });
             // }
-            xml += this.printOrderId(receipt);
-            xml += "<endFiscalReceipt /></printerFiscalReceipt>";
+            xml += '<endFiscalReceipt operator="1" />'
+            xml += this.printOrderId(receipt)
+            xml += '</printerFiscalReceipt>';
             this.fiscalPrinter.send(this.url, xml);
             console.log(xml);
         },
@@ -620,67 +515,79 @@ odoo.define("fiscal_epos_print.epson_epos_print", function (require) {
         /*
         DON'T USE, this fiscal closure is forbid by Epson by default
         */
-        printFiscalReport: function () {
-            var xml = "<printerFiscalReport>";
+        printFiscalReport: function() {
+            var xml = '<printerFiscalReport>';
             xml += '<printZReport operator="1" timeout="" />';
-            xml += "</printerFiscalReport>";
-            this.fiscalPrinter.send(this.url, xml);
+            xml += '</printerFiscalReport>';
+            var res = this.fiscalPrinter.send(this.url, xml);
         },
 
         /*
         It prints report and fiscal closure both
         */
-        printFiscalXZReport: function () {
-            var xml = "<printerFiscalReport>";
+        printFiscalXZReport: function() {
+            var xml = '<printerFiscalReport>';
             xml += '<displayText operator="1" data="Stampa chiusura giornaliera" />';
             xml += '<printXZReport operator="1" timeout="" />';
-            xml += "</printerFiscalReport>";
-            this.fiscalPrinter.send(this.url, xml);
+            xml += '</printerFiscalReport>';
+            var res = this.fiscalPrinter.send(this.url, xml);
         },
 
-        printFiscalXReport: function () {
-            var xml = "<printerFiscalReport>";
+        printFiscalXReport: function() {
+            var xml = '<printerFiscalReport>';
             xml += '<printXReport operator="1" />';
-            xml += "</printerFiscalReport>";
+            xml += '</printerFiscalReport>';
             this.fiscalPrinter.send(this.url, xml);
         },
 
-        getStatusOfFilesForADE: function () {
-            var xml = "<printerCommand>";
+        getStatusOfFilesForADE: function() {
+            var xml = '<printerCommand>';
             xml += '<directIO command="1138" data="01" />';
-            xml += "</printerCommand>";
+            xml += '</printerCommand>';
             this.fiscalPrinter.send(this.url, xml);
         },
 
         /*
-        It need to be logged in to print the duplicate, the pw in data is 0212345 plus 93 spaces, total 100 chars
+        it need to be logged in to print the duplicate, the pw in data is 0212345 plus 93 spaces, total 100 chars
         */
-        printFiscalReprintLast: function () {
-            var xml = "<printerCommand>";
-            xml +=
-                '<directIO command="4038" data="0212345                                                                                             " comment="Login password 0212345 followed by 93 spaces for a length of 100" />';
-            xml += '<printDuplicateReceipt operator="1" />';
-            xml += "</printerCommand>";
+        printFiscalReprintLast: function() {
+//            var xml = '<printerCommand>';
+//                xml += '<directIO command="4038" data="0212345                                                                                             " comment="Login password 0212345 followed by 93 spaces for a length of 100" />';
+//            xml += '</printerCommand>';
+
+            var xml = '<printerCommand>'
+                xml += '<directIO command="1047" data="01" />'
+            xml += '</printerCommand>'
+
+//            var xml = '<printerNonFiscal>';
+//                xml += '<beginNonFiscal operator="1" />';
+//                    xml += '<printDuplicateReceipt operator="1" />';
+//                xml += '<endNonFiscal operator="1" />';
+//            xml += '</printerNonFiscal>';
+//            xml += '<printDuplicateReceipt operator="1" />'
             this.fiscalPrinter.send(this.url, xml);
         },
 
-        printOpenCashDrawer: function () {
-            var xml = "<printerCommand>";
+        printOpenCashDrawer: function() {
+            var xml = '<printerCommand>';
             xml += '<openDrawer operator="1"/>';
-            xml += "</printerCommand>";
+            xml += '</printerCommand>';
             this.fiscalPrinter.send(this.url, xml);
         },
 
-        resetPrinter: function () {
-            var xml = "<printerCommand>";
+        resetPrinter: function(){
+
+            var xml = '<printerCommand>';
             xml += '<displayText operator="" data="Welcome" />';
             xml += '<resetPrinter operator="1" />';
-            xml += "</printerCommand>";
+            xml += '</printerCommand>';
             this.fiscalPrinter.send(this.url, xml);
         },
+
     });
 
     return {
-        eposDriver: eposDriver,
-    };
+        eposDriver: eposDriver
+    }
+
 });
