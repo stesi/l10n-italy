@@ -44,7 +44,9 @@ class AccountMove(models.Model):
                 base_amount = sum(
                     margin_tax_lines.filtered(lambda t: t.margin > 0).mapped('margin'))
                 tax_base_amount = am.amount_untaxed
+                base_amount = base_amount/(1+tax_id.orig_percentage/100)
                 tax_amount = base_amount* tax_id.orig_percentage / 100
+
 
                 invoice_repartition_line_id = tax_id.invoice_repartition_line_ids.filtered(
                     lambda l: l.factor_percent == 100 and l.repartition_type == 'tax')
