@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<!-- TODO THIS XML MUST BE DISTRIBUTED IN THE PROPER COMPONENT FILE -->
+<?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
 
     <!-- Moved inside EpostonEPOSButton.xml -->
@@ -8,22 +9,22 @@
         </div>
     </t> -->
 
-    <t t-extend="PosTicket">
-        <t t-jquery="div[class='pos-sale-ticket']" t-operation="after">
-            <div class="button disabled receipt-sent" t-if="!order.is_to_invoice()">
-                Receipt sent to the printer
-            </div>
-            <div class="button disabled invoice-recorded" t-if="order.is_to_invoice()">
-                Invoice recorded
-            </div>
-            <div class="button disabled printing-error" style="display:none">
-                Printing error
-            </div>
-            <div class="button highlight printing-retry" style="display:none">
-                Retry
-            </div>
-        </t>
-    </t>
+<!--    <t t-extend="PosTicket">-->
+<!--        <t t-jquery="div[class='pos-sale-ticket']" t-operation="after">-->
+<!--            <div class="button disabled receipt-sent" t-if="!order.is_to_invoice()">-->
+<!--                Receipt sent to the printer-->
+<!--            </div>-->
+<!--            <div class="button disabled invoice-recorded" t-if="order.is_to_invoice()">-->
+<!--                Invoice recorded-->
+<!--            </div>-->
+<!--            <div class="button disabled printing-error" style="display:none">-->
+<!--                Printing error-->
+<!--            </div>-->
+<!--            <div class="button highlight printing-retry" >-->
+<!--                Retry-->
+<!--            </div>-->
+<!--        </t>-->
+<!--    </t>-->
 
     <t t-extend="ReceiptScreenWidget">
         <t t-jquery="div[class='button print']" t-operation="attributes">
