@@ -440,7 +440,7 @@ odoo.define("fiscal_epos_print.epson_epos_print", function (require) {
                     {
                         xml += self.printRecRefund({
                             description: _t('Refund >>> ') + l.product_name,
-                            quantity: l.quantity * -1.0,
+                            quantity: l.quantity,
                             unitPrice: l.price,
                             department: l.tax_department.code
                         });
