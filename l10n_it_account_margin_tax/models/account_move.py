@@ -56,10 +56,10 @@ class AccountMove(models.Model):
                 invoice_repartition_line_id =  invoice_repartition_line_id.id.origin if isinstance(invoice_repartition_line_id.id,models.NewId) else invoice_repartition_line_id.id
                 vals_debit = {
                     "name": _("Margin Tax Debit"),
-                    "partner_id": self.partner_id.id,
-                    "account_id": self.company_id.mt_account_id.id,
-                    "journal_id": self.journal_id.id,
-                    "date": self.invoice_date,
+                    "partner_id": am.partner_id.id,
+                    "account_id": am.company_id.mt_account_id.id,
+                    "journal_id": am.journal_id.id,
+                    "date": am.invoice_date,
                     "debit": tax_amount,
                     "credit": 0,
                     "exclude_from_invoice_tab": True,
@@ -70,10 +70,10 @@ class AccountMove(models.Model):
                 }
                 vals_credit = {
                     "name": _("Margin Tax Credit"),
-                    "partner_id": self.partner_id.id,
+                    "partner_id": am.partner_id.id,
                     "account_id": account_id_default.id,
-                    "journal_id": self.journal_id.id,
-                    "date": self.invoice_date,
+                    "journal_id": am.journal_id.id,
+                    "date": am.invoice_date,
                     "debit": 0,
                     "credit": tax_amount,
                     "exclude_from_invoice_tab": True,
