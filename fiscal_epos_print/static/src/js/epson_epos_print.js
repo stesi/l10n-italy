@@ -561,10 +561,10 @@ odoo.define("fiscal_epos_print.epson_epos_print", function (require) {
 
                         // TODO This line of code is added by us, check if it's right
                         xml += self.printRecItem({
-                            description: _t("Refund cash"),
+                            description: _t('Refund cash'),
                             quantity: l.quantity * -1.0,
                             unitPrice: l.price,
-                            department: l.tax_department.code,
+                            department: l.tax_department.code
                         });
                     }
                 } else {
