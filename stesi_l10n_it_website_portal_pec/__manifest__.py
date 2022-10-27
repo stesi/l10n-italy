@@ -14,6 +14,7 @@
         "website_sale"
     ],
     "data": [
+        'data/data.xml',
         "views/portal_templates.xml",
     ],
     "auto_install": True,
