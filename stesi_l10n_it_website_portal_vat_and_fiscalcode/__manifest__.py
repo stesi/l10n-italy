@@ -14,6 +14,7 @@
         "website_sale"
     ],
     "data": [
+        'data/data.xml',
         "views/portal_templates.xml",
     ],
     'pre_init_hook': '_pre_init_check_module',
