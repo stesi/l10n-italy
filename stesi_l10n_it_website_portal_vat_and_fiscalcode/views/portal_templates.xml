@@ -2,7 +2,7 @@
 <odoo>
     <template id="address_b2b_fiscalcode" inherit_id="website_sale.address" name="Show b2b fields fiscalcode" customize_show="True">
         <xpath expr="//div[@id='div_phone']" position="after">
-            <t t-if="(can_edit_vat or 'vat' in checkout and checkout['vat'])">
+            <t t-if="(can_edit_vat or 'vat' in checkout and checkout['vat']) or mode == ('new', 'billing') or (mode == ('edit', 'billing'))">
                 <div t-attf-class="form-group #{error.get('fiscalcode') and 'o_has_error' or ''} col-lg-6 div_fiscalcode">
                     <label class="col-form-label font-weight-normal label-optional" for="vat">Fiscal Code </label>
                     <t t-set="vat_not_editable_message">Changing Fiscal Code number is not allowed once document(s) have been issued for your account. Please contact us directly for this operation.</t>
@@ -31,18 +31,18 @@
                     t-att-readonly="None if partner.can_edit_vat() and not partner.vat else '1'"
                     t-att-title="None if partner.can_edit_vat() else 'Changing Fiscal Code is not allowed once document(s) have been issued for your account. Please contact us directly for this operation.'"/>
             </div>
-            <t>
-                <div t-attf-class="form-group #{error.get('vat') and 'o_has_error' or ''} col-xl-6">
-                    <label class="col-form-label label-optional" for="vat">Vat</label>
-                    <input
-                        type="text"
-                        name="vat"
-                        t-attf-class="form-control #{error.get('vat') and 'is-invalid' or ''}"
-                        t-att-value="vat or partner.vat"
-                        t-att-readonly="None if partner.can_edit_vat() and not partner.vat else '1'"
-                        t-att-title="None if partner.can_edit_vat() else 'Changing Fiscal Code is not allowed once document(s) have been issued for your account. Please contact us directly for this operation.'"/>
-                </div>
-            </t>
+<!--            <t>-->
+<!--                <div t-attf-class="form-group #{error.get('vat') and 'o_has_error' or ''} col-xl-6">-->
+<!--                    <label class="col-form-label label-optional" for="vat">Vat</label>-->
+<!--                    <input-->
+<!--                        type="text"-->
+<!--                        name="vat"-->
+<!--                        t-attf-class="form-control #{error.get('vat') and 'is-invalid' or ''}"-->
+<!--                        t-att-value="vat or partner.vat"-->
+<!--                        t-att-readonly="None if partner.can_edit_vat() and not partner.vat else '1'"-->
+<!--                        t-att-title="None if partner.can_edit_vat() else 'Changing Fiscal Code is not allowed once document(s) have been issued for your account. Please contact us directly for this operation.'"/>-->
+<!--                </div>-->
+<!--            </t>-->
         </xpath>
     </template>
 </odoo>
