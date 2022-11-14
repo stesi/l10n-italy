@@ -1,15 +1,22 @@
 <odoo>
-    <template id="address_b2b_sdi" inherit_id="website_sale.address" name="Show b2b fields SDI" customize_show="True">
-        <xpath expr="//div[@id='div_phone']" position="after">
-            <t t-value="website_sale_order.partner_id.country_id == request.env.ref('base.it') or request.session['geoip'].get('country_code') == 'IT'" t-set="is_italian"/>
-            <t t-if="is_italian and mode == ('new', 'billing') or (mode == ('edit', 'billing'))">
-                <div t-attf-class="form-group #{error.get('codice_destinatario') and 'o_has_error' or ''} col-lg-6" id="div_codice_destinatario">
-                    <label class="col-form-label" for="codice_destinatario">Codice SDI </label>
-                    <input type="text" name="codice_destinatario"
-                           t-att-readonly="None if not 'codice_destinatario' in checkout or not checkout['codice_destinatario'].replace('0000000','') else '1'"
-                           t-attf-class="form-control #{error.get('codice_destinatario') and 'is-invalid' or ''}"
-                           t-att-value="('codice_destinatario' in checkout and checkout['codice_destinatario'] or '0000000')"
-                           t-att-title="None if website_sale_order.partner_id.company_type in ['company'] else 'For change SDI you have to be a Company, if you are, please contact system Administrator.'"/>
+    <template id="extra_info" inherit_id="website_sale.extra_info">
+        <xpath expr="//div[hasclass('s_website_form_field')]" position="after">
+            <t t-value="website_sale_order.partner_id.country_id == request.env.ref('base.it')" t-set="is_italian"/>
+            <t t-if="is_italian">
+                <div class="form-group s_website_form_field col-12 s_website_form_custom "
+                     data-type="char" data-name="Field">
+                    <div class="row s_col_no_resize s_col_no_bgcolor">
+                        <label class="col-form-label col-sm-auto s_website_form_label " style="width: 200px"
+                               for="codice_destinatario">
+                            <span class="s_website_form_label_content">Codice SDI</span>
+                            <span class="s_website_form_mark"> *</span>
+                        </label>
+                        <div class="col-sm">
+                            <input type="text" class="form-control s_website_form_input" name="codice_destinatario"
+                                   placeholder="" id="codice_destinatario" t-att-value="website_sale_order.partner_id.codice_destinatario.replace('0000000','')"
+                                   t-att-readonly="'1' if website_sale_order.partner_id.codice_destinatario else None"/>
+                        </div>
+                    </div>
                 </div>
             </t>
         </xpath>
@@ -21,7 +28,8 @@
         inherit_id="portal.portal_my_details">
 
         <xpath expr="//div[hasclass('o_portal_details')]/div[1]/div[1]/div[7]" position="after">
-            <t>
+            <t t-value="partner.country_id == request.env.ref('base.it')" t-set="is_italian"/>
+            <t t-if="is_italian">
                 <div t-attf-class="form-group #{error.get('codice_destinatario') and 'o_has_error' or ''} col-xl-6">
                     <label class="col-form-label label-optional" for="codice_destinatario">Codice SDI</label>
                     <input

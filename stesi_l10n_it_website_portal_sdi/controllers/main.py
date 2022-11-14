@@ -1,21 +1,21 @@
-from odoo import _
+from odoo import _, http
 from odoo.exceptions import ValidationError
 from odoo.http import request
 
 from odoo.addons.portal.controllers.portal import CustomerPortal
-from odoo.addons.website_sale.controllers.main import WebsiteSale
+from odoo.addons.website_sale.controllers.main import WebsiteSale, WebsiteSaleForm
 
 CustomerPortal.OPTIONAL_BILLING_FIELDS.extend(["codice_destinatario"])
 
 
-class WebsiteSalePEC(WebsiteSale):
-
-    def _checkout_form_save(self, mode, checkout, all_values):
-        res = super(WebsiteSalePEC, self)._checkout_form_save(
-            mode, checkout, all_values)
-        partner_values = dict()
-        if 'codice_destinatario' not in checkout and 'codice_destinatario' in all_values:
-            partner_values['codice_destinatario'] = all_values['codice_destinatario']
-        if partner_values:
-            request.env['res.partner'].browse(res).sudo().write(partner_values)
+class WebsiteSaleFormSDI(WebsiteSaleForm):
+    @http.route('/website_form/shop.sale.order', type='http', auth="public", methods=['POST'], website=True)
+    def website_form_saleorder(self, **kwargs):
+        res = super(WebsiteSaleFormSDI, self).website_form_saleorder(**kwargs)
+        order = request.website.sale_get_order()
+        partner = order.partner_id
+        if partner and kwargs.get("codice_destinatario"):
+            partner.update({
+                'codice_destinatario': str(kwargs.get("codice_destinatario"))
+            })
         return res

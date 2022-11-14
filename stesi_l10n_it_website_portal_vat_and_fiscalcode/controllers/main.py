@@ -1,24 +1,26 @@
-from odoo import _
+from odoo import _, http
 from odoo.exceptions import ValidationError
 from odoo.http import request
 
 from odoo.addons.portal.controllers.portal import CustomerPortal
-from odoo.addons.website_sale.controllers.main import WebsiteSale
+from odoo.addons.website_sale.controllers.main import WebsiteSale, WebsiteSaleForm
 
 CustomerPortal.OPTIONAL_BILLING_FIELDS.extend(["fiscalcode", "vat"])
 
+class WebsiteSaleFormFiscalCode(WebsiteSaleForm):
+    @http.route('/website_form/shop.sale.order', type='http', auth="public", methods=['POST'], website=True)
+    def website_form_saleorder(self, **kwargs):
+        res = super(WebsiteSaleFormFiscalCode, self).website_form_saleorder(**kwargs)
+        order = request.website.sale_get_order()
+        partner = order.partner_id
+        if partner and kwargs.get("fiscalcode"):
+            partner.update({
+                'fiscalcode': str(kwargs.get("fiscalcode"))
+            })
+        return res
 
 class WebsiteSaleFiscalCode(WebsiteSale):
 
-    def _checkout_form_save(self, mode, checkout, all_values):
-        res = super(WebsiteSaleFiscalCode, self)._checkout_form_save(
-            mode, checkout, all_values)
-        partner_values = dict()
-        if 'fiscalcode' not in checkout and 'fiscalcode' in all_values:
-            partner_values['fiscalcode'] = all_values['fiscalcode']
-        if partner_values:
-            request.env['res.partner'].browse(res).sudo().write(partner_values)
-        return res
 
     def checkout_form_validate(self, mode, all_form_values, data):
         error, error_message = super().checkout_form_validate(
