@@ -14,7 +14,7 @@
                         <div class="col-sm">
                             <input type="text" class="form-control s_website_form_input" name="codice_destinatario"
                                    placeholder="" id="codice_destinatario" t-att-value="website_sale_order.partner_id.codice_destinatario.replace('0000000','')"
-                                   t-att-readonly="'1' if website_sale_order.partner_id.codice_destinatario else None"/>
+                                   t-att-readonly="'1' if website_sale_order.partner_id.codice_destinatario.replace('0000000','') else None"/>
                         </div>
                     </div>
                 </div>
