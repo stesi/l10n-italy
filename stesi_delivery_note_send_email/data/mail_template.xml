@@ -1,17 +1,31 @@
 <odoo>
-    <data>
+    <data noupdate="1">
         <record id="mail_template_send_delivery_note" model="mail.template">
             <field name="name">Delivery Note: Confirmation Email</field>
             <field name="model_id" ref="l10n_it_delivery_note.model_stock_delivery_note"/>
             <field name="subject">${object.company_id.name} | Delivery Note: ${object.name or 'n/a' }</field>
-            <field name="email_from">${(object.user_id.email_formatted or user.email_formatted) | safe}</field>
+            <field name="email_from">${(object.partner_sender_id.email_formatted or user.email_formatted) | safe}
+            </field>
             <field name="partner_to">${object.partner_id.id}</field>
             <field name="body_html" type="html">
-                <div style="margin: 0px; padding: 0px;">
-                    <p style="margin: 0px; padding: 0px; font-size: 12px;">
-                    </p>
-                </div>
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Hello ${object.partner_id.name},<br/><br/>
+        We are glad to inform you that your order has been shipped.
+        <br/><br/>
+        Please find your delivery order attached for more details.<br/><br/>
+        Thank you,
+        % if user.signature:
+            <br />
+            ${user.signature | safe}
+        % endif
+    </p>
+</div>
             </field>
+            <field name="report_template" ref="l10n_it_delivery_note.delivery_note_report_action"/>
+            <field name="report_name">${(object.name or 'Delivery Note').replace('/','_')}</field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="auto_delete" eval="True"/>
         </record>
     </data>
 </odoo>

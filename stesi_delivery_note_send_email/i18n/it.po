@@ -1,0 +1,265 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sparewash_custom
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-16 09:27+0000\n"
+"PO-Revision-Date: 2022-11-16 10:28+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: it\n"
+"X-Generator: Poedit 2.4.2\n"
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.product
+msgid "<b><i>DISPONIBILE *</i></b>"
+msgstr ""
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.product
+msgid "<b>DISPONIBILE</b>"
+msgstr ""
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.product
+msgid "<b>IN ARRIVO</b>"
+msgstr ""
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.product
+msgid "<b>NON DISPONIBILE</b>"
+msgstr ""
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.product
+msgid ""
+"<font style=\"font-size: 11px;\">Le lettere finali SW nel codice prodotto (SKU Stock Keeping Unit) individuano prodotti progettati e sviluppati espressamente da SpareWash per assicurare elevate performance tecniche al miglior prezzo. SpareWash esegue verifiche accurate su tutti i prodotti in vendita, la garanzia SpareWash ne assicura l’intercambiabilità / compatibilità con i codici ricambio specificati in ciascuna scheda prodotto.</font>\n"
+"                    <br/>\n"
+"                    <font style=\"font-size: 11px;\">\n"
+"            I prodotti garantiti per intercambiabilità / compatibilità con prodotti Ceccato non sono originali Ceccato, vengono realizzati da fornitori indipendenti selezionati e sono sempre coperti dalla garanzia SpareWash.</font>\n"
+"                    <br/>\n"
+"                    <font style=\"font-size: 11px;\">\n"
+"            Per richieste di informazioni o supporto post-vendita, ricorda di specificare il codice prodotto SpareWash di 8 cifre (SKU), sarà più semplice per i nostri tecnici aiutarti!\n"
+"                           &amp;nbsp;</font>\n"
+"                    <br/>"
+msgstr ""
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.product
+msgid ""
+"<i>\n"
+"                      <span style=\"font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif;&#10;mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;mso-ansi-language:&#10;IT;mso-fareast-language:EN-US;mso-bidi-language:AR-SA\">DISPONIBILE *&amp;nbsp;</span>\n"
+"                    </i>\n"
+"                    <span style=\"font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif;mso-fareast-font-family:&#10;Calibri;mso-fareast-theme-font:minor-latin;mso-ansi-language:IT;mso-fareast-language:&#10;EN-US;mso-bidi-language:AR-SA\"> =&amp;nbsp; disponibile presso il magazzino del nostro fornitore.</span>\n"
+"                    <br/>\n"
+"                    <br/>"
+msgstr ""
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.product
+msgid ""
+"<span><strong>Related Documents:</strong></span>\n"
+"                            <br/>"
+msgstr ""
+"<span><strong>Documenti correlati:</strong></span>\n"
+"                            <br/>"
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.product
+msgid "<span>Brand</span>"
+msgstr ""
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.product
+msgid "<span>Codice Prodotto (SKU): </span>"
+msgstr ""
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.report_sale_order_inherit
+msgid "<strong>Invoice address:</strong>"
+msgstr "<strong>Indirizzo di fatturazione:</strong>"
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.delivery_note_report_main_template
+msgid "<strong>Sale Orders N°: </strong>"
+msgstr "<strong>Ordine di Vendita N°: </strong>"
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.external_layout_background_inherit
+msgid "<strong>Sede operativa</strong>"
+msgstr ""
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.report_sale_order_inherit
+msgid "<strong>Shipping Address:</strong>"
+msgstr "<strong>Indirizzo di spedizione:<strong>"
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.product
+msgid "ATTACHMENTS"
+msgstr "ALLEGATI"
+
+#. module: sparewash_custom
+#: model:ir.model.fields,field_description:sparewash_custom.field_product_product__external_availability
+#: model:ir.model.fields,field_description:sparewash_custom.field_product_template__external_availability
+msgid "Available in third party warehouses"
+msgstr "Disponibile in magazzini di terzi"
+
+#. module: sparewash_custom
+#: model:ir.model,name:sparewash_custom.model_res_company
+msgid "Companies"
+msgstr "Aziende"
+
+#. module: sparewash_custom
+#: model:ir.model,name:sparewash_custom.model_base_document_layout
+msgid "Company Document Layout"
+msgstr "Struttura documento azienda"
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.product
+msgid "DESCRIPTION"
+msgstr "DESCRIZIONE"
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.product
+msgid "DISCLAIMER"
+msgstr ""
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.product
+msgid "Dimensioni imballo ("
+msgstr ""
+
+#. module: sparewash_custom
+#: model:ir.model.fields,field_description:sparewash_custom.field_base_document_layout__display_name
+#: model:ir.model.fields,field_description:sparewash_custom.field_product_product__display_name
+#: model:ir.model.fields,field_description:sparewash_custom.field_product_template__display_name
+#: model:ir.model.fields,field_description:sparewash_custom.field_product_template_attribute_value__display_name
+#: model:ir.model.fields,field_description:sparewash_custom.field_purchase_order_line__display_name
+#: model:ir.model.fields,field_description:sparewash_custom.field_res_company__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: sparewash_custom
+#: model:ir.model.fields,field_description:sparewash_custom.field_base_document_layout__id
+#: model:ir.model.fields,field_description:sparewash_custom.field_product_product__id
+#: model:ir.model.fields,field_description:sparewash_custom.field_product_template__id
+#: model:ir.model.fields,field_description:sparewash_custom.field_product_template_attribute_value__id
+#: model:ir.model.fields,field_description:sparewash_custom.field_purchase_order_line__id
+#: model:ir.model.fields,field_description:sparewash_custom.field_res_company__id
+msgid "ID"
+msgstr ""
+
+#. module: sparewash_custom
+#: model:ir.model.fields,field_description:sparewash_custom.field_base_document_layout____last_update
+#: model:ir.model.fields,field_description:sparewash_custom.field_product_product____last_update
+#: model:ir.model.fields,field_description:sparewash_custom.field_product_template____last_update
+#: model:ir.model.fields,field_description:sparewash_custom.field_product_template_attribute_value____last_update
+#: model:ir.model.fields,field_description:sparewash_custom.field_purchase_order_line____last_update
+#: model:ir.model.fields,field_description:sparewash_custom.field_res_company____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: sparewash_custom
+#: model:ir.model.fields,field_description:sparewash_custom.field_product_template_attribute_value__managed
+msgid "Managed"
+msgstr "Gestito"
+
+#. module: sparewash_custom
+#: model:ir.model.fields,field_description:sparewash_custom.field_product_product__manu_code
+#: model:ir.model.fields,field_description:sparewash_custom.field_product_template__manu_code
+msgid "Manu Code"
+msgstr ""
+
+#. module: sparewash_custom
+#: model:ir.model.fields,field_description:sparewash_custom.field_base_document_layout__operation_headquarter_id
+#: model:ir.model.fields,field_description:sparewash_custom.field_res_company__operation_headquarter_id
+msgid "Operation Headquarter"
+msgstr "Sede Operativa"
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.product
+msgid "Peso ("
+msgstr ""
+
+#. module: sparewash_custom
+#: model:ir.model,name:sparewash_custom.model_product_product
+msgid "Product"
+msgstr "Prodotto"
+
+#. module: sparewash_custom
+#: model:ir.model.fields,field_description:sparewash_custom.field_purchase_order_line__product_code_supplier
+msgid "Product Code Supplier"
+msgstr "Codice Prodotto Fornitore"
+
+#. module: sparewash_custom
+#: model:ir.model,name:sparewash_custom.model_product_template
+msgid "Product Template"
+msgstr "Modello prodotto"
+
+#. module: sparewash_custom
+#: model:ir.model,name:sparewash_custom.model_product_template_attribute_value
+msgid "Product Template Attribute Value"
+msgstr ""
+
+#. module: sparewash_custom
+#: model:ir.model,name:sparewash_custom.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "Riga ordine di acquisto"
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.delivery_note_report_main_template
+msgid "Ref:"
+msgstr "Rif:"
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.product
+msgid "SPECIFICATIONS"
+msgstr "SPECIFICHE"
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.product
+msgid "Sku"
+msgstr ""
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.add_fields_state_id
+msgid "State"
+msgstr "Stato"
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.product
+msgid "WEIGHT AND SIZE"
+msgstr "PESO E DIMENSIONI"
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.product_template_only_form_view
+msgid "Website Description"
+msgstr "Descrizione Sito Web"
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.products_item
+msgid "available"
+msgstr "Disponibile"
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.products_item
+msgid "external"
+msgstr "Esterno"
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.products_item
+msgid "incoming"
+msgstr "in arrivo"
+
+#. module: sparewash_custom
+#: model_terms:ir.ui.view,arch_db:sparewash_custom.products_item
+msgid "unavailable"
+msgstr "non disponibile"
