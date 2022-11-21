@@ -4,8 +4,7 @@
             <field name="name">Delivery Note: Confirmation Email</field>
             <field name="model_id" ref="l10n_it_delivery_note.model_stock_delivery_note"/>
             <field name="subject">${object.company_id.name} | Delivery Note: ${object.name or 'n/a' }</field>
-            <field name="email_from">${(object.partner_sender_id.email_formatted or user.email_formatted) | safe}
-            </field>
+            <field name="email_from">${(object.partner_sender_id.email_formatted or user.email_formatted) | safe}</field>
             <field name="partner_to">${object.partner_id.id}</field>
             <field name="body_html" type="html">
 <div style="margin: 0px; padding: 0px;">
