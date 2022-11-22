@@ -13,7 +13,10 @@ class WizardImportFatturapa(models.TransientModel):
         if fatturapa_in_search_by_default_code== 'True':
             if len(line.CodiceArticolo or []) == 1:
                 code = line.CodiceArticolo[0].CodiceValore
-                product = self.env['product.product'].search([('default_code','=',code)],limit=1)
+                product = self.env['product.supplierinfo'].search([('product_code', '=', code),('name','=',partner.id)], limit=1)
+                product = product.product_id
+                if len(product)==0:
+                    product = self.env['product.product'].search([('default_code','=',code)],limit=1)
         if fatturapa_in_search_by_default_code!= 'True' or len(product)==0:
             product= super(WizardImportFatturapa, self).get_line_product(line,partner)
         return product
