@@ -2,33 +2,6 @@
 <odoo>
 
 
-    <template id="l10n_it_fatturapa_out_fix.account_invoice_it_cessionario_committente"
-                  inherit_id="l10n_it_fatturapa_out.account_invoice_it_cessionario_committente">
-        <xpath
-            expr="//CessionarioCommittente/DatiAnagrafici/IdFiscaleIVA[@t-if='not in_eu(partner_id.commercial_partner_id)']"
-            position="replace">
-            <IdFiscaleIVA t-if="not in_eu(partner_id.commercial_partner_id) and not force_vat">
-                <IdPaese
-                    t-esc="partner_id.commercial_partner_id.country_id.code"
-                />
-                <IdCodice>99999999999</IdCodice>
-            </IdFiscaleIVA>
-        </xpath>
-        <xpath
-        expr="//CessionarioCommittente/DatiAnagrafici/IdFiscaleIVA[@t-if='in_eu(partner_id.commercial_partner_id) and partner_id.commercial_partner_id.vat']"
-        position="replace">
-            <IdFiscaleIVA t-if="(in_eu(partner_id.commercial_partner_id) or force_vat) and partner_id.commercial_partner_id.vat">
-            <IdPaese
-                t-esc="get_vat_country(partner_id.commercial_partner_id.vat)"
-            />
-            <IdCodice
-                t-esc="get_vat_number(partner_id.commercial_partner_id.vat)"
-            />
-            </IdFiscaleIVA>
-        </xpath>
-
-    </template>
-
     <record id="account_move_form_sp_fix" model="ir.ui.view">
         <field name="name">account.move.form.sp.fix</field>
         <field name="model">account.move</field>
