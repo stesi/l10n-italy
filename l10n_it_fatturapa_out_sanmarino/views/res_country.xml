@@ -6,7 +6,7 @@
         <field name="model">res.country</field>
         <field name="inherit_id" ref="base.view_country_form" />
         <field name="arch" type="xml">
-            <xpath expr="//group[@name='country_details']/field[@name='intrastat']" position="after">
+            <xpath expr="//field[@name='intrastat']" position="after">
                 <field name="force_export_vat" string="Force Export Vat in Invoice"/>
             </xpath>
         </field>

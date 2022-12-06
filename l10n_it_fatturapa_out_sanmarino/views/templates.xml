@@ -7,13 +7,13 @@
         <xpath
             expr="//CessionarioCommittente/DatiAnagrafici/IdFiscaleIVA[@t-if='not in_eu(partner_id.commercial_partner_id)']"
             position="attributes">
-            <attribute name="t-if">not in_eu(partner_id.commercial_partner_id) and not force_vat</attribute>
+            <attribute name="t-if">not in_eu(partner_id.commercial_partner_id) and not partner_id.force_export_vat</attribute>
 
         </xpath>
         <xpath
         expr="//CessionarioCommittente/DatiAnagrafici/IdFiscaleIVA[@t-if='in_eu(partner_id.commercial_partner_id) and partner_id.commercial_partner_id.vat']"
         position="attributes">
-            <attribute name="t-if">(in_eu(partner_id.commercial_partner_id) or force_vat) and partner_id.commercial_partner_id.vat</attribute>
+            <attribute name="t-if">(in_eu(partner_id.commercial_partner_id) or partner_id.force_export_vat) and partner_id.commercial_partner_id.vat</attribute>
 
         </xpath>
 

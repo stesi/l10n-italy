@@ -16,7 +16,8 @@
         "l10n_it_fatturapa_out",
     ],
     "data": [
-        'views/templates.xml'
+        'views/templates.xml',
+        'views/res_country.xml'
     ],
     "images": [
 
