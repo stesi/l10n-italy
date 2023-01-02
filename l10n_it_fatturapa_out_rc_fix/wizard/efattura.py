@@ -16,7 +16,7 @@ class EFatturaOut(_EFatturaOut):
         res = super(EFatturaOut, self).__init__(wizard, partner_id, invoices, progressivo_invio)
         invoice = invoices[0]
         if invoice.move_type in [
-            "out_invoice"
+            "out_invoice","out_refund"
         ] and invoice.fiscal_document_type_id.code in ["TD16", "TD17", "TD18", "TD19"]:
             related_invoice = invoice.env['account.move'].search([('rc_self_invoice_id.id', '=', invoice.id)])
             if len(related_invoice) > 0 and related_invoice[0].fiscal_position_id.rc_type_id.partner_id:
