@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="action_report_registro_iva_per_day" model="ir.actions.report">
+        <field name="name">Invoices VAT Registry</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">l10n_it_vat_registries.report_registro_iva_per_day</field>
+        <field name="report_file">l10n_it_vat_registries.report_registro_iva_per_day</field>
+        <field
+            name="paperformat_id"
+            ref="l10n_it_account.l10n_it_account_a4_landscape"
+        />
+    </record>
+
+    <!-- <record id="report_registro_iva_per_day" model="ir.ui.view">-->
+    <!--        <field name="name">res.partner.pec.tree</field>-->
+    <!--        <field name="model">res.partner</field>-->
+    <!--        <field name="inherit_id" ref="l10n_it_vat_registries.report_registro_iva" />-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <field name="email" position="after">-->
+    <!--                <field name="pec_mail" />-->
+    <!--            </field>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+    <template inherit_id="l10n_it_vat_registries.report_registro_iva" id="report_registro_iva_per_day">
+        <xpath expr="//t//t//table[1]" position="after">
+            <t t-set="lines_per_day" t-value="line_per_day(doc_ids,data)"/>
+            <t t-set="lines_to_print" t-value="lines_per_day[0]"/>
+
+            <table style="width:100%; font-size: small;" cellspacing="0" t-if="only_totals_per_day">
+                <thead>
+                    <tr
+                        style="page-break-inside: avoid"
+                        name="vat_header_invoice"
+                    >
+                        <th class="left_with_line_bottom">DATE</th>
+                        <th class="left_with_line_bottom">Tax description</th>
+                        <th class="left_with_line_bottom">Taxable</th>
+                        <th class="left_with_line_bottom">Tax</th>
+
+                        <th class="left_with_line_bottom">TOTAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="lines_to_print" t-as="line">
+                        <tr
+                            style="page-break-inside: avoid; border:1px solid #fff;"
+                            name="vat_body_invoice"
+                        >
+                            <!-- Data registrazione -->
+                            <td class="left_without_line_bold">
+                                <div
+                                    style="page-break-inside: avoid"
+                                    t-esc="format_date(line['invoice_date'],date_format)"
+                                />
+                            </td>
+                            <td class="left_without_line_bold">
+                                <div
+                                    style="page-break-inside: avoid"
+                                    t-esc="(line['tax_code_name'])"
+                                />
+                            </td>
+                            <td class="left_without_line_bold">
+                                <div
+                                    style="page-break-inside: avoid"
+                                    t-esc="formatLang(env, line['base'])"
+                                />
+                            </td>
+                            <td class="left_without_line_bold">
+                                <div
+                                    style="page-break-inside: avoid"
+                                    t-esc="formatLang(env, line['tax'])"
+                                />
+                            </td>
+                            <td class="left_without_line_bold">
+                                <div
+                                    style="page-break-inside: avoid"
+                                    t-esc="formatLang(env, line['tax']+line['base'])"
+                                />
+                            </td>
+
+
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+            <!--        <t t-set="lines_per_day" t-value="line_per_day(doc_ids,data)"/>-->
+            <!--        <t t-set="lines_to_print" t-value="lines_per_day[0]"/>-->
+            <!--              <t t-foreach="lines_to_print" t-as="line">-->
+            <!--                    <t-->
+            <!--                                    t-set="total_used_taxes"-->
+            <!--                                    t-value="total_used_taxes | lines_per_day[1]"-->
+            <!--                                />-->
+            <!--              </t>-->
+
+        </xpath>
+    </template>
+
+</odoo>
