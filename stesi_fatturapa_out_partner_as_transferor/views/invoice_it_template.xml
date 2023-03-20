@@ -1,0 +1,21 @@
+<odoo>
+    <template inherit_id="l10n_it_fatturapa_out_autofattura_fornitore.template_rpestatore_autof"
+              id="template_rpestatore_autof">
+        <xpath expr="//CedentePrestatore//DatiAnagrafici" position="before">
+
+            <t t-if="invoices[0].journal_id.partner_as_transferor">
+
+                <t t-set="partner_id" t-value="invoices[0].partner_id"/>
+            </t>
+        </xpath>
+    </template>
+
+    <template inherit_id="l10n_it_fatturapa_out_autofattura_fornitore.template_cessionario_autof"
+              id="template_cessionario_autof">
+        <xpath expr="//CessionarioCommittente//DatiAnagrafici" position="before">
+            <t t-if="invoices[0].journal_id.partner_as_transferor">
+                <t t-set="partner_id" t-value="company_id.partner_id"/>
+            </t>
+        </xpath>
+    </template>
+</odoo>
