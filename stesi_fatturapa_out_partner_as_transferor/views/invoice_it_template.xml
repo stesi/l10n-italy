@@ -18,4 +18,14 @@
             </t>
         </xpath>
     </template>
+
+    <template inherit_id="l10n_it_fatturapa_out.account_invoice_it_cedente_prestatore"
+              id="account_invoice_it_cedente_prestatore">
+        <xpath expr="//IscrizioneREA" position="attributes">
+            <attribute name="t-if">company_id and company_id.rea_office and company_id.rea_code and company_id.rea_liquidation_state and not invoices[0].journal_id.partner_as_transferor</attribute>
+        </xpath>
+        <xpath expr="//Contatti" position="attributes">
+            <attribute name="t-if">not invoices[0].journal_id.partner_as_transferor</attribute>
+        </xpath>
+    </template>
 </odoo>
