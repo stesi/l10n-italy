@@ -6,20 +6,15 @@ from odoo import api, fields, models
 
 
 class AssetTag(models.Model):
-    _name = 'asset.tag'
+    _name = "asset.tag"
     _description = "Asset Tags"
 
     @api.model
     def get_default_company_id(self):
-        return self.env.company
+        return self.env.user.company_id
 
     company_id = fields.Many2one(
-        'res.company',
-        default=get_default_company_id,
-        string="Company"
+        "res.company", default=get_default_company_id, string="Company"
     )
 
-    name = fields.Char(
-        string="Name",
-        required=True
-    )
+    name = fields.Char(string="Name", required=True)
