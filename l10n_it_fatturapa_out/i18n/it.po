@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-09 10:03+0000\n"
-"PO-Revision-Date: 2022-05-02 18:05+0000\n"
+"PO-Revision-Date: 2022-12-30 11:46+0000\n"
 "Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: \n"
 "Language: it\n"
@@ -15,12 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2\n"
-
-#. module: l10n_it_fatturapa_out
-#: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_out.account_invoice_it_cessionario_committente
-msgid "99999999999"
-msgstr "99999999999"
+"X-Generator: Weblate 4.14.1\n"
 
 #. module: l10n_it_fatturapa_out
 #: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_out.view_account_config_settings
@@ -46,6 +41,11 @@ msgstr "Token di accesso"
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_out.field_fatturapa_attachment_out__message_needaction
 msgid "Action Needed"
 msgstr "Azione richiesta"
+
+#. module: l10n_it_fatturapa_out
+#: model:res.groups,name:l10n_it_fatturapa_out.group_force_e_inv_export_state
+msgid "Allow to force e-invoice export state"
+msgstr ""
 
 #. module: l10n_it_fatturapa_out
 #: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_out.wizard_export_fatturapa_form_view
@@ -117,7 +117,6 @@ msgstr "Contatto"
 #. module: l10n_it_fatturapa_out
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_out.field_fatturapa_attachment_out__create_uid
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_out.field_wizard_export_fatturapa__create_uid
-#: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_out.view_fatturapa_out_attachment_form
 msgid "Created by"
 msgstr "Creato da"
 
@@ -155,6 +154,7 @@ msgstr ""
 #. module: l10n_it_fatturapa_out
 #: model:ir.model.fields.selection,name:l10n_it_fatturapa_out.selection__account_move__fatturapa_state__delivered
 #: model:ir.model.fields.selection,name:l10n_it_fatturapa_out.selection__fatturapa_attachment_out__state__validated
+#: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_out.view_fatturapa_out_attachment_form
 msgid "Delivered"
 msgstr "Consegnato"
 
@@ -186,7 +186,6 @@ msgid "E-bill Transmitter"
 msgstr ""
 
 #. module: l10n_it_fatturapa_out
-#: model:ir.model,name:l10n_it_fatturapa_out.model_fatturapa_attachment_out
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_out.field_account_bank_statement_line__fatturapa_attachment_out_id
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_out.field_account_move__fatturapa_attachment_out_id
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_out.field_account_payment__fatturapa_attachment_out_id
@@ -223,16 +222,12 @@ msgid "E-invoice export file still present for invoice %s."
 msgstr "Per la fattura %s è ancora presente il file e-fattura esportato."
 
 #. module: l10n_it_fatturapa_out
-#: model:ir.model.fields,field_description:l10n_it_fatturapa_out.field_fatturapa_attachment_out__att_name
-msgid "E-invoice file name"
-msgstr "Nome file e-fattura"
-
-#. module: l10n_it_fatturapa_out
 #: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_out.account_invoice_line_it_FatturaPA
 msgid "EAN"
 msgstr "EAN"
 
 #. module: l10n_it_fatturapa_out
+#: model:ir.model,name:l10n_it_fatturapa_out.model_fatturapa_attachment_out
 #: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_out.view_invoice_form_fatturapa
 msgid "Electronic Invoice"
 msgstr "Fattura elettronica"
@@ -336,11 +331,6 @@ msgid "Has Pdf Invoice Print"
 msgstr "Contiene stampa fattura in PDF"
 
 #. module: l10n_it_fatturapa_out
-#: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_out.view_fatturapa_out_attachment_form
-msgid "History"
-msgstr "Cronologia"
-
-#. module: l10n_it_fatturapa_out
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_out.field_account_move__id
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_out.field_fatturapa_attachment_out__id
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_out.field_fatturapa_attachments__id
@@ -360,13 +350,13 @@ msgstr "INVCONT"
 #: model:ir.model.fields,help:l10n_it_fatturapa_out.field_fatturapa_attachment_out__message_needaction
 #: model:ir.model.fields,help:l10n_it_fatturapa_out.field_fatturapa_attachment_out__message_unread
 msgid "If checked, new messages require your attention."
-msgstr "Se selezionato, nuovi messaggi richiedono attenzione."
+msgstr "Se selezionata, nuovi messaggi richiedono attenzione."
 
 #. module: l10n_it_fatturapa_out
 #: model:ir.model.fields,help:l10n_it_fatturapa_out.field_fatturapa_attachment_out__message_has_error
 #: model:ir.model.fields,help:l10n_it_fatturapa_out.field_fatturapa_attachment_out__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr "Se selezionato, alcuni messaggi presentano un errore di consegna."
+msgstr "Se selezionata, alcuni messaggi hanno un errore di consegna."
 
 #. module: l10n_it_fatturapa_out
 #: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_out.wizard_export_fatturapa_form_view
@@ -689,13 +679,23 @@ msgstr "SI"
 #. module: l10n_it_fatturapa_out
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_out.field_fatturapa_attachment_out__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr "Errore di consegna SMS"
+msgstr "Errore consegna SMS"
+
+#. module: l10n_it_fatturapa_out
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_out.field_fatturapa_attachment_out__att_name
+msgid "SdI file name"
+msgstr ""
 
 #. module: l10n_it_fatturapa_out
 #: model:ir.model.fields.selection,name:l10n_it_fatturapa_out.selection__fatturapa_attachment_out__state__sender_error
 #: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_out.view_fatturapa_out_attachment_search
 msgid "Sender Error"
 msgstr "Errore trasmittente"
+
+#. module: l10n_it_fatturapa_out
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_out.field_fatturapa_attachment_out__sending_user
+msgid "Sending User"
+msgstr ""
 
 #. module: l10n_it_fatturapa_out
 #: model:ir.model.fields.selection,name:l10n_it_fatturapa_out.selection__account_move__fatturapa_state__sent
@@ -707,6 +707,11 @@ msgstr "Inviato"
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_out.field_fatturapa_attachment_out__sending_date
 msgid "Sent Date"
 msgstr "Data invio"
+
+#. module: l10n_it_fatturapa_out
+#: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_out.view_fatturapa_out_attachment_form
+msgid "Sent by"
+msgstr ""
 
 #. module: l10n_it_fatturapa_out
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_out.field_fatturapa_attachment_out__state
@@ -869,6 +874,15 @@ msgstr "È possibile reimpostare solo file con stato «Errore trasmittente»."
 #: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_out.view_fatturapa_out_attachment_form
 msgid "on"
 msgstr "il"
+
+#~ msgid "E-invoice file name"
+#~ msgstr "Nome file e-fattura"
+
+#~ msgid "History"
+#~ msgstr "Cronologia"
+
+#~ msgid "99999999999"
+#~ msgstr "99999999999"
 
 #~ msgid "Invoice %s has XML and can't be canceled. Delete the XML before."
 #~ msgstr ""

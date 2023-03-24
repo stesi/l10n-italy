@@ -189,18 +189,15 @@ class WizardImportFatturapa(models.TransientModel):
         cf = DatiAnagrafici.CodiceFiscale or False
         vat = False
         if DatiAnagrafici.IdFiscaleIVA:
+            id_paese = DatiAnagrafici.IdFiscaleIVA.IdPaese.upper()
+            id_codice = re.sub(r"\W+", "", DatiAnagrafici.IdFiscaleIVA.IdCodice).upper()
             # Format Italian VAT ID to always have 11 char
             # to avoid validation error when creating the given partner
-            if DatiAnagrafici.IdFiscaleIVA.IdPaese.upper() == "IT":
-                vat = "{}{}".format(
-                    DatiAnagrafici.IdFiscaleIVA.IdPaese.upper(),
-                    DatiAnagrafici.IdFiscaleIVA.IdCodice.rjust(11, "0")[:11],
-                )
+            if id_paese == "IT" and not id_codice.startswith("IT"):
+                vat = "IT{}".format(id_codice.rjust(11, "0")[:11])
+            # XXX maybe San Marino needs special formatting too?
             else:
-                vat = "{}{}".format(
-                    DatiAnagrafici.IdFiscaleIVA.IdPaese.upper(),
-                    re.sub(r"\W+", "", DatiAnagrafici.IdFiscaleIVA.IdCodice).upper(),
-                )
+                vat = id_codice
         partners = partner_model
         res_partner_rule = (
             self.env["ir.model.data"]
@@ -1075,9 +1072,9 @@ class WizardImportFatturapa(models.TransientModel):
 
         delivery_partner_id = partner.address_get(["delivery"])["delivery"]
         fiscal_position_id = (
-            self.env["account.fiscal.position"].get_fiscal_position(
-                partner_id, delivery_id=delivery_partner_id
-            )
+            self.env["account.fiscal.position"]
+            .get_fiscal_position(partner_id, delivery_id=delivery_partner_id)
+            .id
             or False
         )
 

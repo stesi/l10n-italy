@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-27 08:07+0000\n"
-"PO-Revision-Date: 2022-05-02 18:05+0000\n"
-"Last-Translator: Samuele Mariani <samuele@ooops404.com>\n"
+"PO-Revision-Date: 2023-01-03 12:47+0000\n"
+"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: \n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. module: l10n_it_fatturapa_in
 #: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_in.view_account_config_settings_ftpa_in
@@ -89,7 +89,7 @@ msgstr "Allegato"
 #. module: l10n_it_fatturapa_in
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_in.field_fatturapa_attachment_in__message_attachment_count
 msgid "Attachment Count"
-msgstr "Totale allegati"
+msgstr "Numero allegati"
 
 #. module: l10n_it_fatturapa_in
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_in.field_fatturapa_attachment_in__local_url
@@ -257,11 +257,6 @@ msgid "Created on"
 msgstr "Creato il"
 
 #. module: l10n_it_fatturapa_in
-#: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_in.view_fatturapa_in_attachment_form
-msgid "Creation"
-msgstr "Creazione"
-
-#. module: l10n_it_fatturapa_in
 #: code:addons/l10n_it_fatturapa_in/wizard/wizard_import_fatturapa.py:0
 #, python-format
 msgid ""
@@ -316,8 +311,8 @@ msgid ""
 "Decimal digits used for quantity field. See \"prices decimal digits\". -1 to "
 "use the default precision"
 msgstr ""
-"Cifre decimali usate per il campo quantità. Vedi \"cifre decimali prezzi\". -"
-"1 per usare le precisione predefinita"
+"Cifre decimali usate per il campo quantità. Vedi \"cifre decimali prezzi\". "
+"-1 per usare le precisione predefinita"
 
 #. module: l10n_it_fatturapa_in
 #: model:ir.model.fields,help:l10n_it_fatturapa_in.field_wizard_import_fatturapa__price_decimal_digits
@@ -495,8 +490,8 @@ msgid ""
 "Please manually check Withholding tax Amount\n"
 msgstr ""
 "La e-fattura contiene DatiRitenuta ma non è stata trovata alcuna riga "
-"soggetta a ritenuta. Controllare manualmente l'importo della ritenuta d'"
-"acconto\n"
+"soggetta a ritenuta. Controllare manualmente l'importo della ritenuta "
+"d'acconto\n"
 
 #. module: l10n_it_fatturapa_in
 #: code:addons/l10n_it_fatturapa_in/models/account.py:0
@@ -508,16 +503,6 @@ msgstr "La e-fattura contiene ImportoRitenuta %s ma la fattura creata ha %s\n"
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_in.field_wizard_link_to_invoice_line__e_invoice_descr
 msgid "E-bill description"
 msgstr "Descrizione e-fattura"
-
-#. module: l10n_it_fatturapa_in
-#: model:ir.model.fields,field_description:l10n_it_fatturapa_in.field_fatturapa_attachment_in__att_name
-msgid "E-bill file name"
-msgstr "Nome file e-fattura"
-
-#. module: l10n_it_fatturapa_in
-#: model:ir.model,name:l10n_it_fatturapa_in.model_fatturapa_attachment_in
-msgid "E-bill import file"
-msgstr "File importato e-fattura"
 
 #. module: l10n_it_fatturapa_in
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_in.field_res_partner__e_invoice_detail_level
@@ -577,6 +562,11 @@ msgstr "Riferimento fornitore e-fattura"
 #: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_in.wizard_import_fatturapa_form_view
 msgid "Electronic Bill Import"
 msgstr "Importazione fattura elettronica"
+
+#. module: l10n_it_fatturapa_in
+#: model:ir.model,name:l10n_it_fatturapa_in.model_fatturapa_attachment_in
+msgid "Electronic Invoice"
+msgstr ""
 
 #. module: l10n_it_fatturapa_in
 #: code:addons/l10n_it_fatturapa_in/wizard/wizard_import_fatturapa.py:0
@@ -639,11 +629,6 @@ msgid "Global bill discount from document general data"
 msgstr "Sconto globale fattura dai dati generali del documento"
 
 #. module: l10n_it_fatturapa_in
-#: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_in.view_fatturapa_in_attachment_form
-msgid "History"
-msgstr "Cronologia"
-
-#. module: l10n_it_fatturapa_in
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_in.field_account_move__id
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_in.field_account_move_line__id
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_in.field_discount_rise_price__id
@@ -664,13 +649,13 @@ msgstr "ID"
 #: model:ir.model.fields,help:l10n_it_fatturapa_in.field_fatturapa_attachment_in__message_needaction
 #: model:ir.model.fields,help:l10n_it_fatturapa_in.field_fatturapa_attachment_in__message_unread
 msgid "If checked, new messages require your attention."
-msgstr "Se selezionato, nuovi messaggi richiedono attenzione."
+msgstr "Se selezionata, nuovi messaggi richiedono attenzione."
 
 #. module: l10n_it_fatturapa_in
 #: model:ir.model.fields,help:l10n_it_fatturapa_in.field_fatturapa_attachment_in__message_has_error
 #: model:ir.model.fields,help:l10n_it_fatturapa_in.field_fatturapa_attachment_in__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr "Se selezionato, alcuni messaggi presentano un errore di consegna."
+msgstr "Se selezionata, alcuni messaggi hanno un errore di consegna."
 
 #. module: l10n_it_fatturapa_in
 #: model:ir.model.fields,help:l10n_it_fatturapa_in.field_fatturapa_attachment_in__invoices_total
@@ -709,6 +694,7 @@ msgstr "Importa e-fattura"
 
 #. module: l10n_it_fatturapa_in
 #: model:ir.actions.act_window,name:l10n_it_fatturapa_in.action_wizard_import_fatturapa
+#: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_in.view_fatturapa_in_attachment_form
 msgid "Import Electronic Bill"
 msgstr "Importa fattura elettronica"
 
@@ -718,11 +704,6 @@ msgstr "Importa fattura elettronica"
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_in.field_account_payment__inconsistencies
 msgid "Import Inconsistencies"
 msgstr "Incongruenze nell'importazione"
-
-#. module: l10n_it_fatturapa_in
-#: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_in.view_fatturapa_in_attachment_form
-msgid "Import e-bill"
-msgstr "Importa e-fattura"
 
 #. module: l10n_it_fatturapa_in
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_in.field_fatturapa_attachment_in__in_invoice_ids
@@ -872,6 +853,11 @@ msgstr "Collega a fattura"
 #: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_in.wizard_link_supplier_invoice
 msgid "Link to existing supplier bills"
 msgstr "Collega a fatture fornitore esistenti"
+
+#. module: l10n_it_fatturapa_in
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_in.field_fatturapa_attachment_in__linked_invoice_id_xml
+msgid "Linked Invoice Id Xml"
+msgstr ""
 
 #. module: l10n_it_fatturapa_in
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_in.field_fatturapa_attachment_in__message_main_attachment_id
@@ -1231,12 +1217,17 @@ msgstr "Arrotondamento attivo"
 #. module: l10n_it_fatturapa_in
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_in.field_fatturapa_attachment_in__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr "Errore di consegna SMS"
+msgstr "Errore consegna SMS"
 
 #. module: l10n_it_fatturapa_in
 #: model:ir.model.fields,field_description:l10n_it_fatturapa_in.field_einvoice_line__service_type
 msgid "Sale Provision Type"
 msgstr "Tipo cessione prestazione"
+
+#. module: l10n_it_fatturapa_in
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_in.field_fatturapa_attachment_in__att_name
+msgid "SdI file name"
+msgstr ""
 
 #. module: l10n_it_fatturapa_in
 #: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_in.view_account_config_settings_ftpa_in
@@ -1587,10 +1578,26 @@ msgstr ""
 msgid "You can select only one XML file to link."
 msgstr "È possibile selezionare solo un file XML da collegare."
 
-#. module: l10n_it_fatturapa_in
-#: model_terms:ir.ui.view,arch_db:l10n_it_fatturapa_in.view_fatturapa_in_attachment_form
-msgid "on"
-msgstr "il"
+#~ msgid "Creation"
+#~ msgstr "Creazione"
+
+#~ msgid "E-bill file name"
+#~ msgstr "Nome file e-fattura"
+
+#~ msgid "E-bill import file"
+#~ msgstr "File importato e-fattura"
+
+#~ msgid "History"
+#~ msgstr "Cronologia"
+
+#~ msgid "Import e-bill"
+#~ msgstr "Importa e-fattura"
+
+#~ msgid "Show preview"
+#~ msgstr "Mostra anteprima"
+
+#~ msgid "on"
+#~ msgstr "il"
 
 #~ msgid "Active"
 #~ msgstr "Attivo"
@@ -1921,6 +1928,3 @@ msgstr "il"
 
 #~ msgid "TipoCassa is not defined "
 #~ msgstr "TipoCassa non definito "
-
-#~ msgid "Show preview"
-#~ msgstr "Mostra anteprima"

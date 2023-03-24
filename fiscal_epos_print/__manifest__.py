@@ -6,7 +6,11 @@
 
 {
     "name": "ITA - Driver per stampanti fiscali compatibili ePOS-Print XML",
+<<<<<<< HEAD
     "version": "14.0.1.0.0.2",
+=======
+    "version": "14.0.1.0.1",
+>>>>>>> 43087d161c86f858a604c28bb0c7545bcbcb3b21
     "category": "Point Of Sale",
     "summary": "ePOS-Print XML Fiscal Printer Driver - Stampanti Epson compatibili: "
     "FP81II, FP90III",
