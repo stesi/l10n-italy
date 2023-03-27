@@ -517,11 +517,7 @@ odoo.define("fiscal_epos_print.epson_epos_print", function (require) {
             var has_refund = _.every(receipt.orderlines, function (line) {
                 return line.quantity < 0;
             });
-<<<<<<< HEAD
-            var xml = "<printerFiscalReceipt>";
-=======
             var xml = "<printerFiscalReceipt><beginFiscalReceipt/>";
->>>>>>> 43087d161c86f858a604c28bb0c7545bcbcb3b21
             // Header must be printed before beginning a fiscal receipt
             xml += this.printFiscalReceiptHeader(receipt);
             // TODO now it's seems to be mandatory for refund too
@@ -536,10 +532,6 @@ odoo.define("fiscal_epos_print.epson_epos_print", function (require) {
                     refund_cash_fiscal_serial: receipt.refund_cash_fiscal_serial,
                 });
             }
-<<<<<<< HEAD
-            xml +="<beginFiscalReceipt/>";
-=======
->>>>>>> 43087d161c86f858a604c28bb0c7545bcbcb3b21
             _.each(receipt.orderlines, function (l) {
                 if (l.price >= 0) {
                     if (l.quantity >= 0) {
@@ -568,21 +560,12 @@ odoo.define("fiscal_epos_print.epson_epos_print", function (require) {
                         });
 
                         // TODO This line of code is added by us, check if it's right
-<<<<<<< HEAD
-//                        xml += self.printRecItem({
-//                            description: _t('Refund cash'),
-//                            quantity: l.quantity * -1.0,
-//                            unitPrice: l.price,
-//                            department: l.tax_department.code
-//                        });
-=======
                         xml += self.printRecItem({
                             description: _t("Refund cash"),
                             quantity: l.quantity * -1.0,
                             unitPrice: l.price,
                             department: l.tax_department.code,
                         });
->>>>>>> 43087d161c86f858a604c28bb0c7545bcbcb3b21
                     }
                 } else {
                     xml += self.printRecItemAdjustment({
