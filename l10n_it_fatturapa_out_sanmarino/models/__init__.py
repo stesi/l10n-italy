@@ -1,1 +1,1 @@
-from . import attachment,res_country,res_partner
+from . import attachment,res_country,res_partner,efattura
