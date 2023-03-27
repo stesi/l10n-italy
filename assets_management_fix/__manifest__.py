@@ -17,6 +17,5 @@
         'security/ir.model.access.csv',
     ],
     'development_status': 'Beta',
-    'auto_install': True,
     'installable': True,
 }
