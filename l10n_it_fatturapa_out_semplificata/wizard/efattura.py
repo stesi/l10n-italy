@@ -36,7 +36,8 @@ class EFatturaOut(_EFatturaOut):
         "l10n_it_account",
         "tools",
         "xsd",
-        "Schema_del_file_xml_FatturaPA_versione_1.2.1.xsd",
+        # "Schema_del_file_xml_FatturaPA_versione_1.2.1.xsd",
+        "Schema_del_file_xml_FatturaPA_v1.2.2.xsd",
     )
     _old_xsd_specs = get_module_resource(
         "l10n_it_account", "tools", "xsd", "xmldsig-core-schema.xsd"
