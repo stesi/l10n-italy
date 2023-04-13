@@ -33,7 +33,7 @@ class WebsiteSaleFiscalCode(WebsiteSale):
         if not dummy_partner.check_fiscalcode():
             error['fiscalcode'] = 'error'
             error_message.append(_('Fiscal Code not valid'))
-        if not data.get('vat') and partner_sudo.company_type == 'company':
+        if not data.get('vat') and partner_sudo.company_type == 'company' and mode[1] == 'billing' and 'vat' in all_form_values:
             error['vat'] = 'error'
             error_message.append(_('Vat is required'))
         return error, error_message
