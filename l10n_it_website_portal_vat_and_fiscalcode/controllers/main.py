@@ -28,7 +28,7 @@ class WebsiteSaleFiscalCode(WebsiteSale):
             'fiscalcode': data.get('fiscalcode'),
             'is_company': partner_sudo.is_company
         })
-        if not dummy_partner.check_fiscalcode():
+        if not dummy_partner.check_fiscalcode() and mode[1] == 'billing':
             error['fiscalcode'] = 'error'
             error_message.append(_('Fiscal Code not valid'))
         return error, error_message
