@@ -53,7 +53,12 @@ class EFatturaOut(_EFatturaOut):
     )
 
     def get_template_values(self):
+        def get_vat_country(vat):
+            return vat[:2].upper() if vat else ""
+
         template_values = super().get_template_values()
+
+        template_values['get_vat_country'] = get_vat_country
         if 'formato_trasmissione' in template_values and self.partner_id.simplified_einvoice:
             template_values['formato_trasmissione'] = 'FSM10'
         return template_values

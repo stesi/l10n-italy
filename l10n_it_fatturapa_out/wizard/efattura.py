@@ -190,8 +190,6 @@ class EFatturaOut:
             # wrapper to a method in wizard (for better overriding)
             wiz = self.env["wizard.export.fatturapa"]
             return wiz.getPayments(invoice)
-        def get_vat_country(vat):
-            return vat[:2].upper() if vat else ""
 
         def fpa_to_eur(amount, invoice):
             currency = invoice.currency_id
@@ -227,7 +225,6 @@ class EFatturaOut:
             "get_nome_attachment": get_nome_attachment,
             "get_type_attachment": get_type_attachment,
             "get_id_fiscale_iva": get_id_fiscale_iva,
-            "get_vat_country": get_vat_country,
             "codice_destinatario": code.upper(),
             "in_eu": in_eu,
             "unidecode": unidecode,
