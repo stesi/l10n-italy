@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_vatperiodendstatement_document" inherit_id="account_vat_period_end_statement.report_vatperiodendstatement_document">
+        <xpath expr="//table//td" position="replace">
+            <td class="text-right">Total debit <t t-esc="vat_accounts[account_id]['account_name']"/></td>
+        </xpath>
+
+        <xpath expr="//table//t[@t-foreach][2]//tr//td" position="replace">
+            <td class="text-right">Total credit <t t-esc="vat_accounts[account_id]['account_name']"/></td>
+        </xpath>
+    </template>
+</odoo>
