@@ -4,7 +4,7 @@ from odoo.tools.misc import formatLang
 
 
 def formatLangZero(env, value, digits=None, grouping=True, monetary=False, dp=False, currency_obj=False):
-    if value >= 0:
+    if round(value, digits) >= 0:
         value = abs(value)
     return formatLang(env, value, digits, grouping, monetary, dp, currency_obj)
 
