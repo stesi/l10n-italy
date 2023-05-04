@@ -15,7 +15,7 @@
     'website': "http://www.stesi.eu",
 
     # any module necessary for this one to work correctly
-    'depends': ['account_vat_period_end_statement'],
+    'depends': ['account_vat_period_end_statement', 'l10n_it_vat_registries'],
 
     # always loaded
     'data': ['views/report_vatperiodendstatement.xml'],

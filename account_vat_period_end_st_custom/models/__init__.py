@@ -1,1 +1,1 @@
-from . import vat_statement
+from . import vat_statement, vat_registry
