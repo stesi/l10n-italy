@@ -8,5 +8,15 @@
         <xpath expr="//table//t[@t-foreach][2]//tr//td" position="replace">
             <td class="text-right">Total credit <t t-esc="vat_accounts[account_id]['account_name']"/></td>
         </xpath>
+
+        <xpath expr="//table//tr//td[3]" position="replace">
+          <td class="text-right"><t t-if="statement.previous_credit_vat_amount &lt; 0">-</t><span t-esc="formatLang(env, statement.previous_credit_vat_amount)"/></td>
+        </xpath>
+        <xpath expr="//table//tr[4]//td[3]" position="replace">
+          <td class="text-right"><t t-if="statement.previous_credit_vat_amount &lt; 0">-</t><span t-esc="formatLang(env, statement.tax_credit_amount)"/></td>
+        </xpath>
+        <xpath expr="//table//tr[5]//td[3]" position="replace">
+          <td class="text-right"><t t-if="statement.previous_credit_vat_amount &lt; 0">-</t><span t-esc="formatLang(env, statement.advance_amount)"/></td>
+        </xpath>
     </template>
 </odoo>
