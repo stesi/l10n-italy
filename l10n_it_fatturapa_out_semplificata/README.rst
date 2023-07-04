@@ -27,23 +27,10 @@ ITA - Fattura elettronica semplificata TD07
 
 **Italiano**
 
-Questo modulo consente di generare i file XML della fattura elettronica versione 1.2
+Questo modulo consente di generare correttamente i file XML della fattura elettronica semplificata TD07 da inviare al Sistema di Interscambio (SdI).
 
-http://www.fatturapa.gov.it/export/fatturazione/it/normativa/f-2.htm
-
-da inviare al Sistema di Interscambio (SdI).
-
-http://www.fatturapa.gov.it/export/fatturazione/it/sdi.htm
 
 **English**
-
-This module allows you to generate the Electronic Invoice XML files version 1.2
-
-http://www.fatturapa.gov.it/export/fatturazione/en/normativa/f-2.htm
-
-to be sent to the Exchange System (ES).
-
-http://www.fatturapa.gov.it/export/fatturazione/en/sdi.htm
 
 **Table of contents**
 
@@ -54,35 +41,18 @@ Configuration
 =============
 
 **Italiano**
-
-Consultare il file README di l10n_it_fatturapa.
-
-É possibile esportare le fatture cliente con le righe articolo con un CodiceTipo diverso dallo standard 'ODOO' creando un parametro 'fatturapa.codicetipo.odoo' (in Configurazione > Funzioni tecniche > Parametri > Parametri di sistema) con il codice voluto (tipicamente su richiesta del cliente).
-Non è possibile impostare un diverso CodiceTipo per cliente, al momento.
+Dopo aver installato ed attivato il modulo, occorre: 
+- attivare il flag "Fattura elettronica semplificata" in tab "Fattura elettronica" del partner per il quale è necessario l'invio di fatture elettroniche con "Tipo di documento fiscale = TD07 fattura semplificata;
+- verificare che in Contabilità > Configurazione > Tipi di documenti fiscale > TD07 > "Documento fisclae per rimborso" sia settato su TD08 Nota di credito semplificata.
 
 **English**
-
-See l10n_it_fatturapa README file.
-
-It is possible to export invoices with rows with a different CodiceTipo from the default 'ODOO' by creating a parameter 'fatturapa.codicetipo.odoo' (in Settings > Technical > Parameters > System Parameters) with the desired code (tipically on customer's request).
-It is not possible to set a different CodiceTipo by customer, until now.
 
 Usage
 =====
-
-**Italiano**
-
- * Compilare la fattura con i dati necessari per l'esportazione: per esempio, nella scheda "Allegati fattura elettronica"
- * Selezionare 1 o N fatture ed eseguire la procedura guidata "Esporta fattura elettronica"
- * Per le fatture estere, è possibile inviarle a soli fini fiscali inserendo il codice identificativo XXXXXXX (7 volte X) ed avendo cura di indicare il paese del partner.
-   Le fatture vanno comunque spedite al cliente, ma si evita la predisposizione dell'esterometro.
+Il modulo non implica nessuna modifica nel flusso di generazione del file .xml della fattura.
 
 **English**
 
- * Fill invoice data you need to export: For instance, in 'Electronic Invoice Attachments' TAB
- * Select 1 or N invoices and run 'Export Electronic Invoice' wizard
- * For foreign invoices, it is possible to send them only for tax purposes with code XXXXXXX (7 times X) and assuring to set the country of the partner.
-   Invoices must be sent anyway to the customer, but in this way it is not needed to prepare esterometro.
 
 Bug Tracker
 ===========
@@ -96,42 +66,19 @@ Do not contact contributors directly about support or help with technical issues
 
 Credits
 =======
+STeSI Consulting Srl
 
 Authors
 ~~~~~~~
-
-* Davide Corio
-* Agile Business Group
-* Innoviu
+STeSI Consulting Srl
 
 Contributors
 ~~~~~~~~~~~~
 
-* Davide Corio
-* Lorenzo Battistini <https://github.com/eLBati>
-* Roberto Onnis
-* Alessio Gerace
-* Alex Comba
-* Sergio Zanchetta <https://github.com/primes2h>
-* Marco Colombo <https://github.com/TheMule71>
-* Giovanni Serra <giovanni@gslab.it>
-* `Tecnativa <https://www.tecnativa.com>`_:
-
-  * Víctor Martínez
 
 Maintainers
 ~~~~~~~~~~~
 
-This module is maintained by the OCA.
+This module is maintained by the STeSI Consulting Srl.
 
-.. image:: https://odoo-community.org/logo.png
-   :alt: Odoo Community Association
-   :target: https://odoo-community.org
 
-OCA, or the Odoo Community Association, is a nonprofit organization whose
-mission is to support the collaborative development of Odoo features and
-promote its widespread use.
-
-This module is part of the `OCA/l10n-italy <https://github.com/OCA/l10n-italy/tree/14.0/l10n_it_fatturapa_out>`_ project on GitHub.
-
-You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
