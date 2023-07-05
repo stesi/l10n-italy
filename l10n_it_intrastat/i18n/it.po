@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e-20191007\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-16 15:53+0000\n"
-"PO-Revision-Date: 2022-10-26 13:44+0000\n"
-"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
+"PO-Revision-Date: 2023-06-14 15:10+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: \n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: l10n_it_intrastat
 #: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_33074100
@@ -9948,7 +9948,7 @@ msgid ""
 "synthetic textile fibres or artificial plastic materials)"
 msgstr ""
 "Olio di ricino e sue frazioni, diverso da quello destinato alla produzione "
-"di acido ammino-undecanoico per la fabbricazione  di fibre sintetiche o "
+"di acido ammino-undecanoico per la fabbricazione di fibre sintetiche o "
 "materie plastiche"
 
 #. module: l10n_it_intrastat
@@ -17124,6 +17124,11 @@ msgstr "Tetraborato di disodio pentaidrato"
 #: model:ir.model.fields,field_description:l10n_it_intrastat.field_res_country__display_name
 msgid "Display Name"
 msgstr "Nome visualizzato"
+
+#. module: l10n_it_intrastat
+#: model:ir.model.fields,field_description:l10n_it_intrastat.field_account_invoice_intrastat__show_weight
+msgid "Display weight in declaration"
+msgstr "Visualizza il peso nella dichiarazione"
 
 #. module: l10n_it_intrastat
 #: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_90065310
@@ -55094,7 +55099,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_it_intrastat.field_account_invoice_intrastat__partner_id
 #: model_terms:ir.ui.view,arch_db:l10n_it_intrastat.view_invoice_intrastat_search
 msgid "Partner"
-msgstr "Contatto"
+msgstr "Partner"
 
 #. module: l10n_it_intrastat
 #: model:ir.model.fields,field_description:l10n_it_intrastat.field_account_invoice_intrastat__country_partner_id
@@ -84000,7 +84005,7 @@ msgstr ""
 #. module: l10n_it_intrastat
 #: model:ir.model.fields,field_description:l10n_it_intrastat.field_report_intrastat_code__type
 msgid "Type"
-msgstr "Tipologia"
+msgstr "Tipo"
 
 #. module: l10n_it_intrastat
 #: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_96121080
