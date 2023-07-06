@@ -30,10 +30,10 @@ class WizardImportFatturapa(models.TransientModel):
             return super(WizardImportFatturapa, self)._prepare_generic_line_data(line)
 
     def set_invoice_line_ids(
-        self, FatturaBody, credit_account_id, partner, wt_found, invoice
+        self, FatturaBody, credit_account_id, partner, wt_found, invoice,invoice_type
     ):
         res = super(WizardImportFatturapa, self).set_invoice_line_ids(
-            FatturaBody, credit_account_id, partner, wt_found, invoice
+            FatturaBody, credit_account_id, partner, wt_found, invoice,invoice_type
         )
         if not invoice.invoice_line_ids:
             return res

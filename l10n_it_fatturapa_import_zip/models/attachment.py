@@ -200,9 +200,9 @@ class FatturaPAAttachmentOut(models.Model):
         readonly=True,
         ondelete="restrict",
     )
-
-    def get_xml_string(self):
-        return self.ir_attachment_id.get_xml_string()
+    #
+    # def get_xml_string(self):
+    #     return self.ir_attachment_id.get_xml_string()
 
     def get_invoice_obj(self, fatturapa_attachment):
         xml_string = fatturapa_attachment.get_xml_string()
