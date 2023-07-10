@@ -1039,45 +1039,11 @@ class WizardImportFatturapa(models.TransientModel):
 
         return credit_account
 
-    def invoiceCreate(
-        self,
-        fatt,
-        fatturapa_attachment,
-        FatturaBody,
-        partner_id,
-        invoice_type="purchase",
-    ):
-        partner_model = self.env["res.partner"]
-        invoice_model = self.env["account.move"]
-        currency_model = self.env["res.currency"]
+    def get_data_from_TipoDocumento(self, FatturaBody, invoice_type):
         ftpa_doctype_model = self.env["fiscal.document.type"]
-        rel_docs_model = self.env["fatturapa.related_document_type"]
-
-        company = self.env.company
-        partner = partner_model.browse(partner_id)
-
-        # currency 2.1.1.2
-        currency = currency_model.search(
-            [("name", "=", FatturaBody.DatiGenerali.DatiGeneraliDocumento.Divisa)]
-        )
-        if not currency:
-            raise UserError(
-                _(
-                    "No currency found with code %s."
-                    % FatturaBody.DatiGenerali.DatiGeneraliDocumento.Divisa
-                )
-            )
-
-        journal = self.get_invoice_type_journal(company, invoice_type)
-        account = (
-            self.get_credit_account()
-            if invoice_type == "purchase"
-            else journal.default_account_id
-        )
-        invtype = "in_invoice" if invoice_type == "purchase" else "out_invoice"
-        comment = ""
-        # 2.1.1
         docType_id = False
+        invtype = "in_invoice" if invoice_type == "purchase" else "out_invoice"
+
         docType = FatturaBody.DatiGenerali.DatiGeneraliDocumento.TipoDocumento
         if docType:
             docType_record = ftpa_doctype_model.search([("code", "=", docType)])
@@ -1087,24 +1053,25 @@ class WizardImportFatturapa(models.TransientModel):
                 raise UserError(_("Document type %s not handled.") % docType)
             if docType == "TD04":
                 invtype = "in_refund" if invoice_type == "purchase" else "out_refund"
-        # 2.1.1.11
-        causLst = FatturaBody.DatiGenerali.DatiGeneraliDocumento.Causale
-        if causLst:
-            for rel_doc in causLst:
-                comment += rel_doc + "\n"
+        return docType_id, invtype
 
-        e_invoice_date = datetime.strptime(
-            FatturaBody.DatiGenerali.DatiGeneraliDocumento.Data, "%Y-%m-%d"
-        ).date()
-
-        delivery_partner_id = partner.address_get(["delivery"])["delivery"]
-        fiscal_position_id = (
-            self.env["account.fiscal.position"]
-            .get_fiscal_position(partner_id, delivery_id=delivery_partner_id)
-            .id
-            or False
-        )
-
+    def _prepare_invoice_data_vals(
+        self,
+        fatt,
+        fatturapa_attachment,
+        FatturaBody,
+        partner_id,
+        invoice_type,
+        company,
+        partner,
+        currency,
+        journal,
+        docType_id,
+        invtype,
+        comment,
+        fiscal_position_id,
+        e_invoice_date,
+    ):
         invoice_data = {
             "fiscal_document_type_id": docType_id,
             "sender": fatt.FatturaElettronicaHeader.SoggettoEmittente or False,
@@ -1145,6 +1112,81 @@ class WizardImportFatturapa(models.TransientModel):
                     "fatturapa_attachment_out_id": fatturapa_attachment.id,
                 }
             )
+        return invoice_data
+
+    def invoiceCreate(
+        self,
+        fatt,
+        fatturapa_attachment,
+        FatturaBody,
+        partner_id,
+        invoice_type="purchase",
+    ):
+        partner_model = self.env["res.partner"]
+        invoice_model = self.env["account.move"]
+        currency_model = self.env["res.currency"]
+        rel_docs_model = self.env["fatturapa.related_document_type"]
+
+        company = self.env.company
+        partner = partner_model.browse(partner_id)
+
+        # currency 2.1.1.2
+        currency = currency_model.search(
+            [("name", "=", FatturaBody.DatiGenerali.DatiGeneraliDocumento.Divisa)]
+        )
+        if not currency:
+            raise UserError(
+                _(
+                    "No currency found with code %s."
+                    % FatturaBody.DatiGenerali.DatiGeneraliDocumento.Divisa
+                )
+            )
+
+        journal = self.get_invoice_type_journal(company, invoice_type)
+        account = (
+            self.get_credit_account()
+            if invoice_type == "purchase"
+            else journal.default_account_id
+        )
+        comment = ""
+        # 2.1.1
+        docType_id, invtype = self.get_data_from_TipoDocumento(
+            FatturaBody, invoice_type
+        )
+        # 2.1.1.11
+        causLst = FatturaBody.DatiGenerali.DatiGeneraliDocumento.Causale
+        if causLst:
+            for rel_doc in causLst:
+                comment += rel_doc + "\n"
+
+        e_invoice_date = datetime.strptime(
+            FatturaBody.DatiGenerali.DatiGeneraliDocumento.Data, "%Y-%m-%d"
+        ).date()
+
+        delivery_partner_id = partner.address_get(["delivery"])["delivery"]
+        fiscal_position_id = (
+            self.env["account.fiscal.position"]
+            .get_fiscal_position(partner_id, delivery_id=delivery_partner_id)
+            .id
+            or False
+        )
+
+        invoice_data = self._prepare_invoice_data_vals(
+            fatt,
+            fatturapa_attachment,
+            FatturaBody,
+            partner_id,
+            invoice_type,
+            company,
+            partner,
+            currency,
+            journal,
+            docType_id,
+            invtype,
+            comment,
+            fiscal_position_id,
+            e_invoice_date,
+        )
 
         # 2.1.1.12
         self.set_art73(FatturaBody, invoice_data)
