@@ -1,0 +1,77 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_it_fatturapa_out_autofattura_fornitore
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-04 14:10+0000\n"
+"PO-Revision-Date: 2023-01-04 14:10+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_it_fatturapa_out_autofattura_fornitore
+#: model:ir.model,name:l10n_it_fatturapa_out_autofattura_fornitore.model_res_partner
+msgid "Contact"
+msgstr "Contatto"
+
+#. module: l10n_it_fatturapa_out_autofattura_fornitore
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_out_autofattura_fornitore.field_account_move__display_name
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_out_autofattura_fornitore.field_res_partner__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: l10n_it_fatturapa_out_autofattura_fornitore
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_out_autofattura_fornitore.field_res_partner__fatturapa_out_autofattura
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_out_autofattura_fornitore.field_res_users__fatturapa_out_autofattura
+msgid "Fatturapa Out Autofattura"
+msgstr "Permetti esportazione fattura elettronica fornitore"
+
+#. module: l10n_it_fatturapa_out_autofattura_fornitore
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_out_autofattura_fornitore.field_account_move__id
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_out_autofattura_fornitore.field_res_partner__id
+msgid "ID"
+msgstr ""
+
+#. module: l10n_it_fatturapa_out_autofattura_fornitore
+#: code:addons/l10n_it_fatturapa_out_autofattura_fornitore/models/account_move.py:0
+#, python-format
+msgid "Invoice %s contains product lines w/o taxes"
+msgstr "La fattura %s contiene product lines senza taxes"
+
+#. module: l10n_it_fatturapa_out_autofattura_fornitore
+#: code:addons/l10n_it_fatturapa_out_autofattura_fornitore/models/account_move.py:0
+#, python-format
+msgid ""
+"Invoice %s fiscal payment method must be set for the selected payment term "
+"%s"
+msgstr ""
+
+#. module: l10n_it_fatturapa_out_autofattura_fornitore
+#: code:addons/l10n_it_fatturapa_out_autofattura_fornitore/models/account_move.py:0
+#, python-format
+msgid ""
+"Invoice %s fiscal payment term must be set for the selected payment term %s"
+msgstr "Il termine di pagamento fiscale della fattura %s deve essere impostato sul metodo di pagamento %s"
+
+#. module: l10n_it_fatturapa_out_autofattura_fornitore
+#: code:addons/l10n_it_fatturapa_out_autofattura_fornitore/models/account_move.py:0
+#, python-format
+msgid "Invoice %s: company and company partner must have same vat"
+msgstr "Fattura %s: company and company partner devono avere la stessa p.iva"
+
+#. module: l10n_it_fatturapa_out_autofattura_fornitore
+#: model:ir.model,name:l10n_it_fatturapa_out_autofattura_fornitore.model_account_move
+msgid "Journal Entry"
+msgstr ""
+
+#. module: l10n_it_fatturapa_out_autofattura_fornitore
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_out_autofattura_fornitore.field_account_move____last_update
+#: model:ir.model.fields,field_description:l10n_it_fatturapa_out_autofattura_fornitore.field_res_partner____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"

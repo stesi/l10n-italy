@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+   <template
+        id="template_rpestatore_autof"
+        inherit_id="l10n_it_fatturapa_out.account_invoice_it_cedente_prestatore"
+    >
+
+       <xpath expr="//CedentePrestatore//DatiAnagrafici" position="before">
+
+                    <t t-if="invoices[0].partner_id.fatturapa_out_autofattura and invoices[0].move_type=='in_invoice'">
+
+                        <t t-set="partner_id" t-value="invoices[0].partner_id"/>
+                    </t>
+                </xpath>
+   </template>
+   <template
+        id="template_cessionario_autof"
+        inherit_id="l10n_it_fatturapa_out.account_invoice_it_cessionario_committente"
+    >
+
+  <xpath expr="//CessionarioCommittente//DatiAnagrafici" position="before">
+                    <t t-if="invoices[0].partner_id.fatturapa_out_autofattura and invoices[0].move_type=='in_invoice'">
+                        <t t-set="partner_id" t-value="company_id.partner_id"/>
+                    </t>
+                </xpath>
+   </template>
+
+
+<!--        <record id="template_rpestatore_autof" model="ir.ui.view">-->
+<!--            <field name="name">account.move.form.sp.fix</field>-->
+<!--            <field name="model">account.move</field>-->
+<!--            <field name="inherit_id" ref="l10n_it_fatturapa_out.account_invoice_it_cedente_prestatore"/>-->
+<!--            <field name="arch" type="xml">-->
+
+<!--                -->
+
+<!--            </field>-->
+<!--        </record>-->
+<!--        <record id="template_cessionario_autof" model="ir.ui.view">-->
+<!--            <field name="name">account.move.form.sp.fix</field>-->
+<!--            <field name="model">account.move</field>-->
+<!--            <field name="inherit_id" ref="l10n_it_fatturapa_out.account_invoice_it_cessionario_committente"/>-->
+<!--            <field name="arch" type="xml">-->
+
+<!--                <xpath expr="//CessionarioCommittente//DatiAnagrafici" position="before">-->
+<!--                    <t t-if="invoices[0].partner_id.fatturapa_out_autofattura">-->
+<!--                        <t t-set="partner_id" t-value="company_id.partner_id"/>-->
+<!--                    </t>-->
+<!--                </xpath>-->
+
+<!--            </field>-->
+<!--        </record>-->
+
+        <!--        <template-->
+        <!--        id="account_invoice_it_fattura_elettronica_body_margin"-->
+        <!--        inherit_id="l10n_it_fatturapa_out.account_invoice_it_fattura_elettronica_body"-->
+        <!--    >-->
+        <!--            <xpath expr="//FatturaElettronicaBody//DatiBeniServizi//DatiRiepilogo//Imposta" position="attributes">-->
+        <!--                <attribute name="t-if">not record.is_margin_tax_invoice</attribute>-->
+        <!--            </xpath>-->
+        <!--            <xpath expr="//FatturaElettronicaBody//DatiBeniServizi//DatiRiepilogo//ImponibileImporto" position="after">-->
+        <!--                <Imposta t-if="record.is_margin_tax_invoice">0.00</Imposta>-->
+        <!--            </xpath>-->
+        <!--        </template>-->
+    </data>
+</odoo>
