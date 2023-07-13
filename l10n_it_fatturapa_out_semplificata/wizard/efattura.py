@@ -77,9 +77,11 @@ class EFatturaOut(_EFatturaOut):
 
         template_values = self.get_template_values()
         if not self.partner_id.simplified_einvoice:
-            content = env.ref("l10n_it_fatturapa_out.account_invoice_it_FatturaPA_export")._render(template_values)
+            ir_ui_view = env.ref("l10n_it_fatturapa_out.account_invoice_it_FatturaPA_export")
+            content = ir_ui_view._render_template('l10n_it_fatturapa_out.account_invoice_it_FatturaPA_export', template_values)
         else:
-            content = env.ref("l10n_it_fatturapa_out_semplificata.account_invoice_it_FatturaPA_semplificata_export")._render(template_values)
+            ir_ui_view = env.ref("l10n_it_fatturapa_out_semplificata.account_invoice_it_FatturaPA_semplificata_export")
+            content = ir_ui_view._render_template('l10n_it_fatturapa_out_semplificata.account_invoice_it_FatturaPA_semplificata_export', template_values)
         # 14.0 - occorre rimuovere gli spazi tra i tag
         root = etree.fromstring(content, parser=etree.XMLParser(remove_blank_text=True))
         # già che ci siamo, validiamo con l'XMLSchema dello SdI
