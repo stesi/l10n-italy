@@ -78,8 +78,8 @@ class AccountMove(models.Model):
         ).read()[0]
         return action
 
-    def action_post(self):
-        posted = super().action_post()
+    def _post(self, soft=True):
+        posted = super()._post(soft)
         # Check if there is enough available amount on declarations
         for invoice in self:
             declarations = invoice.get_declarations()
