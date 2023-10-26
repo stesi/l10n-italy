@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e-20191007\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-16 15:53+0000\n"
-"PO-Revision-Date: 2023-06-14 15:10+0000\n"
-"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"PO-Revision-Date: 2023-10-09 09:13+0000\n"
+"Last-Translator: Sebastiano Picchi <sebapicchi@yahoo.it>\n"
 "Language-Team: \n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -783,7 +783,7 @@ msgstr "Sostanze minerali naturali attivate; neri di origine animale"
 #: model:ir.model.fields,field_description:l10n_it_intrastat.field_account_intrastat_transaction_nature__active
 #: model:ir.model.fields,field_description:l10n_it_intrastat.field_report_intrastat_code__active
 msgid "Active"
-msgstr "Attiva"
+msgstr "Attivo"
 
 #. module: l10n_it_intrastat
 #: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_21021090
@@ -3805,8 +3805,8 @@ msgid ""
 "dolomite or chromite"
 msgstr ""
 "Lavori in pietra o altre sostanze minerali, n.n.a. contenenti magnesite, "
-"magnesia sotto forma di periclasio, dolomite, anche\n"
-"sotto forma di calce dolomitica, o cromite"
+"magnesia sotto forma di periclasio, dolomite, anche sotto forma di calce "
+"dolomitica, o cromite"
 
 #. module: l10n_it_intrastat
 #: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_81039090
@@ -4386,6 +4386,17 @@ msgid ""
 "self-contained electric motor of an output <= 125 W)"
 msgstr ""
 "Ventilatori, diversi da quelli delle precedenti voci 8414 51 00, assiali"
+
+#. module: l10n_it_intrastat
+#: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_84145925
+msgid ""
+"Axial fans (excl. table, floor, wall, window, ceiling or roof fans, with a "
+"self-contained electric motor of an output <= 125 W, and fans for cooling IT "
+"equipment of 84145915)"
+msgstr ""
+"Ventilatori da tavolo, da suolo, da muro o da parete, da soffitto, da tetto "
+"o da finestra, con motore elettrico incorporato di potenza inferiore o "
+"uguale a 125 W, assiali"
 
 #. module: l10n_it_intrastat
 #: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_86079110
@@ -6585,6 +6596,11 @@ msgstr ""
 msgid "Blended malt Scotch whisky, in containers holding > 2 l"
 msgstr ""
 "Whisky detto \"blended malt\", presentato in recipienti di capacità > 2 litri"
+
+#. module: l10n_it_intrastat
+#: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_73181631
+msgid "Blind rivet nuts of stainless steel"
+msgstr "Dadi di acciaio inossidabile per ribadini ciechi"
 
 #. module: l10n_it_intrastat
 #: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_70169040
@@ -14688,7 +14704,7 @@ msgstr ""
 #. module: l10n_it_intrastat
 #: model:ir.model,name:l10n_it_intrastat.model_res_country
 msgid "Country"
-msgstr "Paese"
+msgstr "Nazione"
 
 #. module: l10n_it_intrastat
 #: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_19024010
@@ -19266,7 +19282,7 @@ msgid ""
 "e.s."
 msgstr ""
 "Fili e cavi elettrici, isolati, non adatti a connettori con diametro dei "
-"singoli fili > 0,51 mm"
+"singoli fili >0,51mm"
 
 #. module: l10n_it_intrastat
 #: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_85369085
@@ -19285,6 +19301,23 @@ msgstr ""
 "corrente, elementi prefabbricati per canalizzazioni elettriche ed altre "
 "connessioni ed elementi di contatto per fili e cavi nonché sonde di dischi "
 "(wafers) a semiconduttore)"
+
+#. module: l10n_it_intrastat
+#: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_85369095
+msgid ""
+"Electrical apparatus for making connections to or in electrical circuits, "
+"for a voltage <= 1.000 V (excl. fuses, circuit breakers and other apparatus "
+"for protecting electrical circuits, relays and other switches, lamp holders, "
+"plugs and sockets, prefabricated elements for electrical circuits, "
+"connections and contact elements for wire and cables, and car battery clamps)"
+msgstr ""
+"Apparecchi per l'interruzione, il sezionamento, la protezione, la "
+"diramazione, l'allacciamento o il collegamento dei circuiti elettrici per "
+"una tensione inferiore o uguale a 1 000 V (escl. fusibili, interruttori di "
+"sicurezza e altri apparecchi per proteggere circuiti elettrici, relè e altri "
+"interruttori, portalampade, spine e prese di corrente, elementi "
+"prefabbricati per i circuiti elettrici, connessioni e contatti per fili e "
+"cavi, morsetti per batterie di automobili)"
 
 #. module: l10n_it_intrastat
 #: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_85359000
@@ -20140,6 +20173,22 @@ msgstr ""
 "multichips integrati consistenti in due o più circuiti monolitici integrati)"
 
 #. module: l10n_it_intrastat
+#: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_85423119
+msgid ""
+"Electronic integrated circuits as processors and controllers, whether or not "
+"combined with memories, converters, logic circuits, amplifiers, clock and "
+"timing circuits, or other circuits in the form of multichip integrated "
+"circuits consisting of two or more interconnected monolithic integrated "
+"circuits as specified in note 12 (b) (3) to chapter 85"
+msgstr ""
+"Processori e dispositivi di controllori (controllers), anche combinati con "
+"memorie, convertitori, circuiti logici, amplificatori, orologi, circuiti di "
+"sincronizzazione o altri circuiti nella forma di circuiti integrati "
+"multichip costituiti da due o più circuiti integrati monolotici "
+"interconnessi.\n"
+"Merci specificate nella nota 12(b)(3 e 4) cap. 85"
+
+#. module: l10n_it_intrastat
 #: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_85423110
 msgid ""
 "Electronic integrated circuits as processors and controllers, whether or not "
@@ -20233,6 +20282,20 @@ msgid ""
 "appliances)"
 msgstr ""
 "Strumenti ed apparecchi di meteorologia, idrologia e geofisica, elettronici"
+
+#. module: l10n_it_intrastat
+#: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_85423111
+msgid ""
+"Electronic multi-component integrated circuits \"MCOs\" as processors and "
+"controllers as specified in note 12 (b) (4) to chapter 85, whether or not "
+"combined with memories, converters, logic circuits, amplifiers, clock and "
+"timing circuits, or other circuits"
+msgstr ""
+"Circuiti integrati multicomponenti come processori e dispositivi di "
+"controllori (controllers), anche combinati con\n"
+"memorie, convertitori, circuiti logici, amplificatori, orologi, circuiti di "
+"sincronizzazione o altri circuiti.\n"
+"Merci specificate nella nota 12(b)(3 e 4) cap. 85"
 
 #. module: l10n_it_intrastat
 #: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_90302091
@@ -21265,6 +21328,18 @@ msgid ""
 msgstr ""
 "Ventilatori, diversi da quelli delle precedenti voci 8414 51 00, esclusi "
 "quelli assiali e quelli centrifughi"
+
+#. module: l10n_it_intrastat
+#: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_84145915
+msgid ""
+"Fans of a kind used solely or principally for cooling microprocessors, "
+"telecommunication apparatus, automatic data processing machines or units of "
+"automatic data processing machines"
+msgstr ""
+"Ventilatori dei tipi usati esclusivamente o principalmente per raffreddare "
+"microprocessori, apparecchiature per le telecomunicazioni, macchine "
+"automatiche per l'elaborazione dell'informazione o unità di macchine "
+"automatiche per l'elaborazione dell'informazione"
 
 #. module: l10n_it_intrastat
 #: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_84324090
@@ -51405,7 +51480,7 @@ msgstr "Termostati, non elettronici, con dispositivo elettrico di scatto"
 #: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_90321089
 msgid "Non-electronic thermostats, without electrical triggering device"
 msgstr ""
-"Termostati, non elettronici (escl. quelli  con dispositivo elettrico di "
+"Termostati, non elettronici (escl. quelli con dispositivo elettrico di "
 "scatto)"
 
 #. module: l10n_it_intrastat
@@ -51913,6 +51988,11 @@ msgid ""
 msgstr ""
 "Dadi filettati di ghisa, ferro o acciaio, ottenuti dalla massa su torni "
 "automatici a \" decolleter\", di diametro di foro fino a 6 mm"
+
+#. module: l10n_it_intrastat
+#: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_73181639
+msgid "Nuts of stainless steel (excl. blind rivet nuts)"
+msgstr "Dadi di acciaio inossidabile, altri"
 
 #. module: l10n_it_intrastat
 #: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_73181630
@@ -53070,7 +53150,7 @@ msgstr "Origine"
 #: model:ir.model.fields,field_description:l10n_it_intrastat.field_res_company__intrastat_sale_country_origin_id
 #: model_terms:ir.ui.view,arch_db:l10n_it_intrastat.view_intrastat_company_form
 msgid "Origin Country"
-msgstr "Paese d'origine"
+msgstr "Paese di origine"
 
 #. module: l10n_it_intrastat
 #: model:ir.model.fields,field_description:l10n_it_intrastat.field_account_invoice_intrastat__province_origin_id
@@ -70017,6 +70097,19 @@ msgstr ""
 "strade ferrate, ganci a vite e viti ad occhio, chiodi a vite)"
 
 #. module: l10n_it_intrastat
+#: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_73181542
+msgid ""
+"Screws and bolts, of iron or steel other than stainless \"whether or not "
+"with their nuts and washers\", without heads, with a tensile strength of < "
+"800 MPa (excl. screws and bolts for fixing railway track construction "
+"material)"
+msgstr ""
+"Viti, bulloni, dadi, tirafondi, ganci a vite, ribadini, copiglie, pernotti, "
+"chiavette, rondelle (comprese le rondelle destinate a funzionare da molla) "
+"ed articoli simili, di ghisa, ferro o acciaio: altre viti e bulloni, anche "
+"con i relativi dadi o rondelle: inferiore a 800 MPa"
+
+#. module: l10n_it_intrastat
 #: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_73181541
 msgid ""
 "Screws and bolts, of iron or steel other than stainless \"whether or not "
@@ -70030,6 +70123,19 @@ msgstr ""
 "resistenza alla trazione < 800 MPa (escl. viti ottenute dalla massa su torni "
 "automatici a \"décolleter\", di spessore di stelo <= 6 mm, viti e bulloni, "
 "filettati, per fissare gli elementi delle strade ferrate)"
+
+#. module: l10n_it_intrastat
+#: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_73181548
+msgid ""
+"Screws and bolts, of iron or steel other than stainless \"whether or not "
+"with their nuts and washers\", without heads, with a tensile strength of >= "
+"800 MPa (excl. screws and bolts for fixing railway track construction "
+"material)"
+msgstr ""
+"Viti, bulloni, dadi, tirafondi, ganci a vite, ribadini, copiglie, pernotti, "
+"chiavette, rondelle (comprese le rondelle destinate a funzionare da molla) "
+"ed articoli simili, di ghisa, ferro o acciaio: altre viti e bulloni, anche "
+"con i relativi dadi o rondelle: uguale o superiore a 800 MPa"
 
 #. module: l10n_it_intrastat
 #: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_73181549
@@ -75882,13 +75988,21 @@ msgid "Statement Section"
 msgstr "Sezione dichiarazione"
 
 #. module: l10n_it_intrastat
+#: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_85044095
+msgid ""
+"Static converters (excl. accumulator chargers, rectifiers, and inverters)"
+msgstr ""
+"Convertitori statici (escl. accumulatori statici, raddrizzatori e "
+"invertitori)"
+
+#. module: l10n_it_intrastat
 #: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_85044090
 msgid ""
 "Static converters (excl. of a kind used with telecommunication apparatus, "
 "automatic data-processing machines and units thereof, battery chargers, "
 "polycrystalline semiconductor and other rectifiers, and a.c. converters)"
 msgstr ""
-"Convertitori statici (escl.  del tipo utilizzato con le apparecchiature per "
+"Convertitori statici (escl. del tipo utilizzato con le apparecchiature per "
 "le telecomunicazioni, le macchine automatiche per l'elaborazione "
 "dell'informazione e le loro unità nonchè caricatori di accumulatori, "
 "raddrizzatori con semiconduttore cristallino e altri raddrizzatori e "
@@ -82405,15 +82519,12 @@ msgstr "Natura transazione"
 #: model_terms:ir.ui.view,arch_db:l10n_it_intrastat.account_intrastat_transaction_nature_b_view_tree
 #: model_terms:ir.ui.view,arch_db:l10n_it_intrastat.view_intrastat_company_form
 msgid "Transaction Nature B"
-msgstr "Transazione Natura B"
+msgstr "Transazione natura B"
 
 #. module: l10n_it_intrastat
 #: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_99500000
 msgid "Transactions with small value not arranged according to chapter"
-msgstr ""
-"Codice utilizzato esclusivamente per lo scambio di merci tra Stati membri "
-"per singole operazioni di valore < 200 Euro e per segnalare, in alcuni casi, "
-"prodotti residuali"
+msgstr "Operazioni di modico valore non disposte secondo il capitolo"
 
 #. module: l10n_it_intrastat
 #: model:report.intrastat.code,description:l10n_it_intrastat.intrastat_category_2014_85198111
