@@ -265,6 +265,7 @@ class RibaListLine(models.Model):
         for line in self:
             line.cig = ""
             line.cup = ""
+
             for move_line in line.move_line_ids:
                 for (
                     related_document
