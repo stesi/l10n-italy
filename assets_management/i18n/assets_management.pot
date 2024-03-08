@@ -1778,7 +1778,6 @@ msgstr ""
 
 #. module: assets_management
 #: model:ir.model.fields,help:assets_management.field_asset_asset__message_has_error
-#: model:ir.model.fields,help:assets_management.field_asset_asset__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 
@@ -2637,11 +2636,6 @@ msgid "Responsible User"
 msgstr ""
 
 #. module: assets_management
-#: model:ir.model.fields,field_description:assets_management.field_asset_asset__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr ""
-
-#. module: assets_management
 #: model:ir.model.fields.selection,name:assets_management.selection__wizard_account_move_manage_asset__move_type__sale
 msgid "Sale"
 msgstr ""
@@ -2991,7 +2985,6 @@ msgstr ""
 
 #. module: assets_management
 #: model_terms:ir.ui.view,arch_db:assets_management.asset_dep_line_form_view
-#: model_terms:ir.ui.view,arch_db:assets_management.asset_form_view
 msgid ""
 "You confirm the removal of the current line? Depreciation line amounts will "
 "not be affected and will have to be updated manually."
@@ -3055,11 +3048,6 @@ msgstr ""
 #, python-format
 msgid ""
 "`{}`: cannot change move's company once it's already related to an asset."
-msgstr ""
-
-#. module: assets_management
-#: model_terms:ir.ui.view,arch_db:assets_management.wizard_account_move_mange_asset_form_view
-msgid "move lines"
 msgstr ""
 
 #. module: assets_management
