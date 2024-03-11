@@ -1,12 +1,22 @@
+#  Copyright 2023 Simone Rubino - TAKOBI
+#  License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+
 import base64
-import os
-import shutil
+import tempfile
 import zipfile
-from datetime import datetime
+from io import BytesIO
+from pathlib import Path
 
 from odoo import fields, models
 
 from odoo.addons.l10n_it_fatturapa_in.wizard import efattura
+
+
+def _extract_zip_file(directory, datas):
+    """Extract the zip file having content `datas` to `directory`."""
+    zip_data = base64.b64decode(datas)
+    with zipfile.ZipFile(BytesIO(zip_data)) as zip_ref:
+        zip_ref.extractall(directory)
 
 
 class FatturaPAAttachmentImportZIP(models.Model):
@@ -122,61 +132,43 @@ class FatturaPAAttachmentImportZIP(models.Model):
 
     def action_import(self):
         self.ensure_one()
-        tmp_dir_name = "/tmp/{}_{}".format(
-            self.env.cr.dbname, datetime.now().timestamp()
-        )
-        if os.path.isdir(tmp_dir_name):
-            shutil.rmtree(tmp_dir_name)
-        os.mkdir(tmp_dir_name)
-        zip_data = base64.b64decode(self.datas)
-        zip_file_path = "%s/e_bills_to_import.zip" % tmp_dir_name
-        with open(zip_file_path, "wb") as writer:
-            writer.write(zip_data)
-        tmp_dir_name_xml = tmp_dir_name + "/XML"
-        with zipfile.ZipFile(zip_file_path, "r") as zip_ref:
-            zip_ref.extractall(tmp_dir_name_xml)
-        for xml_filename in os.listdir(tmp_dir_name_xml):
-            with open("{}/{}".format(tmp_dir_name_xml, xml_filename), "rb") as reader:
-                content = reader.read()
-            attach_vals = {
-                "name": xml_filename,
-                "datas": base64.encodebytes(content),
-            }
-            att_in = self.env["fatturapa.attachment.in"].create(attach_vals)
-            if att_in.xml_supplier_id.id == self.env.company.partner_id.id:
-                att_in.unlink()
-                attach_vals["state"] = "validated"
-                att_out = self.env["fatturapa.attachment.out"].create(attach_vals)
-                wizard = (
-                    self.env["wizard.import.fatturapa"]
-                    .with_context(
-                        active_ids=[att_out.id], active_model="fatturapa.attachment.out"
+        company_partner = self.env.company.partner_id
+        with tempfile.TemporaryDirectory() as tmp_dir_path:
+            tmp_dir = Path(tmp_dir_path)
+            _extract_zip_file(tmp_dir, self.datas)
+            original_in_invoice_registration_date = (
+                self.env.company.in_invoice_registration_date
+            )
+            # we don't have the received date
+            self.env.company.in_invoice_registration_date = "inv_date"
+
+            for xml_file in tmp_dir.glob("*"):
+                content = xml_file.read_bytes()
+                attach_vals = {
+                    "name": xml_file.name,
+                    "datas": base64.encodebytes(content),
+                    "attachment_import_zip_id": self.id,
+                }
+                attachment = self.env["fatturapa.attachment.in"].create(attach_vals)
+                if attachment.xml_supplier_id == company_partner:
+                    attachment.unlink()
+                    attach_vals["state"] = "validated"
+                    attachment = self.env["fatturapa.attachment.out"].create(
+                        attach_vals
                     )
-                    .create({})
-                )
-                wizard.importFatturaPA(invoice_type="sale")
-                att_out.attachment_import_zip_id = self.id
-            else:
-                in_invoice_registration_date = (
-                    self.env.company.in_invoice_registration_date
-                )
-                # we don't have the received date
-                self.env.company.in_invoice_registration_date = "inv_date"
-                att_in.attachment_import_zip_id = self.id
                 wizard = (
                     self.env["wizard.import.fatturapa"]
                     .with_context(
-                        active_ids=[att_in.id], active_model="fatturapa.attachment.in"
+                        active_ids=attachment.ids,
+                        active_model=attachment._name,
                     )
                     .create({})
                 )
                 wizard.importFatturaPA()
-                att_in.attachment_import_zip_id = self.id
-                self.env.company.in_invoice_registration_date = (
-                    in_invoice_registration_date
-                )
-        if os.path.isdir(tmp_dir_name):
-            shutil.rmtree(tmp_dir_name)
+            self.env.company.in_invoice_registration_date = (
+                original_in_invoice_registration_date
+            )
+
         self.state = "done"
 
 
@@ -200,10 +192,7 @@ class FatturaPAAttachmentOut(models.Model):
         readonly=True,
         ondelete="restrict",
     )
-    #
-    # def get_xml_string(self):
-    #     return self.ir_attachment_id.get_xml_string()
 
-    def get_invoice_obj(self, fatturapa_attachment):
-        xml_string = fatturapa_attachment.get_xml_string()
+    def get_invoice_obj(self):
+        xml_string = self.get_xml_string()
         return efattura.CreateFromDocument(xml_string)
