@@ -12,12 +12,13 @@ class AccountMove(models.Model):
         # Therefore we choose instead the lines that
         # should generate the tax line i.e. the lines that have `tax_ids`
         tax_lines = self.line_ids.filtered("tax_ids")
+        for declaration in declarations:
+            if declaration.id not in declarations_amounts:
+                declarations_amounts[declaration.id] = declaration.available_amount
         for tax_line in tax_lines:
             # Move lines having `tax_ids` represent the base amount for those taxes
             amount = tax_line.price_subtotal
-            for declaration in declarations:
-                if declaration.id not in declarations_amounts:
-                    declarations_amounts[declaration.id] = declaration.available_amount
+            for declaration in declarations.filtered(lambda a: tax_line.force_declaration_of_intent_id and tax_line.force_declaration_of_intent_id == a or not tax_line.force_declaration_of_intent_id):
                 if any(tax in declaration.taxes_ids for tax in tax_line.tax_ids):
                     if tax_line.move_id.move_type not in ['in_refund']:
                         declarations_amounts[declaration.id] -= amount
