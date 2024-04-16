@@ -16,7 +16,7 @@
         # "l10n_it_fatturapa_out",
         # "l10n_it_reverse_charge",
         # "l10n_it_fatturapa_out_rc",
-        "l10n_it_fatturapa_out_semplificata",
+        "l10n_it_fatturapa_out",
     ],
     "data": [
         "views/invoice_it_template.xml"
