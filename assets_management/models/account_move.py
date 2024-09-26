@@ -98,7 +98,7 @@ class AccountMove(models.Model):
             raise ValidationError(_("Every line is already linked to an asset."))
 
         xmlid = "assets_management.action_wizard_account_move_manage_asset"
-        act = self.env.ref(xmlid).read()[0]
+        act = self.env.ref(xmlid).sudo().read()[0]
         ctx = dict(self._context)
         ctx.update(
             {
