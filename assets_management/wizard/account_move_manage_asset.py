@@ -223,9 +223,9 @@ class WizardAccountMoveManageAsset(models.TransientModel):
 
         if self._context.get("show_asset"):
             act_xmlid = "assets_management.action_asset"
-            act = self.env.ref(act_xmlid).read()[0]
+            act = self.env.ref(act_xmlid).sudo().read()[0]
             form_xmlid = "assets_management.asset_form_view"
-            form = self.env.ref(form_xmlid)
+            form = self.env.ref(form_xmlid).sudo()
             act.update(
                 {
                     "res_id": asset.id,
