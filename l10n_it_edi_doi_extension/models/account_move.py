@@ -37,14 +37,15 @@ class AccountMove(models.Model):
         other_move_ids = self - purchase_move_ids
         super(AccountMove, other_move_ids)._compute_l10n_it_edi_doi_amount()
         for move in purchase_move_ids:
-            tax = move.company_id.l10n_it_edi_doi_bill_tax_id
-            if not tax or not move.l10n_it_edi_doi_id:
+            l10n_it_edi_doi_bill_tax_ids = move.company_id.l10n_it_edi_doi_bill_tax_id
+            if not l10n_it_edi_doi_bill_tax_ids or not move.l10n_it_edi_doi_id:
                 move.l10n_it_edi_doi_amount = 0
                 continue
             declaration_lines = move.invoice_line_ids.filtered(
-                # The declaration tax cannot be used with other taxes on a single line
-                # (checked in `_post`)
-                lambda line, tax=tax: line.tax_ids.ids == tax.ids
+                lambda line,
+                l10n_it_edi_doi_bill_tax_ids=l10n_it_edi_doi_bill_tax_ids: all(
+                    tax in line.tax_ids for tax in l10n_it_edi_doi_bill_tax_ids
+                )
             )
             move.l10n_it_edi_doi_amount = sum(declaration_lines.mapped("price_total"))
         return  # W8110
@@ -97,13 +98,7 @@ class AccountMove(models.Model):
                         doi_bill_tax.name,
                     )
                 )
-            if any(line.tax_ids != doi_bill_tax for line in declaration_lines):
-                errors.append(
-                    _(
-                        "A line using tax %s should not contain any other taxes",
-                        doi_bill_tax.name,
-                    )
-                )
+
         if errors:
             raise UserError("\n".join(errors))
         return super()._post(soft)

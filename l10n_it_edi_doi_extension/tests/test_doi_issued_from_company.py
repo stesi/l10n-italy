@@ -22,13 +22,13 @@ class TestDoiIssuedFromCompany(TransactionCase):
                 "start_date": fields.Date.today(),
                 "end_date": fields.Date.today() + relativedelta(months=2),
                 "threshold": 5000,
-                "protocol_number_part1": "123",
-                "protocol_number_part2": "456",
+                "protocol_number_part1": f"123{type_doi}",
+                "protocol_number_part2": f"456{type_doi}",
             }
         )
 
     @classmethod
-    def _create_invoice(cls, name, partner, tax=False, date=False, in_type=False):
+    def _create_invoice(cls, name, partner, taxes=False, date=False, in_type=False):
         invoice_form = Form(
             cls.env["account.move"].with_context(
                 default_move_type="in_invoice" if in_type else "out_invoice",
@@ -39,20 +39,21 @@ class TestDoiIssuedFromCompany(TransactionCase):
         invoice_form.invoice_payment_term_id = cls.env.ref(
             "account.account_payment_term_advance"
         )
-        cls._add_invoice_line_id(invoice_form, tax=tax, in_type=in_type)
+        cls._add_invoice_line_id(invoice_form, taxes=taxes, in_type=in_type)
         invoice = invoice_form.save()
         return invoice
 
     @classmethod
-    def _add_invoice_line_id(cls, invoice_form, tax=False, in_type=False):
+    def _add_invoice_line_id(cls, invoice_form, taxes=False, in_type=False):
         with invoice_form.invoice_line_ids.new() as invoice_line:
             invoice_line.product_id = cls.env.ref("product.product_product_5")
             invoice_line.quantity = 10.00
             invoice_line.name = "test line"
             invoice_line.price_unit = 90.00
-            if tax:
+            if taxes:
                 invoice_line.tax_ids.clear()
-                invoice_line.tax_ids.add(tax)
+                for tax in taxes:
+                    invoice_line.tax_ids.add(tax)
 
     @classmethod
     def setUpClass(cls):
@@ -81,7 +82,29 @@ class TestDoiIssuedFromCompany(TransactionCase):
         cls.env.company.l10n_it_edi_doi_bill_tax_id = cls.tax
 
     def test_in_invoice_under_declaration_limit(self):
-        invoice = self._create_invoice("1", self.partner, tax=self.tax, in_type=True)
+        invoice = self._create_invoice("1", self.partner, taxes=self.tax, in_type=True)
+        previous_used_amount = self.doi_in.invoiced
+        invoice.action_post()
+        used_amount = self.doi_in.invoiced
+        self.assertNotEqual(previous_used_amount, used_amount)
+        self.assertEqual(used_amount, invoice.amount_total)
+        self.assertEqual(self.doi_in.state, "active")
+
+    def test_out_invoice_with_two_taxes(self):
+        tax2 = self.tax_model.create(
+            {
+                "l10n_it_exempt_reason": "N4",
+                "l10n_it_law_reference": "Dumb tax for test",
+                "type_tax_use": "purchase",
+                "name": "0% dumb tax",
+                "amount": 0,
+                "tax_group_id": self.tax_group.id,
+            }
+        )
+        invoice = self._create_invoice(
+            "1", self.partner, taxes=self.tax | tax2, in_type=True
+        )
+
         previous_used_amount = self.doi_in.invoiced
         invoice.action_post()
         used_amount = self.doi_in.invoiced
